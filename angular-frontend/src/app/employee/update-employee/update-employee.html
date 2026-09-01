@@ -1,0 +1,23 @@
+<h3>Update Employee Data</h3>
+@if (employee$ | async; as employee) {
+<form (ngSubmit)="onSubmit(employee)">
+    <div class="form-group">
+        <label for="firstname">Firstname</label>
+        <input type="text" class="form-control" id="firstname" [(ngModel)]="employee.firstname" name="firstname">
+    </div>
+
+    <div class="form-group">
+        <label for="lastname">Lastname</label>
+        <input type="text" class="form-control" id="lastname" [(ngModel)]="employee.lastname" name="lastname">
+    </div>
+
+    <div class="form-group">
+        <label for="email-id">Email</label>
+        <input type="email" class="form-control" id="email-id" [(ngModel)]="employee.emailId" name="email-id">
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-warning" type="submit">UPDATE</button>
+    </div>
+</form>
+}

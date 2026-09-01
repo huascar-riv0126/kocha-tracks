@@ -1,0 +1,19 @@
+<h3>EMployee Details</h3>
+@if (employee$ | async; as employee) {
+<div class="container">
+    <div>
+        <label><b>First Name: </b></label> {{employee.firstname}}
+    </div>
+    <div>
+        <label><b>Last Name: </b></label> {{employee.lastname}}
+    </div>
+
+    <div>
+        <label><b>Email: </b></label> {{employee.emailId}}
+
+        <div class="d-flex justify-content-end">
+            <button (click)="goToList()" class="btn btn-info">GO BACK</button>
+        </div>
+    </div>
+</div>
+}
