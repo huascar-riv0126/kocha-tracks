@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-/* Color variables for Tailwind utilities */
 @theme {
+  /* Color variables for Tailwind utilities */
+  /* Primitives: change this in case of color palette changes */
   /* Brand */
   --color-brand-primary-50: #EEF6FC;
   --color-brand-primary-100: #D7EBF8;
@@ -44,8 +45,34 @@
   --color-neutral-800: #1F2937;
   --color-neutral-900: #111827;
   --color-neutral-white: #FFFFFF;
-}
 
+  /* Aliases: do not change, only in cases when the style gets broken by changes on the color palette */
+  /* Backgorund */
+  --color-page: var(--color-neutral-50);
+  --color-surface: var(--color-neutral-white);
+  --color-hero: var(--color-brand-primary-900);
+  --color-section-alt: var(--color-brand-primary-50);
+  --color-card: var(--color-neutral-white);
+  --color-footer: var(--color-neutral-900);
+  
+  /* Text */
+  --color-primary: var(--color-neutral-900);
+  --color-secondary: var(--color-neutral-600);
+  --color-on-dark: var(--color-neutral-white);
+  --color-on-dark-muted: var(--color-neutral-300);
+  --color-accent: var(--color-brand-primary-500);
+  --color-link: var(--color-brand-primary-600);
+
+  /* Interactive */
+  --color-interactive-primary: var(--color-brand-primary-500);
+  --color-interactive-primary-hover: var(--color-brand-primary-700);
+  --color-interactive-cta: var(--color-accent-warning-500);
+  --color-interactive-cta-hover: var(--color-accent-warning-600);
+
+  /* Border */
+  --color-border-default: var(--color-neutral-200);
+  --color-border-subtle: var(--color-neutral-100);
+}
 
 .footer {
   position: absolute;
