@@ -1,0 +1,54 @@
+<div class="hero-page-wrapper">
+  
+  <!-- SECCIÓN HERO: BIENVENIDA Y CONTEXTO (HU-4) -->
+  <section class="hero-section">
+    <div class="hero-overlay">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 text-center">
+            
+            <h1 class="hero-main-title">Bienvenido a Kocha Tracks</h1>
+            
+            <div class="hero-description-container mx-auto">
+              <p class="hero-text">
+                En un entorno urbano en constante cambio, <strong>Kocha Tracks</strong> se establece como la 
+                herramienta definitiva para el monitoreo de bloqueos viales en Cochabamba. Ofrecemos una 
+                descripción general y precisa del estado de las vías, permitiendo a los ciudadanos planificar 
+                sus rutas de manera inteligente y reducir el impacto del congestionamiento diario.
+              </p>
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+              <button class="btn-explore-vial" (click)="irAlMapa()">
+                📍 EXPLORAR EL MAPA INTERACTIVO
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DEL MAPA: CENTRADO TOTAL -->
+  <section id="seccion-mapa" class="map-section">
+    <div class="container text-center">
+      
+      <h2 class="map-section-title">Estado del Tráfico: Av. Aroma (Cochabamba)</h2>
+      
+      <!-- Contenedor del mapa con margen automático para centrarlo -->
+      <div class="map-wrapper shadow-lg mx-auto">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.41235!2d-66.1558!3d-17.3985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e373f1d8c1e7a5%3A0x2a1a1a1a1a1a1a1a!2sAv.%20Aroma%2C%20Cochabamba!5e0!3m2!1ses!2sbo!4v1725510000000!5m2!1ses!2sbo&layer=t" 
+          width="100%" 
+          height="550" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+
+</div>

@@ -1,21 +1,26 @@
-<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a routerLink="employees" routerLinkActive="active" class="nav-link">Employee List</a>
-    </li>
-    <li class="nav-item">
-      <a routerLink="create-employee" routerLinkActive="active" class="nav-link">Create Employee</a>
-    </li>
-  </ul>
-</nav>
-<h1 class="text-center"> {{title()}} </h1>
+<div class="main-layout">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand brand-name" routerLink="/">Kocha Tracks</a>
+      <div class="navbar-nav ms-auto">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Inicio</a>
+        <a routerLink="employees" routerLinkActive="active" class="nav-link">Lista de Empleados</a>
+        <a routerLink="create-employee" routerLinkActive="active" class="nav-link">Crear Empleado</a>
+      </div>
+    </div>
+  </nav>
 
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
-
-<footer class="footer">
-  <div class="container">
-    <span>All Rights Reserved 2026</span>
+  <!-- CONTENIDO VARIABLE (Hero, Listas, etc) -->
+  <div class="content-grow">
+    <router-outlet></router-outlet>
   </div>
-</footer>
+
+  <!-- FOOTER SIEMPRE AL FINAL -->
+  <footer class="footer">
+    <div class="container">
+      <p class="mb-0">All Rights Reserved 2026 - <strong>Kocha Tracks</strong></p>
+      <small>Sistema de Monitoreo de Bloqueos Viales - Cochabamba</small>
+    </div>
+  </footer>
+</div>

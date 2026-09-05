@@ -1,0 +1,91 @@
+/* FUENTE DE MARCA */
+@font-face {
+  font-family: 'Bodoni MT Black';
+  src: local('Bodoni MT Black'), local('Bodoni-MT-Black');
+}
+
+.hero-page-wrapper {
+  width: 100%;
+}
+
+/* --- ESTILOS SECCIÓN HERO --- */
+.hero-section {
+  background: url('https://images.unsplash.com/photo-1545147986-a9d6f210df77?q=80&w=2000') no-repeat center center/cover;
+  min-height: 75vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-overlay {
+  background: rgba(0, 43, 68, 0.82); /* Tinte azul oscuro institucional */
+  width: 100%;
+  height: 100%;
+  padding: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-main-title {
+  font-family: 'Bodoni MT Black', serif;
+  font-size: 4.8rem; /* Más grande y profesional */
+  color: #ffc107; /* Ámbar */
+  text-shadow: 3px 3px 15px rgba(0,0,0,0.6);
+  margin-bottom: 2rem;
+}
+
+.hero-description-container {
+  max-width: 900px; /* Evita que el texto se estire a los bordes */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-text {
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.btn-explore-vial {
+  background-color: #ffc107;
+  color: #002b44;
+  padding: 18px 50px;
+  font-weight: 900;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn-explore-vial:hover {
+  transform: translateY(-5px);
+  background-color: #ffca2c;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+/* --- ESTILOS SECCIÓN MAPA --- */
+.map-section {
+  padding: 80px 0;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.map-section-title {
+  font-family: 'Bodoni MT Black', serif;
+  color: #002b44;
+  font-size: 2.8rem;
+  margin-bottom: 3rem;
+}
+
+.map-wrapper {
+  max-width: 1100px; /* Ancho profesional para el mapa */
+  border-radius: 25px;
+  overflow: hidden;
+  border: 12px solid #fff; /* Marco blanco elegante */
+}

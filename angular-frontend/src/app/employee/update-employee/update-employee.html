@@ -1,23 +1,38 @@
 <h3>Update Employee Data</h3>
 @if (employee$ | async; as employee) {
-<form (ngSubmit)="onSubmit(employee)">
+<form #updateForm="ngForm" (ngSubmit)="onSubmit(employee)">
     <div class="form-group">
         <label for="firstname">Firstname</label>
-        <input type="text" class="form-control" id="firstname" [(ngModel)]="employee.firstname" name="firstname">
+        <input type="text" class="form-control" id="firstname" 
+               [(ngModel)]="employee.firstname" name="firstname" 
+               required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$" #firstname="ngModel">
+        
+        <!-- Mensaje de error dinámico -->
+        @if (firstname.errors?.['pattern']) {
+            <small class="text-danger">Solo se permiten letras y espacios.</small>
+        }
     </div>
 
     <div class="form-group">
         <label for="lastname">Lastname</label>
-        <input type="text" class="form-control" id="lastname" [(ngModel)]="employee.lastname" name="lastname">
+        <input type="text" class="form-control" id="lastname" 
+               [(ngModel)]="employee.lastname" name="lastname" 
+               required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$" #lastname="ngModel">
+        
+        @if (lastname.errors?.['pattern']) {
+            <small class="text-danger">Solo se permiten letras y espacios.</small>
+        }
     </div>
 
     <div class="form-group">
         <label for="email-id">Email</label>
-        <input type="email" class="form-control" id="email-id" [(ngModel)]="employee.emailId" name="email-id">
+        <input type="email" class="form-control" id="email-id" 
+               [(ngModel)]="employee.emailId" name="email-id" required email>
     </div>
 
     <div class="d-flex justify-content-end">
-        <button class="btn btn-warning" type="submit">UPDATE</button>
+        <!-- El botón se deshabilita si el formulario no es válido -->
+        <button [disabled]="updateForm.invalid" class="btn btn-warning" type="submit">UPDATE</button>
     </div>
 </form>
 }
