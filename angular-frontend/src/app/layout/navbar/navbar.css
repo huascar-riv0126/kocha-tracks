@@ -1,0 +1,90 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem;
+  background-color: var(--color-hero);
+  color: var(--color-on-dark);
+  font-family: sans-serif;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.logo-icon {
+  background-color: var(--color-interactive-cta);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-on-dark);
+}
+
+.brand-text {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color-on-dark);
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--color-neutral-400);
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.navbar-links a:hover, .navbar-links a.active {
+  color: var(--color-interactive-cta);
+}
+
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.btn-register {
+  text-decoration: none;
+  color: var(--color-on-dark);
+  font-size: 1rem;
+}
+
+.btn-login {
+  background-color: var(--color-interactive-cta);
+  color: var(--color-on-dark);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+  background-color: var(--color-interactive-cta-hover);
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 1rem 2rem; flex-wrap: wrap; gap: 1rem; }
+  .navbar-links { display: none; }
+}
