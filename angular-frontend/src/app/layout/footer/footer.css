@@ -1,12 +1,10 @@
-/* CAMBIO 1: Nueva clase única para evitar heredar alturas fijas (height) que cortan el fondo */
 .kocha-footer {
-  background-color: var(--color-bg-dark);
-  color: var(--color-text-muted);
+  background-color: var(--color-footer);
+  color: var(--color-on-dark-muted);
   font-family: system-ui, -apple-system, sans-serif;
   padding: 4rem 6rem 2rem 6rem;
   width: 100%;
   box-sizing: border-box;
-  /* CAMBIO 2: Forzamos al contenedor a crecer según su contenido y no colapsar */
   height: auto;
   min-height: max-content;
   display: flex;
@@ -35,14 +33,14 @@
 }
 
 .logo-icon {
-  background-color: var(--color-accent);
+  background-color: var(--color-interactive-cta);
   width: 36px;
   height: 36px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--color-white);
+  color: var(--color-on-dark);
 }
 
 .logo-icon svg {
@@ -51,7 +49,7 @@
 }
 
 .brand-name {
-  color: var(--color-white);
+  color: var(--color-on-dark);
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -60,7 +58,7 @@
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
 }
 
 .footer-links-section {
@@ -77,7 +75,7 @@
 }
 
 .link-group h4 {
-  color: var(--color-white);
+  color: var(--color-on-dark);
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -85,19 +83,18 @@
 
 .link-group a {
   text-decoration: none;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
   font-size: 0.9rem;
   transition: color 0.2s;
 }
 
 .link-group a:hover {
-  color: var(--color-accent);
+  color: var(--color-interactive-cta);
 }
 
-/* CAMBIO 3: Nueva clase separadora para renderizar la línea sutil azul oscuro */
 .footer-divider {
   height: 1px;
-  background-color: var(--color-divider);
+  background-color: var(--color-brand-primary-800);
   width: 100%;
   margin-bottom: 2rem;
 }
@@ -112,7 +109,7 @@
   margin: 0;
   font-size: 0.85rem;
   font-family: monospace;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
 }
 
 .social-links {
@@ -121,7 +118,7 @@
 }
 
 .social-links a {
-  color: var(--color-white);
+  color: var(--color-on-dark);
   display: flex;
   align-items: center;
   transition: color 0.2s;
@@ -133,10 +130,9 @@
 }
 
 .social-links a:hover {
-  color: var(--color-accent);
+  color: var(--color-interactive-cta);
 }
 
-/* Diseño responsivo */
 @media (max-width: 900px) {
   .kocha-footer { padding: 3rem 2rem 2rem 2rem; }
   .footer-content { flex-direction: column; gap: 3rem; }

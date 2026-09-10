@@ -3,8 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 4rem;
-  background-color: var(--color-bg-dark);
-  color: var(--color-white);
+  background-color: var(--color-hero);
+  color: var(--color-on-dark);
   font-family: sans-serif;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .logo-icon {
-  background-color: var(--color-accent);
+  background-color: var(--color-interactive-cta);
   width: 40px;
   height: 40px;
   border-radius: 8px;
@@ -28,13 +28,13 @@
 .logo-icon svg {
   width: 20px;
   height: 20px;
-  color: var(--color-white);
+  color: var(--color-on-dark);
 }
 
 .brand-text {
   font-size: 1.25rem;
   font-weight: bold;
-  color: var(--color-white);
+  color: var(--color-on-dark);
 }
 
 .navbar-links {
@@ -47,13 +47,13 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: var(--color-text-muted-alt);
+  color: var(--color-neutral-400);
   font-size: 1rem;
   transition: color 0.3s;
 }
 
 .navbar-links a:hover, .navbar-links a.active {
-  color: var(--color-accent);
+  color: var(--color-interactive-cta);
 }
 
 .navbar-auth {
@@ -64,13 +64,13 @@
 
 .btn-register {
   text-decoration: none;
-  color: var(--color-white);
+  color: var(--color-on-dark);
   font-size: 1rem;
 }
 
 .btn-login {
-  background-color: var(--color-accent);
-  color: var(--color-white);
+  background-color: var(--color-interactive-cta);
+  color: var(--color-on-dark);
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
@@ -81,11 +81,10 @@
 }
 
 .btn-login:hover {
-  background-color: var(--color-accent-hover);
+  background-color: var(--color-interactive-cta-hover);
 }
 
-/* Diseño responsivo básico */
 @media (max-width: 768px) {
   .navbar { padding: 1rem 2rem; flex-wrap: wrap; gap: 1rem; }
-  .navbar-links { display: none; /* Se implementará menú hamburguesa después */ }
+  .navbar-links { display: none; }
 }

@@ -1,0 +1,7 @@
+a {
+    color: var(--color-border-default);
+}
+
+a:hover {
+    color: var(--color-interactive-cta);
+}
