@@ -1,3 +1,13 @@
+:root {
+  --color-bg-dark: #0b1325;
+  --color-accent: #f58220;
+  --color-accent-hover: #e0701b;
+  --color-text-muted: #94a3b8;
+  --color-text-muted-alt: #a0aec0;
+  --color-divider: #1e293b;
+  --color-white: #ffffff;
+}
+
 /* You can add global styles to this file, and also import other style files */
 
 .footer {

@@ -1,7 +1,7 @@
 /* CAMBIO 1: Nueva clase única para evitar heredar alturas fijas (height) que cortan el fondo */
 .kocha-footer {
-  background-color: #0b1325;
-  color: #94a3b8;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-muted);
   font-family: system-ui, -apple-system, sans-serif;
   padding: 4rem 6rem 2rem 6rem;
   width: 100%;
@@ -35,14 +35,14 @@
 }
 
 .logo-icon {
-  background-color: #f58220;
+  background-color: var(--color-accent);
   width: 36px;
   height: 36px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: var(--color-white);
 }
 
 .logo-icon svg {
@@ -51,7 +51,7 @@
 }
 
 .brand-name {
-  color: white;
+  color: var(--color-white);
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -60,7 +60,7 @@
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .footer-links-section {
@@ -77,7 +77,7 @@
 }
 
 .link-group h4 {
-  color: white;
+  color: var(--color-white);
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -85,19 +85,19 @@
 
 .link-group a {
   text-decoration: none;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.9rem;
   transition: color 0.2s;
 }
 
 .link-group a:hover {
-  color: #f58220;
+  color: var(--color-accent);
 }
 
 /* CAMBIO 3: Nueva clase separadora para renderizar la línea sutil azul oscuro */
 .footer-divider {
   height: 1px;
-  background-color: #1e293b;
+  background-color: var(--color-divider);
   width: 100%;
   margin-bottom: 2rem;
 }
@@ -112,7 +112,7 @@
   margin: 0;
   font-size: 0.85rem;
   font-family: monospace;
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .social-links {
@@ -121,7 +121,7 @@
 }
 
 .social-links a {
-  color: white;
+  color: var(--color-white);
   display: flex;
   align-items: center;
   transition: color 0.2s;
@@ -133,7 +133,7 @@
 }
 
 .social-links a:hover {
-  color: #f58220;
+  color: var(--color-accent);
 }
 
 /* Diseño responsivo */

@@ -3,8 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 4rem;
-  background-color: #0b1325; /* Color del prototipo */
-  color: white;
+  background-color: var(--color-bg-dark);
+  color: var(--color-white);
   font-family: sans-serif;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .logo-icon {
-  background-color: #f58220; /* Naranja del prototipo */
+  background-color: var(--color-accent);
   width: 40px;
   height: 40px;
   border-radius: 8px;
@@ -28,13 +28,13 @@
 .logo-icon svg {
   width: 20px;
   height: 20px;
-  color: white;
+  color: var(--color-white);
 }
 
 .brand-text {
   font-size: 1.25rem;
   font-weight: bold;
-  color: white;
+  color: var(--color-white);
 }
 
 .navbar-links {
@@ -47,13 +47,13 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: #a0aec0;
+  color: var(--color-text-muted-alt);
   font-size: 1rem;
   transition: color 0.3s;
 }
 
 .navbar-links a:hover, .navbar-links a.active {
-  color: #f58220;
+  color: var(--color-accent);
 }
 
 .navbar-auth {
@@ -64,13 +64,13 @@
 
 .btn-register {
   text-decoration: none;
-  color: white;
+  color: var(--color-white);
   font-size: 1rem;
 }
 
 .btn-login {
-  background-color: #f58220;
-  color: white;
+  background-color: var(--color-accent);
+  color: var(--color-white);
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
@@ -81,7 +81,7 @@
 }
 
 .btn-login:hover {
-  background-color: #e0701b;
+  background-color: var(--color-accent-hover);
 }
 
 /* Diseño responsivo básico */
