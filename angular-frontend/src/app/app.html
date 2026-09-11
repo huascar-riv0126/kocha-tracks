@@ -1,20 +1,18 @@
 <div class="main-layout">
-  <!-- NAVBAR -->
+  <!-- NAVBAR ORIGINAL -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
-      <a class="navbar-brand brand-name" routerLink="/">Kocha Tracks</a>
+      <a class="navbar-brand brand-name" routerLink="/">KOCHA TRACKS</a>
       <div class="navbar-nav ms-auto">
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Inicio</a>
-        <a routerLink="employees" routerLinkActive="active" class="nav-link">Lista de Empleados</a>
-        <a routerLink="create-employee" routerLinkActive="active" class="nav-link">Crear Empleado</a>
+        <a routerLink="/employees" routerLinkActive="active" class="nav-link">Lista de Empleados</a>
+        <a routerLink="/create-employee" routerLinkActive="active" class="nav-link">Crear Empleado</a>
       </div>
     </div>
   </nav>
 
-  <!-- CONTENIDO VARIABLE (Hero, Listas, etc) -->
-  <div class="content-grow">
+  <!-- ÚNICA ÁREA DINÁMICA DE RUTAS -->
+  <main class="content-grow">
     <router-outlet></router-outlet>
-  </div>
-
- 
+  </main>
 </div>

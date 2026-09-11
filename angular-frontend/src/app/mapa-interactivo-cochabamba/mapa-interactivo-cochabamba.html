@@ -1,0 +1,111 @@
+<div class="interactive-map-layout">
+  
+  <!-- BARRA LATERAL IZQUIERDA -->
+  <aside class="sidebar-panel">
+    
+    <!-- PESTAÑAS: ACTIVOS / HISTÓRICOS -->
+    <div class="tabs-container">
+      <button class="tab-btn active">Activos</button>
+      <button class="tab-btn">Históricos</button>
+    </div>
+
+    <!-- FILTRO DE CATEGORÍAS -->
+    <div class="categories-section">
+      <span class="section-label">CATEGORÍAS</span>
+      <div class="tags-cloud">
+        <button class="chip-tag active">Todo</button>
+        <button class="chip-tag">Inundación</button>
+        <button class="chip-tag">Incendio</button>
+        <button class="chip-tag">Accidente</button>
+        <button class="chip-tag">Corte de vía</button>
+        <button class="chip-tag">Protesta</button>
+        <button class="chip-tag">Otro</button>
+      </div>
+    </div>
+
+    <!-- LISTA DE REPORTES ACTIVOS -->
+    <div class="reports-section">
+      <div class="reports-header">
+        <h4>REPORTES ACTIVOS (5)</h4>
+        <span class="location-tag">Cochabamba</span>
+      </div>
+
+      <div class="reports-scroll-list">
+        
+        <!-- CARD 1 (SELECCIONADO) -->
+        <div class="report-card selected">
+          <div class="card-header">
+            <span class="status-dot dot-orange"></span>
+            <h5 class="report-title">Inundación Av. Blanco G...</h5>
+            <span class="report-time">Hace 15 min</span>
+          </div>
+          <p class="report-location">Blanco Galindo KM 5</p>
+          <div class="card-footer">
+            <span class="reports-count">14 Reportes</span>
+            <span class="selected-label">Seleccionado</span>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="report-card">
+          <div class="card-header">
+            <span class="status-dot dot-orange"></span>
+            <h5 class="report-title">Corte Av. Heroínas</h5>
+            <span class="report-time">Hace 45 min</span>
+          </div>
+          <p class="report-location">Rotonda Muyurina</p>
+          <div class="card-footer">
+            <span class="reports-count">29 Reportes</span>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="report-card">
+          <div class="card-header">
+            <span class="status-dot dot-red"></span>
+            <h5 class="report-title">Incendio zona sud</h5>
+            <span class="report-time">Hace 1 hora</span>
+          </div>
+          <p class="report-location">Av. Petrolera KM 2</p>
+          <div class="card-footer">
+            <span class="reports-count">8 Reportes</span>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="report-card">
+          <div class="card-header">
+            <span class="status-dot dot-green"></span>
+            <h5 class="report-title">Accidente Km 5 antigua...</h5>
+            <span class="report-time">Hace 2 horas</span>
+          </div>
+          <p class="report-location">Km 5 Antigua Carretera</p>
+          <div class="card-footer">
+            <span class="reports-count">3 Reportes</span>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="report-card">
+          <div class="card-header">
+            <span class="status-dot dot-green"></span>
+            <h5 class="report-title">Bache masivo Vinto</h5>
+            <span class="report-time">Hace 4 horas</span>
+          </div>
+          <p class="report-location">Av. Pairumani</p>
+          <div class="card-footer">
+            <span class="reports-count">1 Reportes</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ÁREA DERECHA RESERVADA PARA EL MAPA -->
+  <main class="map-view-container">
+    <!-- Tu compañero colocará el componente o lienzo del mapa aquí -->
+  </main>
+
+</div>

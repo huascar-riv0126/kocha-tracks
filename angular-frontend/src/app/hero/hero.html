@@ -4,7 +4,7 @@
     <!-- LADO IZQUIERDO: TEXTO Y BOTONES -->
     <div class="hero-content">
       <div class="badge-tag">
-        <span class="badge-dot"></span>
+        <span class="badge-dot"></span> 
         <span>MONITOREO CÍVICO COLABORATIVO</span>
       </div>
 
@@ -17,8 +17,9 @@
         Define zonas de interés, recibe alertas y consulta el historial de incidentes en las rutas que te importan en Bolivia. Privacidad total garantizada.
       </p>
 
+      <!-- CAMBIO AQUÍ: Usamos <a> para el routerLink -->
       <div class="hero-buttons">
-        <button class="btn-primary">Explorar el Mapa</button>
+        <a routerLink="/mapa-interactivo-cochabamba" class="btn-primary">Explorar el Mapa</a>
         <button class="btn-secondary">Conocer más</button>
       </div>
     </div>
@@ -35,7 +36,6 @@
         </div>
       </div>
 
-      <!-- MAPA CON CAPA OSCURA Y ZONA DE ALERTA ROJA EN LA AROMA -->
       <div class="map-wrapper">
         <iframe 
           class="google-map"
@@ -44,7 +44,6 @@
           loading="lazy">
         </iframe>
 
-        <!-- Capa de Radar / Círculo Rojo en La Aroma -->
         <div class="radar-overlay">
           <div class="pulse-circle"></div>
           <div class="alert-pin">
@@ -57,6 +56,7 @@
 
   </div>
 </section>
+
 <app-map-preview></app-map-preview>
 <app-features></app-features>
 <app-cta-section></app-cta-section>
