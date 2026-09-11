@@ -1,54 +1,62 @@
-<div class="hero-page-wrapper">
-  
-  <!-- SECCIÓN HERO: BIENVENIDA Y CONTEXTO (HU-4) -->
-  <section class="hero-section">
-    <div class="hero-overlay">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10 text-center">
-            
-            <h1 class="hero-main-title">Bienvenido a Kocha Tracks</h1>
-            
-            <div class="hero-description-container mx-auto">
-              <p class="hero-text">
-                En un entorno urbano en constante cambio, <strong>Kocha Tracks</strong> se establece como la 
-                herramienta definitiva para el monitoreo de bloqueos viales en Cochabamba. Ofrecemos una 
-                descripción general y precisa del estado de las vías, permitiendo a los ciudadanos planificar 
-                sus rutas de manera inteligente y reducir el impacto del congestionamiento diario.
-              </p>
-            </div>
+<section class="hero-section">
+  <div class="hero-container">
+    
+    <!-- LADO IZQUIERDO: TEXTO Y BOTONES -->
+    <div class="hero-content">
+      <div class="badge-tag">
+        <span class="badge-dot"></span>
+        <span>MONITOREO CÍVICO COLABORATIVO</span>
+      </div>
 
-            <div class="d-flex justify-content-center mt-5">
-              <button class="btn-explore-vial" (click)="irAlMapa()">
-                📍 EXPLORAR EL MAPA INTERACTIVO
-              </button>
-            </div>
+      <h1 class="hero-title">
+        Monitorea bloqueos viales<br>
+        sin compartir tu ubicación
+      </h1>
 
+      <p class="hero-description">
+        Define zonas de interés, recibe alertas y consulta el historial de incidentes en las rutas que te importan en Bolivia. Privacidad total garantizada.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn-primary">Explorar el Mapa</button>
+        <button class="btn-secondary">Conocer más</button>
+      </div>
+    </div>
+
+    <!-- LADO DERECHO: MAPA EN LA AROMA (COCHABAMBA) -->
+    <div class="hero-map-card">
+      <div class="map-header">
+        <div class="status-left">
+          <span class="dot-red"></span>
+          <span>ZONA DE ALERTA DE BLOQUEO</span>
+        </div>
+        <div class="status-right">
+          <span>VIGILANCIA ACTIVA</span>
+        </div>
+      </div>
+
+      <!-- MAPA CON CAPA OSCURA Y ZONA DE ALERTA ROJA EN LA AROMA -->
+      <div class="map-wrapper">
+        <iframe 
+          class="google-map"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.560636284687!2d-66.15830002499298!3d-17.385012583501062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e3740237746401%3A0xa6eb3e6393b48227!2sAv.%20Aroma%2C%20Cochabamba!5e0!3m2!1ses!2sbo!4v1710000000000!5m2!1ses!2sbo" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+
+        <!-- Capa de Radar / Círculo Rojo en La Aroma -->
+        <div class="radar-overlay">
+          <div class="pulse-circle"></div>
+          <div class="alert-pin">
+            <span class="pin-icon">⚠️</span>
+            <span class="pin-text">AV. AROMA - BLOQUEO ACTIVO</span>
           </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- SECCIÓN DEL MAPA: CENTRADO TOTAL -->
-  <section id="seccion-mapa" class="map-section">
-    <div class="container text-center">
-      
-      <h2 class="map-section-title">Estado del Tráfico: Av. Aroma (Cochabamba)</h2>
-      
-      <!-- Contenedor del mapa con margen automático para centrarlo -->
-      <div class="map-wrapper shadow-lg mx-auto">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.41235!2d-66.1558!3d-17.3985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e373f1d8c1e7a5%3A0x2a1a1a1a1a1a1a1a!2sAv.%20Aroma%2C%20Cochabamba!5e0!3m2!1ses!2sbo!4v1725510000000!5m2!1ses!2sbo&layer=t" 
-          width="100%" 
-          height="550" 
-          style="border:0;" 
-          allowfullscreen="" 
-          loading="lazy">
-        </iframe>
-      </div>
-
-    </div>
-  </section>
-
-</div>
+  </div>
+</section>
+<app-map-preview></app-map-preview>
+<app-features></app-features>
+<app-cta-section></app-cta-section>

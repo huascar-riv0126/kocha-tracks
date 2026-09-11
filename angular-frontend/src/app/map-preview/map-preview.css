@@ -1,0 +1,287 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.preview-section {
+  background-color: #f1f5f9; /* Fondo claro como en la captura */
+  padding: 4rem 2rem 6rem;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.preview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ENCABEZADO */
+.preview-header {
+  margin-bottom: 2rem;
+}
+
+.sub-label {
+  color: #f27a24;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.main-title {
+  color: #0f172a;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+/* CONTENEDOR PRINCIPAL DUAL */
+.map-card-container {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  min-height: 480px;
+}
+
+/* PANEL IZQUIERDO: REPORTES */
+.reports-panel {
+  width: 340px;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.country-tag {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.reports-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.report-item {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+
+.report-item:hover {
+  background-color: #f8fafc;
+}
+
+.item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.badge-activo {
+  background-color: #ffe4e6;
+  color: #e11d48;
+}
+
+.badge-resuelto {
+  background-color: #d1fae5;
+  color: #059669;
+}
+
+.badge-prevencion {
+  background-color: #ffedd5;
+  color: #ea580c;
+}
+
+.time-ago {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.location-title {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.location-desc {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* PANEL DERECHO: MAPA DENTRO DE TARJETA OSCURA */
+.map-visual-panel {
+  flex: 1;
+  background-color: #0b132b; /* Azul oscuro del figma */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.city-watermark {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  color: #38bdf8;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.map-routes-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* ZONA DE INTERÉS */
+.interest-zone {
+  position: absolute;
+  top: 32%;
+  left: 36%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.zone-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.zone-circle {
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(242, 122, 36, 0.4);
+  background-color: rgba(242, 122, 36, 0.03);
+  border-radius: 50%;
+}
+
+/* PINES EN EL MAPA */
+.map-pin {
+  position: absolute;
+  z-index: 10;
+}
+
+.pin-bloqueo {
+  top: 48%;
+  left: 45%;
+}
+
+.pin-muyurina {
+  top: 38%;
+  left: 64%;
+}
+
+.pin-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.pin-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: #ffffff;
+}
+
+.bg-red { background-color: #ef4444; }
+.bg-green { background-color: #10b981; }
+
+.pin-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.pin-details strong {
+  font-size: 0.75rem;
+  color: #0f172a;
+}
+
+.pin-details span {
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.text-red { color: #ef4444; }
+.text-green { color: #10b981; }
+
+/* PUNTOS SECUNDARIOS */
+.dot-marker {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.dot-1 { top: 30%; left: 58%; }
+.dot-2 { top: 75%; left: 70%; }
+.dot-3 { top: 68%; left: 44%; }
+
+.compass-btn {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 0.8rem;
+}

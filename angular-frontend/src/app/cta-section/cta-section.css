@@ -1,0 +1,99 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.cta-section {
+  background-color: #0b132b; /* Azul oscuro identico al Figma */
+  padding: 6rem 2rem;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  text-align: center;
+}
+
+.cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cta-title {
+  color: #ffffff;
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.5px;
+}
+
+.cta-description {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 2.5rem 0;
+}
+
+/* FORMULARIO */
+.cta-form {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.cta-input {
+  flex: 1;
+  background-color: #172554; /* Fondo azul mas claro para el input */
+  border: 1px solid #1e3a8a;
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.cta-input::placeholder {
+  color: #64748b;
+}
+
+.cta-input:focus {
+  border-color: #f27a24;
+}
+
+.cta-button {
+  background-color: #f27a24;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.6rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.cta-button:hover {
+  background-color: #e06915;
+  transform: translateY(-1px);
+}
+
+.cta-footer-note {
+  color: #64748b;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .cta-form {
+    flex-direction: column;
+  }
+  
+  .cta-button {
+    width: 100%;
+  }
+}

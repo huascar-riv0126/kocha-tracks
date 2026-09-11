@@ -1,91 +1,205 @@
-/* FUENTE DE MARCA */
-@font-face {
-  font-family: 'Bodoni MT Black';
-  src: local('Bodoni MT Black'), local('Bodoni-MT-Black');
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
 
-.hero-page-wrapper {
-  width: 100%;
-}
-
-/* --- ESTILOS SECCIÓN HERO --- */
 .hero-section {
-  background: url('https://images.unsplash.com/photo-1545147986-a9d6f210df77?q=80&w=2000') no-repeat center center/cover;
-  min-height: 75vh;
-  width: 100%;
+  background-color: #081028; /* Color azul muy oscuro idéntico al Figma */
+  padding: 5rem 3rem;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  min-height: calc(100vh - 80px);
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-.hero-overlay {
-  background: rgba(0, 43, 68, 0.82); /* Tinte azul oscuro institucional */
+.hero-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+/* --- ESTILOS LADO IZQUIERDO --- */
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #94a3b8;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 1.8rem;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #f97316;
+  border-radius: 50%;
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  color: #ffffff;
+  margin-bottom: 1.2rem;
+}
+
+.hero-description {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 2.2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-primary {
+  background-color: #f97316;
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #ea580c;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* --- ESTILOS DERECHA (MAPA DE LA AROMA) --- */
+.hero-map-card {
+  background: #0b1739;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 1rem;
+  padding: 0 0.2rem;
+}
+
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ef4444;
+}
+
+.dot-red {
+  width: 7px;
+  height: 7px;
+  background-color: #ef4444;
+  border-radius: 50%;
+}
+
+.status-right {
+  color: #f97316;
+}
+
+/* CONTENEDOR DEL MAPA Y OVERLAY */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* MAPA DE GOOGLE OSCURECIDO CON FILTROS */
+.google-map {
   width: 100%;
   height: 100%;
-  padding: 100px 0;
+  border: none;
+  filter: invert(90%) hue-rotate(180deg) brightness(85%) contrast(110%);
+}
+
+/* CAPA SOBREPUESTA CON ZONA ROJA CIRCULAR */
+.radar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.05) 50%, transparent 70%);
 }
 
-.hero-main-title {
-  font-family: 'Bodoni MT Black', serif;
-  font-size: 4.8rem; /* Más grande y profesional */
-  color: #ffc107; /* Ámbar */
-  text-shadow: 3px 3px 15px rgba(0,0,0,0.6);
-  margin-bottom: 2rem;
+/* CÍRCULO ROJO EN LA AROMA */
+.pulse-circle {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border: 2px solid rgba(239, 68, 68, 0.6);
+  border-radius: 50%;
+  background-color: rgba(239, 68, 68, 0.15);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
 }
 
-.hero-description-container {
-  max-width: 900px; /* Evita que el texto se estire a los bordes */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-text {
-  color: white;
-  font-size: 1.5rem;
-  line-height: 1.8;
-  font-weight: 400;
-}
-
-.btn-explore-vial {
-  background-color: #ffc107;
-  color: #002b44;
-  padding: 18px 50px;
-  font-weight: 900;
-  font-size: 1.3rem;
-  border: none;
+/* PIN DE ALERTA */
+.alert-pin {
+  position: relative;
+  z-index: 5;
+  background-color: #0b1739;
+  border: 1px solid #f97316;
+  padding: 6px 12px;
   border-radius: 8px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
 }
 
-.btn-explore-vial:hover {
-  transform: translateY(-5px);
-  background-color: #ffca2c;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+.pin-icon {
+  font-size: 0.9rem;
 }
 
-/* --- ESTILOS SECCIÓN MAPA --- */
-.map-section {
-  padding: 80px 0;
-  background-color: #ffffff;
-  width: 100%;
-}
-
-.map-section-title {
-  font-family: 'Bodoni MT Black', serif;
-  color: #002b44;
-  font-size: 2.8rem;
-  margin-bottom: 3rem;
-}
-
-.map-wrapper {
-  max-width: 1100px; /* Ancho profesional para el mapa */
-  border-radius: 25px;
-  overflow: hidden;
-  border: 12px solid #fff; /* Marco blanco elegante */
+.pin-text {
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: #ffffff;
 }

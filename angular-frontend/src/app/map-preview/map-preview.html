@@ -1,0 +1,113 @@
+<section class="preview-section">
+  <div class="preview-container">
+    
+    <!-- ENCABEZADO -->
+    <div class="preview-header">
+      <span class="sub-label">MONITOREO EN VIVO</span>
+      <h2 class="main-title">Mapa en tiempo real</h2>
+    </div>
+
+    <!-- TARJETA CONTENEDORA PRINCIPAL -->
+    <div class="map-card-container">
+      
+      <!-- PANEL IZQUIERDO: REPORTES ACTIVOS -->
+      <div class="reports-panel">
+        <div class="panel-header">
+          <h3>Reportes Activos</h3>
+          <span class="country-tag">Bolivia</span>
+        </div>
+
+        <div class="reports-list">
+          
+          <!-- ITEM 1: ACTIVO -->
+          <div class="report-item active-item">
+            <div class="item-meta">
+              <span class="badge badge-activo">ACTIVO</span>
+              <span class="time-ago">Hace 10 min</span>
+            </div>
+            <h4 class="location-title">Av. Blanco Galindo KM 5</h4>
+            <p class="location-desc">Fuerte contundencia, escombros en vía.</p>
+          </div>
+
+          <!-- ITEM 2: RESUELTO -->
+          <div class="report-item">
+            <div class="item-meta">
+              <span class="badge badge-resuelto">RESUELTO</span>
+              <span class="time-ago">Hace 1 hr</span>
+            </div>
+            <h4 class="location-title">Rotonda de la Muyurina</h4>
+            <p class="location-desc">Tránsito normalizado tras limpieza.</p>
+          </div>
+
+          <!-- ITEM 3: PREVENCIÓN -->
+          <div class="report-item">
+            <div class="item-meta">
+              <span class="badge badge-prevencion">PREVENCIÓN</span>
+              <span class="time-ago">Hace 20 min</span>
+            </div>
+            <h4 class="location-title">Av. Petrolera KM 2</h4>
+            <p class="location-desc">Amago de bloqueo, tránsito lento.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PANEL DERECHO: MAPA INTERACTIVO ESTILIZADO DE COCHABAMBA -->
+      <div class="map-visual-panel">
+        
+        <span class="city-watermark">COCHABAMBA</span>
+
+        <!-- Trazados Vectoriales Simulando Red Vial/Calles -->
+        <svg class="map-routes-svg" viewBox="0 0 700 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Rutas Principales -->
+          <path d="M 50 250 Q 200 220 350 240 T 650 180" stroke="#f27a24" stroke-width="2.5" opacity="0.85" />
+          <path d="M 350 240 Q 420 120 500 80 T 600 50" stroke="#f27a24" stroke-width="2" opacity="0.85" />
+          <path d="M 350 240 Q 300 350 450 420" stroke="#10b981" stroke-width="2" opacity="0.85" />
+          
+          <!-- Red Vial Secundaria (Malla de calles) -->
+          <path d="M 100 150 L 600 350 M 120 380 L 580 100 M 200 80 L 250 400 M 480 60 L 520 420 M 280 120 C 350 180 380 280 420 380" stroke="#334155" stroke-width="1" opacity="0.5" stroke-dasharray="3 3"/>
+          <path d="M 300 200 C 320 150 400 150 420 200 C 440 250 340 300 300 200 Z" stroke="#475569" stroke-width="1" opacity="0.4"/>
+          <path d="M 180 220 L 550 220 M 350 100 L 350 380" stroke="#334155" stroke-width="1" opacity="0.6"/>
+        </svg>
+
+        <!-- Zona de Interés (Círculo Concéntrico) -->
+        <div class="interest-zone">
+          <span class="zone-label">TU ZONA DE INTERÉS</span>
+          <div class="zone-circle"></div>
+        </div>
+
+        <!-- Pin Bloqueo KM 5 -->
+        <div class="map-pin pin-bloqueo">
+          <div class="pin-card">
+            <div class="pin-icon bg-red">⚠️</div>
+            <div class="pin-details">
+              <strong>Bloqueo KM 5</strong>
+              <span class="text-red">ACTIVO</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pin Muyurina Libre -->
+        <div class="map-pin pin-muyurina">
+          <div class="pin-card">
+            <div class="pin-icon bg-green">✓</div>
+            <div class="pin-details">
+              <strong>Muyurina</strong>
+              <span class="text-green">LIBRE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puntos secundarios -->
+        <div class="dot-marker dot-1"></div>
+        <div class="dot-marker dot-2"></div>
+        <div class="dot-marker dot-3"></div>
+
+        <!-- Brujula / Navegación -->
+        <div class="compass-btn">🧭</div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
