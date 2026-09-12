@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Navbar } from './navbar';
 
 describe('Navbar', () => {
@@ -8,6 +9,7 @@ describe('Navbar', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Navbar],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Navbar);
@@ -17,5 +19,13 @@ describe('Navbar', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should link Mapa to the /map route', () => {
+    const links: HTMLAnchorElement[] = Array.from(
+      fixture.nativeElement.querySelectorAll('.navbar-links a'),
+    );
+    const mapLink = links.find(link => link.textContent?.trim() === 'Mapa');
+    expect(mapLink?.getAttribute('href')).toBe('/map');
   });
 });
