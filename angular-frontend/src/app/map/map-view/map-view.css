@@ -1,10 +1,22 @@
 /* HU-6: mapa 1120x828 pegado a la derecha, slot izquierdo libre para el compañero. */
 .map-page {
+  position: relative;
   display: flex;
   align-items: stretch;
   justify-content: flex-end;
   width: 100%;
 }
+
+#map {
+  width: 1120px;
+  height: 828px;
+  min-height: 500px;
+  max-width: 100%;
+  margin-left: auto;
+  z-index: 0;
+  background-color: var(--color-section-alt);
+}
+
 
 .sidebar-slot {
   flex: 1 1 auto;
