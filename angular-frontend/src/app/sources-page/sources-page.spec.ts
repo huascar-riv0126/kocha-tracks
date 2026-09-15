@@ -1,0 +1,21 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SourcesPage } from './sources-page';
+
+describe('SourcesPage', () => {
+  let component: SourcesPage;
+  let fixture: ComponentFixture<SourcesPage>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SourcesPage],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SourcesPage);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
