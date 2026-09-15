@@ -1,0 +1,21 @@
+<section class="flex flex-col gap-12 p-20">
+  <div class="flex flex-col gap-3">
+    <p class="text-sm font-semibold text-interactive-cta">
+      Catálogo Integrado
+    </p>
+
+    <h2 class="text-4xl font-bold text-txt-primary">
+      Orígenes de Datos Activos
+    </h2>
+
+    <p class="text-base text-txt-secondary">
+      Conoce las entidades que alimentan la base de datos de Kocha Tracks. Cada reporte pasa por procesos
+      automáticos y comunitarios para ser clasificado.
+    </p>
+  </div>
+  <div class="grid grid-cols-3 gap-6">
+    @for (source of sources$ | async; track source.id) {
+    <app-info-card [title]="source.name" [linkHref]="source.url" [description]="source.description" />
+    }
+  </div>
+</section>
