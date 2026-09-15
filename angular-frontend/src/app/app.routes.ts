@@ -14,4 +14,5 @@ export const routes: Routes = [
     { path: 'employee-details/:id', component: EmployeeDetails},
     { path: 'map', component: MapView},
     { path: 'fuentes', component: SourcesPage},
+    { path: 'event-details/:id', redirectTo: 'map' } 
 ];
