@@ -1,0 +1,22 @@
+{
+  "sources.hero.title": "Fuentes de Datos sobre los eventos",
+  "sources.hero.desc": "Para garantizar la confiabilidad y veracidad de la información vial en Cochabamba, agrupamos, cruzamos y validamos información procedente de múltiples entidades oficiales, científicas y reportes vecinales directos.",
+  "sources.grid.short.desc": "Catálogo Integrado",
+  "sources.grid.title": "Orígenes de Datos Activos",
+  "sources.grid.desc": "Conoce las entidades que alimentan la base de datos de Kocha Tracks. Cada reporte pasa por procesos automáticos y comunitarios para ser clasificado.",
+  "sources.dataflow.short.desc": "Procesamiento de Telemetría",
+  "sources.dataflow.title": "Flujo de Entrada y Validación",
+  "sources.dataflow.flow.step1.title": "Recopilación Multicanal",
+  "sources.dataflow.flow.step1.desc": "Ingesta automática vía API, web scraping institucional o reportes directos geo-referenciados de ciudadanos en Cochabamba.",
+  "sources.dataflow.flow.step2.title": "Validación Cívica y Filtros",
+  "sources.dataflow.flow.step2.desc": "Algoritmos cruzados con reportes de Tránsito de la Policía y aprobación comunitaria local para evitar reportes falsos o spam.",
+  "sources.dataflow.flow.step3.title": "Publicación en Mapa",
+  "sources.dataflow.flow.step3.desc": "Sincronización instantánea en el mapa interactivo vecinal con alertas tempranas y cálculo de rutas libres de bloqueos.",
+  "sources.suggestions.short.desc": "Colaboración Ciudadana",
+  "sources.suggestions.title": "¿Conoces otra fuente de información confiable?",
+  "sources.suggestions.desc": "Ayúdanos a expandir nuestra cobertura de alertas. Si tienes conocimiento de alguna API municipal, grupo de monitoreo vecinal estructurado o canal de emergencias oficial en Cochabamba, compártelo con nosotros.",
+  "sources.suggestions.form.title": "Sugerir Fuente de Datos",
+  "sources.suggestions.form.label": "URL de la fuente de datos",
+  "sources.suggestions.form.placeholder": "Ej. Pagina web de los Tiempos",
+  "sources.suggestions.form.submit": "Enviar Propuesta"
+}

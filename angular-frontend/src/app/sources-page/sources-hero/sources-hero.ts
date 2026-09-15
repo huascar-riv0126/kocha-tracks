@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 
 @Component({
-  imports: [],
+  imports: [GetStringsPipe],
   selector: 'app-sources-hero',
   templateUrl: './sources-hero.html',
 })
