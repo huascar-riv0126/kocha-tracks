@@ -11,5 +11,6 @@ export const routes: Routes = [
     { path: 'create-employee', component: CreateEmployee },
     { path: 'update-employee/:id', component: UpdateEmployee },
     { path: 'employee-details/:id', component: EmployeeDetails},
-    { path: 'map', component: MapView}
+    { path: 'map', component: MapView},
+    { path: 'event-details/:id', redirectTo: 'map' } 
 ];
