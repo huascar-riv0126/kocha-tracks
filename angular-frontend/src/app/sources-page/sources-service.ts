@@ -10,21 +10,27 @@ export class SourcesService {
   private readonly mockSources: Source[] = [
     {
       id: 1,
-      name: 'Fuente de información 1',
-      url: 'https://example.com/source-1',
-      description: 'Descripción de la primera fuente de información.',
+      name: 'Los Tiempos',
+      url: 'https://www.lostiempos.com/actualidad/cochabamba',
+      description: 'Periodico digital con titulares y noticias sobre Bolivia, Cochabamba y Globales.',
     },
     {
       id: 2,
-      name: 'Fuente de información 2',
-      url: 'https://example.com/source-2',
-      description: 'Descripción de la segunda fuente de información.',
+      name: 'El Deber',
+      url: 'https://eldeber.com.bo/pais/cochabamba',
+      description: 'Periodico digital con titulares y noticias sobre Bolivia y Globales.',
     },
     {
       id: 3,
-      name: 'Fuente de información 3',
-      url: 'https://example.com/source-3',
-      description: 'Descripción de la tercera fuente de información.',
+      name: 'Opinion',
+      url: 'https://www.opinion.com.bo/cochabamba/',
+      description: 'Periodico digital con titulares y noticias sobre Bolivia, Cochabamba y Globales.',
+    },
+    {
+      id: 4,
+      name: 'Alcaldia de Cochabamba',
+      url: 'https://www.cochabamba.bo/noticias',
+      description: 'Pagina oficial de la alcaldia de Cochabamba con noticias del departamento.'
     },
   ];
 
