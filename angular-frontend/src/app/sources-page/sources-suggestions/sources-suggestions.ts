@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { SuggestionForm } from './suggestion-form/suggestion-form';
+import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 
 @Component({
-  imports: [SuggestionForm],
+  imports: [SuggestionForm, GetStringsPipe],
   selector: 'app-sources-suggestions',
   templateUrl: './sources-suggestions.html',
 })

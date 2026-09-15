@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-
 import { SourceCard } from './source-card/source-card';
 import { SourcesService } from '../sources-service';
+import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 
 @Component({
   selector: 'app-sources-grid',
   standalone: true,
-  imports: [AsyncPipe, SourceCard],
+  imports: [AsyncPipe, SourceCard, GetStringsPipe],
   templateUrl: './sources-grid.html',
 })
 export class SourcesGrid {

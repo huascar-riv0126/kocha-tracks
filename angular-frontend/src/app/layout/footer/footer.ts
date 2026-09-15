@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [GetStringsPipe],
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })
