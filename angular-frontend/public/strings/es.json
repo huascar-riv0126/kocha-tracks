@@ -1,4 +1,11 @@
 {
+  "navbar.brand": "Kocha Tracks",
+  "navbar.home": "Inicio",
+  "navbar.map": "Mapa",
+  "navbar.history": "Historial",
+  "navbar.forum": "Comunidad",
+  "navbar.sign.out": "Registrarse",
+  "navbar.sign.in": "Iniciar Sesión",
   "sources.hero.title": "Fuentes de Datos sobre los eventos",
   "sources.hero.desc": "Para garantizar la confiabilidad y veracidad de la información vial en Cochabamba, agrupamos, cruzamos y validamos información procedente de múltiples entidades oficiales, científicas y reportes vecinales directos.",
   "sources.grid.short.desc": "Catálogo Integrado",
