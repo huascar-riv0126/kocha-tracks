@@ -1,0 +1,29 @@
+<article 
+  (click)="onSelect()"
+  class="card-container"
+  [class.card-selected]="isSelected"
+  role="button"
+  tabindex="0"
+>
+  <div class="card-header">
+    <div class="title-group">
+      <!-- Círculo de estado visual según el criterio de aceptación -->
+      <span 
+        class="status-dot" 
+        [ngClass]="event.state === 'activo' ? 'dot-active' : 'dot-resolved'"
+        [attr.aria-label]="'Estado: ' + event.state"
+      ></span>
+      <h4 class="event-title" [title]="event.title">{{ event.title }}</h4>
+    </div>
+    <span class="elapsed-time">Hace {{ event.elapsedTime }}</span>
+  </div>
+
+  <p class="event-subtitle">
+    {{ event.title.includes(' - ') ? (event.title.split(' - ')[1]) : 'Zona Urbana Cochabamba' }}
+  </p>
+
+  <div class="card-footer">
+    <span class="report-count">14 Reportes</span>
+    <span *ngIf="isSelected" class="selected-badge">Seleccionado</span>
+  </div>
+</article>

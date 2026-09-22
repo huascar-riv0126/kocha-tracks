@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { COCHABAMBA_CENTER, COCHABAMBA_ZOOM, MapView, OSM_TILE_URL } from './map-view';
+import { EventMockService } from '../../event/event-mock';
 
 describe('MapView', () => {
   let component: MapView;
@@ -8,6 +10,10 @@ describe('MapView', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MapView],
+      providers: [
+        EventMockService,
+        provideRouter([])
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapView);
@@ -36,8 +42,6 @@ describe('MapView', () => {
   });
 
   it('should expose no GPS tracking API', () => {
-    // El componente no expone metodos de localizacion; la ausencia de
-    // rastreo se verifica ademas con grep en la verificacion.
     expect('geolocation' in component).toBe(false);
     expect('locate' in component).toBe(false);
   });
