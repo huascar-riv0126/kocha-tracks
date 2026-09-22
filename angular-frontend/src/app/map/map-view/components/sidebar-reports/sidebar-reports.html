@@ -1,0 +1,50 @@
+<aside class="sidebar-wrapper" aria-label="Panel lateral de reportes">
+  <!-- Pestañas Activos / Históricos -->
+  <div class="tabs-container">
+    <button 
+      class="tab-btn" 
+      [class.tab-btn-active]="activeTab === 'activos'"
+      (click)="selectTab('activos')"
+    >
+      Activos
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.tab-btn-active]="activeTab === 'historicos'"
+      (click)="selectTab('historicos')"
+    >
+      Históricos
+    </button>
+  </div>
+
+  <!-- Sección Categorías -->
+  <div class="categories-section">
+    <span class="section-title">CATEGORÍAS</span>
+    <div class="chips-container">
+      <button 
+        *ngFor="let cat of categories"
+        class="category-chip"
+        [class.chip-active]="selectedCategory === cat"
+        (click)="selectCategory(cat)"
+      >
+        {{ cat }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Encabezado de la lista -->
+  <div class="list-header">
+    <span class="header-count">REPORTES ACTIVOS ({{ filteredEvents.length }})</span>
+    <span class="header-city">Cochabamba</span>
+  </div>
+
+  <!-- Lista de Tarjetas (Cards) -->
+  <div class="cards-list">
+    <app-report-card
+      *ngFor="let ev of filteredEvents"
+      [event]="ev"
+      [isSelected]="selectedEventId === ev.id"
+      (cardClick)="onSelectEvent($event)"
+    ></app-report-card>
+  </div>
+</aside>

@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, Inject, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import type * as Leaflet from 'leaflet';
-import { EventMockService } from '../../event/event-mock'; // <-- Importamos tu servicio
+import { EventMockService } from '../../event/event-mock';
+import { EventMock } from '../../event/event-mock.model';
+// HU-7: Panel lateral
+import { SidebarReportsComponent } from './components/sidebar-reports/sidebar-reports';
 
-// HU-6: mapa base de Cochabamba sin rastreo de ubicacion.
 export const COCHABAMBA_CENTER: [number, number] = [-17.3895, -66.1568];
 export const COCHABAMBA_ZOOM = 14;
 export const OSM_TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -13,6 +15,7 @@ export const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/co
 @Component({
   selector: 'app-map-view',
   standalone: true,
+  imports: [CommonModule, SidebarReportsComponent],
   templateUrl: './map-view.html',
   styleUrl: './map-view.css',
 })
@@ -22,8 +25,8 @@ export class MapView implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
-    private router: Router,                      
-    private eventMockService: EventMockService   // <-- UH-5
+    private router: Router,
+    private eventMockService: EventMockService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -49,11 +52,9 @@ export class MapView implements AfterViewInit, OnDestroy {
     map.invalidateSize();
     this.map = map;
 
-    // Llamamos al renderizado de marcadores (UH-8)
     this.renderMarkers(L, map);
   }
 
-  // Método dedicado a la UH-8
   private renderMarkers(L: typeof Leaflet, map: Leaflet.Map): void {
     const events = this.eventMockService.getEvents();
 
@@ -67,10 +68,10 @@ export class MapView implements AfterViewInit, OnDestroy {
         weight: 2,
         opacity: 1,
         fillOpacity: 0.9,
-        className: 'no-outline-marker' // Clase para quitar el borde feo
+        className: 'no-outline-marker'
       }).addTo(map);
 
-      // Diseño del globo interactivo
+      // Popup informativo existente
       const popupContent = `
         <div style="text-align: center; font-family: sans-serif; min-width: 160px; margin: -5px;">
           <h4 style="margin: 0 0 5px 0; color: #ffffff; font-size: 14px;">${event.title}</h4>
@@ -85,28 +86,23 @@ export class MapView implements AfterViewInit, OnDestroy {
         </div>
       `;
 
-      // Bindeamos como Popup (se queda fijo al hacer clic)
       marker.bindPopup(popupContent, {
-        className: 'kocha-dark-tooltip', // Reutilizamos tu excelente CSS oscuro
-        closeButton: false, // Ocultamos la X por defecto para un look más limpio
+        className: 'kocha-dark-tooltip',
+        closeButton: false,
         offset: [0, -5]
       });
 
-      // Abrir el popup temporalmente al pasar el mouse (Hover)
-          marker.on('mouseover', () => {
-            marker.openPopup();
-          });
+      marker.on('mouseover', () => {
+        marker.openPopup();
+      });
 
-      // Magia: Escuchar el clic EN EL BOTÓN NARANJA dentro del popup
       marker.on('popupopen', (e) => {
         const popupNode = e.popup.getElement();
         if (popupNode) {
           const btn = popupNode.querySelector('.btn-detalles');
           if (btn) {
-            // Removemos listeners previos para evitar ejecuciones dobles
             const newBtn = btn.cloneNode(true);
             btn.parentNode?.replaceChild(newBtn, btn);
-            
             newBtn.addEventListener('click', () => {
               this.router.navigate(['/event-details', event.id]);
             });
@@ -114,6 +110,14 @@ export class MapView implements AfterViewInit, OnDestroy {
         }
       });
     });
+  }
+
+  // HU-7: Al seleccionar una tarjeta en el panel lateral, el mapa se centra en las coordenadas
+  onSidebarEventSelect(event: EventMock): void {
+    if (this.map) {
+      this.map.setView(event.coordinates, 15);
+      this.map.invalidateSize();
+    }
   }
 
   ngOnDestroy(): void {

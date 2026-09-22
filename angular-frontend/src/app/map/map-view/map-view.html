@@ -1,4 +1,9 @@
 <section class="map-page" aria-label="Mapa base de Cochabamba">
-  <aside class="sidebar-slot" aria-label="Espacio reservado para la barra lateral"></aside>
+  <!-- HU-7: Panel lateral de reportes activos e históricos -->
+  <aside class="sidebar-slot" aria-label="Panel lateral de reportes">
+    <app-sidebar-reports (eventSelected)="onSidebarEventSelect($event)"></app-sidebar-reports>
+  </aside>
+
+  <!-- Contenedor del mapa Leaflet -->
   <div id="map" class="map-canvas" data-testid="map-canvas" role="application" aria-label="Mapa interactivo de Cochabamba"></div>
 </section>
