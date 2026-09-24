@@ -34,7 +34,7 @@ export class SourcesService {
     },
     {
       id: 5,
-      name: 'Cochabamba',
+      name: 'Unitel Cochabamba',
       url: 'https://unitel.bo/',
       description: 'Página oficial del Sitio Web de Unitel, canal noticiero de Cochabamba.'
     }
