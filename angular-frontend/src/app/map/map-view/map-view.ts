@@ -23,7 +23,7 @@ export class MapView implements AfterViewInit, OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
     private router: Router,                      
-    private eventMockService: EventMockService   // <-- UH-5
+    private eventMockService: EventMockService   
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -48,8 +48,6 @@ export class MapView implements AfterViewInit, OnDestroy {
     L.tileLayer(OSM_TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION }).addTo(map);
     map.invalidateSize();
     this.map = map;
-
-    // Llamamos al renderizado de marcadores (UH-8)
     this.renderMarkers(L, map);
   }
 
@@ -67,10 +65,9 @@ export class MapView implements AfterViewInit, OnDestroy {
         weight: 2,
         opacity: 1,
         fillOpacity: 0.9,
-        className: 'no-outline-marker' // Clase para quitar el borde feo
+        className: 'no-outline-marker' 
       }).addTo(map);
 
-      // Diseño del globo interactivo
       const popupContent = `
         <div style="text-align: center; font-family: sans-serif; min-width: 160px; margin: -5px;">
           <h4 style="margin: 0 0 5px 0; color: #ffffff; font-size: 14px;">${event.title}</h4>
@@ -85,25 +82,21 @@ export class MapView implements AfterViewInit, OnDestroy {
         </div>
       `;
 
-      // Bindeamos como Popup (se queda fijo al hacer clic)
       marker.bindPopup(popupContent, {
-        className: 'kocha-dark-tooltip', // Reutilizamos tu excelente CSS oscuro
-        closeButton: false, // Ocultamos la X por defecto para un look más limpio
+        className: 'kocha-dark-tooltip', 
+        closeButton: false, 
         offset: [0, -5]
       });
-
-      // Abrir el popup temporalmente al pasar el mouse (Hover)
           marker.on('mouseover', () => {
             marker.openPopup();
           });
 
-      // Magia: Escuchar el clic EN EL BOTÓN NARANJA dentro del popup
       marker.on('popupopen', (e) => {
         const popupNode = e.popup.getElement();
         if (popupNode) {
           const btn = popupNode.querySelector('.btn-detalles');
           if (btn) {
-            // Removemos listeners previos para evitar ejecuciones dobles
+
             const newBtn = btn.cloneNode(true);
             btn.parentNode?.replaceChild(newBtn, btn);
             
