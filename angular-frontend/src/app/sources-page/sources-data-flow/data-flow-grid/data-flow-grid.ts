@@ -23,6 +23,11 @@ export class DataFlowGrid {
       number: '3',
       title: 'sources.dataflow.flow.step3.title',
       description: 'sources.dataflow.flow.step3.desc'
+    },
+     {
+      number: '4',
+      title: 'sources.dataflow.flow.step4.title',
+      description: 'sources.dataflow.flow.step4.desc'
     }
   ];
 }
