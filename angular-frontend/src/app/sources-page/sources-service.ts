@@ -32,6 +32,18 @@ export class SourcesService {
       url: 'https://www.cochabamba.bo/noticias',
       description: 'Pagina oficial de la alcaldia de Cochabamba con noticias del departamento.'
     },
+    {
+      id: 5,
+      name: 'The New York Times',
+      url: 'https://www.nytimes.com/international/',
+      description: 'Pagina gringa de noticias.'
+    },
+    {
+      id: 6,
+      name: 'Kawsachun Coca',
+      url: 'https://kawsachuncoca.com/',
+      description: 'Pagina a fin al partido MAS de Bolivia'
+    },
   ];
 
   getSources(): Observable<Source[]> {
