@@ -11,7 +11,7 @@
   </div>
 
   <ul class="navbar-links">
-    <li><a href="#" class="active">{{ "navbar.home" | getStrings }}</a></li>
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{ "navbar.home" | getStrings }}</a></li>
     <li><a routerLink="/map" routerLinkActive="active">{{ "navbar.map" | getStrings }}</a></li>
     <li><a href="#">{{ "navbar.history" | getStrings }}</a></li>
     <li><a href="#">{{ "navbar.forum" | getStrings }}</a></li>

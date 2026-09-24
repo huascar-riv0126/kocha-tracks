@@ -7,6 +7,7 @@ import { Component, input } from '@angular/core';
 })
 export class SourceCard {
   readonly title = input.required<string>();
-  readonly linkHref = input.required<string>();
   readonly description = input.required<string>();
+  readonly linkHref = input<string>('#');
+  readonly iconSrc = input<string | undefined>(undefined);
 }

@@ -12,6 +12,10 @@ describe('DataFlowCard', () => {
 
     fixture = TestBed.createComponent(DataFlowCard);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('number', '01');
+    fixture.componentRef.setInput('title', 'Test step');
+    fixture.componentRef.setInput('description', 'Test description');
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
