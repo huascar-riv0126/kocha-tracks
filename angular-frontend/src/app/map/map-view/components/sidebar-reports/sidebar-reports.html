@@ -17,6 +17,23 @@
     </button>
   </div>
 
+  <!-- Filtro de Departamentos (Solo visible en pestaña Históricos) -->
+  <div *ngIf="activeTab === 'historicos'" class="department-filter">
+    <label for="departmentSelect" class="filter-label">DEPARTAMENTO</label>
+    <div class="select-wrapper">
+      <select 
+        id="departmentSelect"
+        [ngModel]="selectedDepartment"
+        (ngModelChange)="onDepartmentChange($event)"
+        class="department-select"
+      >
+        <option *ngFor="let dept of departments" [value]="dept">
+          {{ dept }}
+        </option>
+      </select>
+    </div>
+  </div>
+
   <!-- Sección Categorías -->
   <div class="categories-section">
     <span class="section-title">CATEGORÍAS</span>
@@ -34,8 +51,12 @@
 
   <!-- Encabezado de la lista -->
   <div class="list-header">
-    <span class="header-count">REPORTES ACTIVOS ({{ filteredEvents.length }})</span>
-    <span class="header-city">Cochabamba</span>
+    <span class="header-count">
+      {{ activeTab === 'activos' ? 'REPORTES ACTIVOS' : 'REPORTES HISTÓRICOS' }} ({{ filteredEvents.length }})
+    </span>
+    <span class="header-city">
+      {{ activeTab === 'historicos' ? selectedDepartment : 'Cochabamba' }}
+    </span>
   </div>
 
   <!-- Lista de Tarjetas (Cards) -->
