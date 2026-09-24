@@ -27,6 +27,16 @@
   }
 }
 
+.map-page.embedded {
+  display: block;
+}
+
+.map-page.embedded .map-canvas {
+  width: 100%;
+  height: 480px;
+  margin-left: 0;
+}
+
 /* Quitar el outline (cuadro) que aparece al hacer clic en el marcador SVG */
 ::ng-deep .no-outline-marker {
   outline: none !important;
