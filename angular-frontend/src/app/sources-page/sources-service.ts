@@ -22,16 +22,23 @@ export class SourcesService {
     },
     {
       id: 3,
-      name: 'Opinion',
+      name: 'Opinión',
       url: 'https://www.opinion.com.bo/cochabamba/',
       description: 'Periodico digital con titulares y noticias sobre Bolivia, Cochabamba y Globales.',
     },
     {
       id: 4,
-      name: 'Alcaldia de Cochabamba',
+      name: 'Alcaldía de Cochabamba',
       url: 'https://www.cochabamba.bo/noticias',
-      description: 'Pagina oficial de la alcaldia de Cochabamba con noticias del departamento.'
+      description: 'Página oficial de la alcaldía de Cochabamba con noticias del departamento.'
     },
+    {
+      id: 5,
+      name: 'Cochabamba',
+      url: 'https://unitel.bo/',
+      description: 'Página oficial del Sitio Web de Unitel, canal noticiero de Cochabamba.'
+    }
+
   ];
 
   getSources(): Observable<Source[]> {
