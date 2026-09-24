@@ -34,6 +34,9 @@
   "sources.dataflow.flow.step2.title": "Validación Cívica y Filtros",
   "sources.dataflow.flow.step2.desc": "Algoritmos cruzados con reportes de Tránsito de la Policía y aprobación comunitaria local para evitar reportes falsos o spam.",
   "sources.dataflow.flow.step3.title": "Publicación en Mapa",
+    "sources.dataflow.flow.step4.title": "Publicacion de Mi modelo 4to agregado",
+    "sources.dataflow.flow.step4.desc": "prueba del 4to cuadro para la prueba de mi html y vizualicacion del 4to cuadro .",
+
   "sources.dataflow.flow.step3.desc": "Sincronización instantánea en el mapa interactivo vecinal con alertas tempranas y cálculo de rutas libres de bloqueos.",
   "sources.suggestions.short.desc": "Colaboración Ciudadana",
   "sources.suggestions.title": "¿Conoces otra fuente de información confiable?",
