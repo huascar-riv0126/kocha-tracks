@@ -32,6 +32,12 @@ export class SourcesService {
       url: 'https://www.cochabamba.bo/noticias',
       description: 'Pagina oficial de la alcaldia de Cochabamba con noticias del departamento.'
     },
+    {
+      id: 5,
+      name: 'Telemundo',
+      url: 'https://www.telemundo.com',
+      description: 'Es una de las cadenas de televisión abierta en español más grandes e influyentes de los Estados Unidos.'
+    },
   ];
 
   getSources(): Observable<Source[]> {
