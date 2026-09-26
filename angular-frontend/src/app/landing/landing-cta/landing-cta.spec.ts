@@ -1,23 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { Footer } from './footer';
+import { LandingCta } from './landing-cta';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
 
-describe('Footer', () => {
-  let component: Footer;
-  let fixture: ComponentFixture<Footer>;
+describe('LandingCta', () => {
+  let component: LandingCta;
+  let fixture: ComponentFixture<LandingCta>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Footer],
-      providers: [
-        provideRouter([]),
-        { provide: StringsService, useValue: { get: (key: string) => key } },
-      ],
+      imports: [LandingCta],
+      providers: [{ provide: StringsService, useValue: { get: (key: string) => key } }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Footer);
+    fixture = TestBed.createComponent(LandingCta);
     component = fixture.componentInstance;
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 

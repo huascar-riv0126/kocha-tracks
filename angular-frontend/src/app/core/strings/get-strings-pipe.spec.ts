@@ -1,8 +1,13 @@
-import { GetStringsPipePipe } from './get-strings-pipe-pipe';
+import { TestBed } from '@angular/core/testing';
+import { GetStringsPipe } from './get-strings-pipe';
+import { StringsService } from './strings-service/strings-service';
 
-describe('GetStringsPipePipe', () => {
+describe('GetStringsPipe', () => {
   it('create an instance', () => {
-    const pipe = new GetStringsPipePipe();
+    TestBed.configureTestingModule({
+      providers: [{ provide: StringsService, useValue: { get: (key: string) => key } }],
+    });
+    const pipe = TestBed.runInInjectionContext(() => new GetStringsPipe());
     expect(pipe).toBeTruthy();
   });
 });

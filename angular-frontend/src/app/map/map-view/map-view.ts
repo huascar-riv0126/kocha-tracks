@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, Inject, input, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import type * as Leaflet from 'leaflet';
@@ -17,6 +17,8 @@ export const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/co
   styleUrl: './map-view.css',
 })
 export class MapView implements AfterViewInit, OnDestroy {
+  readonly mapId = input<string>('map');
+  readonly embedded = input<boolean>(false);
   private map?: Leaflet.Map;
   private readonly isBrowser: boolean;
 
@@ -38,12 +40,13 @@ export class MapView implements AfterViewInit, OnDestroy {
       existing.remove();
       this.map = undefined;
     }
-    const host = document.getElementById('map');
+    const mapHostId = this.mapId();
+    const host = document.getElementById(mapHostId);
     if (host && (host as HTMLElement & { _leaflet_id?: unknown })._leaflet_id !== undefined) {
       host.innerHTML = '';
       delete (host as HTMLElement & { _leaflet_id?: unknown })._leaflet_id;
     }
-    const map = L.map('map', { zoomControl: true, attributionControl: true });
+    const map = L.map(mapHostId, { zoomControl: true, attributionControl: true });
     map.setView(COCHABAMBA_CENTER, COCHABAMBA_ZOOM);
     L.tileLayer(OSM_TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION }).addTo(map);
     map.invalidateSize();
