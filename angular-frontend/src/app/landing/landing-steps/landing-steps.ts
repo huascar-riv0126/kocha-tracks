@@ -27,5 +27,11 @@ export class LandingSteps {
       descKey: 'landing.steps.step3.desc',
       icon: 'icons/archive.svg',
     },
+      {
+      number: '04',
+      titleKey: 'landing.steps.step3.title',
+      descKey: 'landing.steps.step3.desc',
+      icon: 'icons/archive.svg',
+    },
   ];
 }
