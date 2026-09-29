@@ -17,7 +17,6 @@
     </button>
   </div>
 
-  <!-- Filtro de Departamentos (Solo visible en pestaña Históricos) -->
   <div *ngIf="activeTab === 'historicos'" class="department-filter">
     <label for="departmentSelect" class="filter-label">DEPARTAMENTO</label>
     <div class="select-wrapper">
@@ -34,7 +33,6 @@
     </div>
   </div>
 
-  <!-- Sección Categorías -->
   <div class="categories-section">
     <span class="section-title">CATEGORÍAS</span>
     <div class="chips-container">
@@ -49,7 +47,6 @@
     </div>
   </div>
 
-  <!-- Encabezado de la lista -->
   <div class="list-header">
     <span class="header-count">
       {{ activeTab === 'activos' ? 'REPORTES ACTIVOS' : 'REPORTES HISTÓRICOS' }} ({{ filteredEvents.length }})
@@ -59,7 +56,6 @@
     </span>
   </div>
 
-  <!-- Lista de Tarjetas (Cards) -->
   <div class="cards-list">
     <app-report-card
       *ngFor="let ev of filteredEvents"
