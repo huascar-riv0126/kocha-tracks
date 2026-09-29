@@ -1,14 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
+import { StringsService } from './core/strings/strings-service/strings-service';
+import { StringsServiceStub } from '@testutils/stubs';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter([])],
-    })
-      .compileComponents();
+      providers: [
+        provideRouter([]),
+        { provide: StringsService, useClass: StringsServiceStub },
+      ],
+    }).compileComponents();
   });
 
   it('should create the app', () => {
@@ -17,10 +21,11 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the navbar and footer', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
+    fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-frontend');
+    expect(compiled.querySelector('app-navbar')).toBeTruthy();
+    expect(compiled.querySelector('app-footer')).toBeTruthy();
   });
 });
