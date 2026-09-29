@@ -22,8 +22,8 @@ describe('LandingSteps', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should reuse data-flow cards for the three steps', () => {
-    const cards = fixture.nativeElement.querySelectorAll('app-data-flow-card');
-    expect(cards.length).toBe(3);
-  });
+it('should reuse data-flow cards for the four steps', () => {
+  const cards = fixture.nativeElement.querySelectorAll('app-data-flow-card');
+  expect(cards.length).toBe(4);
+});
 });
