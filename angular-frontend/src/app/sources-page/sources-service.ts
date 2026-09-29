@@ -32,6 +32,12 @@ export class SourcesService {
       url: 'https://www.cochabamba.bo/noticias',
       description: 'Pagina oficial de la alcaldia de Cochabamba con noticias del departamento.'
     },
+    {
+      id: 5,
+      name: 'El Diario Cochabamba',
+      url: 'https://www.eldiario.net/',
+      description: 'Periodico digital con titulares y noticias sobre Bolivia y Globales.',
+    },
   ];
 
   getSources(): Observable<Source[]> {
