@@ -24,19 +24,19 @@
 } @else {
 <article class="relative min-w-xs flex flex-col items-center justify-center gap-4 rounded-2xl bg-card p-6">
     <div class="flex size-8 shrink-0 items-center justify-center rounded-full bg-interactive-cta">
-        <p class="text-center text-sm font-bold text-white">
+        <p testid="step-number" class="text-center text-sm font-bold text-white">
             {{ number() }}
         </p>
     </div>
 
     <div class="w-full">
-        <h4 class="text-center text-lg font-bold text-txt-primary">
+        <h4 testid="step-title" class="text-center text-lg font-bold text-txt-primary">
             {{ title() }}
         </h4>
     </div>
 
     <div class="w-full">
-        <p class="text-center text-sm font-normal text-txt-secondary">
+        <p testid="step-description" class="text-center text-sm font-normal text-txt-secondary">
             {{ description() }}
         </p>
     </div>
