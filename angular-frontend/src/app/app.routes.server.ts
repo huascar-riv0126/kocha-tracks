@@ -2,14 +2,6 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'update-employee/:id',
-    renderMode: RenderMode.Server
-  },
-  {
-    path: 'employee-details/:id',
-    renderMode: RenderMode.Server
-  },
-  {
     path: 'event-details/:id',
     renderMode: RenderMode.Server
   },
