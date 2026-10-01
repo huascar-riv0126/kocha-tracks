@@ -3,6 +3,7 @@ package hre.dev.springboot_backend.controller;
 import hre.dev.springboot_backend.dto.SourceResponseDTO;
 import hre.dev.springboot_backend.model.Source;
 import hre.dev.springboot_backend.service.SourceService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,14 +57,18 @@ public class SourceController {
         try {
             Source updated = sourceService.updateSource(id, source);
             return ResponseEntity.ok(convertToDTO(updated));
-        } catch (RuntimeException e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSource(@PathVariable Long id) {
-        sourceService.deleteSource(id);
-        return ResponseEntity.noContent().build();
+        try {
+            sourceService.deleteSource(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
