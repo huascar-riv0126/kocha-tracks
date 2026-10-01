@@ -17,7 +17,7 @@
   font-display: swap;
 }
 
-@theme {
+@theme static {
   --font-sans: "Inter", sans-serif;
   /* Color variables for Tailwind utilities */
   /* Primitives: change this in case of color palette changes */

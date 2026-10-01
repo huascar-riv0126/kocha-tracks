@@ -69,5 +69,13 @@
   "landing.cta.title": "Empieza a monitorear tus rutas hoy",
   "landing.cta.desc": "Únete a la red ciudadana de monitoreo de movilidad en Cochabamba y Bolivia. Mantente informado con total privacidad.",
   "landing.cta.button": "Registrarse",
-  "landing.cta.note": "No requiere GPS activo continuamente. Totalmente libre y gratuito."
+  "landing.cta.note": "No requiere GPS activo continuamente. Totalmente libre y gratuito.",
+  "action.card.title": "ACCIONES DISPONIBLES",
+  "action.to.forum": "Ir al Foro",
+  "action.to.forum.add": "Reportar nueva Informacion",
+  "action.share": "Compartir",
+  "event.details.severity.title": "GRADO DE AFECTACION",
+  "severity.low": "PARCIAL",
+  "severity.mid": "TRANCADERA",
+  "severity.high": "BLOQUEADO"
 }
