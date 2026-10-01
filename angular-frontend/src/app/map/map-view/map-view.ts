@@ -114,7 +114,7 @@ export class MapView implements AfterViewInit, OnDestroy {
             btn.parentNode?.replaceChild(newBtn, btn);
             
             newBtn.addEventListener('click', () => {
-              this.router.navigate(['/event-details', event.id]);
+              this.router.navigate(['/detalles/evento', event.id]);
             });
           }
         }
