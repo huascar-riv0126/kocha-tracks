@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventMock } from '../../../../event/event-mock.model';
+import { GetStringsPipe } from '../../../../core/strings/get-strings-pipe';
 
 @Component({
   selector: 'app-report-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, GetStringsPipe],
   templateUrl: './report-card.html',
   styleUrl: './report-card.css'
 })

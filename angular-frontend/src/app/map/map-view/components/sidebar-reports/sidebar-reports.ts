@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { EventMockService } from '../../../../event/event-mock';
 import { EventMock } from '../../../../event/event-mock.model';
 import { ReportCardComponent } from '../report-card/report-card';
+import { GetStringsPipe } from '../../../../core/strings/get-strings-pipe';
 
 @Component({
   selector: 'app-sidebar-reports',
   standalone: true,
-  imports: [CommonModule, ReportCardComponent],
+  imports: [CommonModule, ReportCardComponent, GetStringsPipe],
   templateUrl: './sidebar-reports.html',
   styleUrl: './sidebar-reports.css'
 })
@@ -15,11 +16,17 @@ export class SidebarReportsComponent implements OnInit {
   @Output() eventSelected = new EventEmitter<EventMock>();
 
   activeTab: 'activos' | 'historicos' = 'activos';
-  selectedCategory: string = 'Todo';
+  selectedCategoryKey: string = 'sidebar.category.all';
   selectedEventId: number | null = 1;
 
-  categories: string[] = [
-    'Todo', 'Inundación', 'Incendio', 'Accidente', 'Corte de vía', 'Protesta', 'Otro'
+  categories = [
+    { key: 'sidebar.category.all', labelKey: 'sidebar.category.all' },
+    { key: 'sidebar.category.flood', labelKey: 'sidebar.category.flood' },
+    { key: 'sidebar.category.fire', labelKey: 'sidebar.category.fire' },
+    { key: 'sidebar.category.accident', labelKey: 'sidebar.category.accident' },
+    { key: 'sidebar.category.roadblock', labelKey: 'sidebar.category.roadblock' },
+    { key: 'sidebar.category.protest', labelKey: 'sidebar.category.protest' },
+    { key: 'sidebar.category.other', labelKey: 'sidebar.category.other' }
   ];
 
   events: EventMock[] = [];
@@ -41,8 +48,8 @@ export class SidebarReportsComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  selectCategory(category: string): void {
-    this.selectedCategory = category;
+  selectCategory(categoryKey: string): void {
+    this.selectedCategoryKey = categoryKey;
   }
 
   onSelectEvent(event: EventMock): void {

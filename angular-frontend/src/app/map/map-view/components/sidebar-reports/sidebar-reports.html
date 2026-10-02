@@ -1,45 +1,57 @@
-<aside class="sidebar-wrapper" aria-label="Panel lateral de reportes">
+<aside class="w-full max-w-[340px] h-full bg-[var(--color-surface)] border-r border-[var(--color-border-default)] p-4 flex flex-col box-border" aria-label="Panel lateral de reportes">
   <!-- Pestañas Activos / Históricos -->
-  <div class="tabs-container">
+  <div class="flex bg-[var(--color-neutral-100)] rounded-lg p-1 gap-1">
     <button 
-      class="tab-btn" 
-      [class.tab-btn-active]="activeTab === 'activos'"
+      class="flex-1 border-0 py-1.5 px-3 rounded-md text-xs font-semibold cursor-pointer transition-all duration-200"
+      [ngClass]="activeTab === 'activos' 
+        ? 'bg-[var(--color-surface)] text-[var(--color-txt-primary)] shadow-xs' 
+        : 'bg-transparent text-[var(--color-txt-secondary)] hover:text-[var(--color-txt-primary)]'"
       (click)="selectTab('activos')"
     >
-      Activos
+      {{ 'sidebar.tab.active' | getStrings }}
     </button>
     <button 
-      class="tab-btn" 
-      [class.tab-btn-active]="activeTab === 'historicos'"
+      class="flex-1 border-0 py-1.5 px-3 rounded-md text-xs font-semibold cursor-pointer transition-all duration-200"
+      [ngClass]="activeTab === 'historicos' 
+        ? 'bg-[var(--color-surface)] text-[var(--color-txt-primary)] shadow-xs' 
+        : 'bg-transparent text-[var(--color-txt-secondary)] hover:text-[var(--color-txt-primary)]'"
       (click)="selectTab('historicos')"
     >
-      Históricos
+      {{ 'sidebar.tab.historical' | getStrings }}
     </button>
   </div>
 
   <!-- Sección Categorías -->
-  <div class="categories-section">
-    <span class="section-title">CATEGORÍAS</span>
-    <div class="chips-container">
+  <div class="mt-5">
+    <span class="block text-[11px] font-extrabold text-[var(--color-txt-primary)] tracking-wider mb-2.5">
+      {{ 'sidebar.categories.title' | getStrings }}
+    </span>
+    <div class="flex flex-wrap gap-1.5">
       <button 
         *ngFor="let cat of categories"
-        class="category-chip"
-        [class.chip-active]="selectedCategory === cat"
-        (click)="selectCategory(cat)"
+        class="border rounded-full py-1 px-2.5 text-[11px] cursor-pointer transition-colors duration-150"
+        [ngClass]="selectedCategoryKey === cat.key 
+          ? 'bg-[var(--color-interactive-cta)] text-white border-[var(--color-interactive-cta)] font-medium' 
+          : 'border-[var(--color-border-default)] bg-[var(--color-surface)] text-[var(--color-txt-secondary)] hover:bg-[var(--color-neutral-50)]'"
+        (click)="selectCategory(cat.key)"
       >
-        {{ cat }}
+        {{ cat.labelKey | getStrings }}
       </button>
     </div>
   </div>
 
   <!-- Encabezado de la lista -->
-  <div class="list-header">
-    <span class="header-count">REPORTES ACTIVOS ({{ filteredEvents.length }})</span>
-    <span class="header-city">Cochabamba</span>
+  <div class="flex justify-between items-center mt-6 mb-3">
+    <span class="text-[11px] font-extrabold text-[var(--color-txt-primary)]">
+      {{ (activeTab === 'activos' ? 'sidebar.active.reports' : 'sidebar.historical.reports') | getStrings }} ({{ filteredEvents.length }})
+    </span>
+    <span class="text-[11px] font-medium text-[var(--color-interactive-cta)]">
+      {{ 'sidebar.city.cochabamba' | getStrings }}
+    </span>
   </div>
 
-  <!-- Lista de Tarjetas (Cards) -->
-  <div class="cards-list">
+  <!-- Lista de Tarjetas -->
+  <div class="sidebar-cards-scroll flex-1 overflow-y-auto pr-1">
     <app-report-card
       *ngFor="let ev of filteredEvents"
       [event]="ev"
