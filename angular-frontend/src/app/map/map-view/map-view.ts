@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, Inject, input, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import type * as Leaflet from 'leaflet';
@@ -20,8 +20,11 @@ export const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/co
   styleUrl: './map-view.css',
 })
 export class MapView implements AfterViewInit, OnDestroy {
+  readonly mapId = input<string>('map');
+  readonly embedded = input<boolean>(false);
   private map?: Leaflet.Map;
   private readonly isBrowser: boolean;
+  private destroyed = false;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -32,21 +35,25 @@ export class MapView implements AfterViewInit, OnDestroy {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    if (!this.isBrowser) {
-      return;
-    }
+    if (!this.isBrowser) return;
+
     const L = await import('leaflet');
-    const existing = this.map;
-    if (existing) {
-      existing.remove();
-      this.map = undefined;
-    }
-    const host = document.getElementById('map');
-    if (host && (host as HTMLElement & { _leaflet_id?: unknown })._leaflet_id !== undefined) {
+
+    // El componente pudo destruirse mientras cargaba Leaflet
+    if (this.destroyed) return;
+
+    const host = document.getElementById(this.mapId());
+    if (!host) return;
+
+    this.map?.remove();
+    this.map = undefined;
+
+    if ((host as HTMLElement & { _leaflet_id?: unknown })._leaflet_id !== undefined) {
       host.innerHTML = '';
       delete (host as HTMLElement & { _leaflet_id?: unknown })._leaflet_id;
     }
-    const map = L.map('map', { zoomControl: true, attributionControl: true });
+
+    const map = L.map(host, { zoomControl: true, attributionControl: true });
     map.setView(COCHABAMBA_CENTER, COCHABAMBA_ZOOM);
     L.tileLayer(OSM_TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION }).addTo(map);
     map.invalidateSize();
@@ -121,6 +128,7 @@ export class MapView implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true;
     this.map?.remove();
     this.map = undefined;
   }

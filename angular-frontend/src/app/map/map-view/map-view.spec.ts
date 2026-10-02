@@ -58,6 +58,7 @@ describe('MapView', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
+    // Espera a que termine el ngAfterViewInit asíncrono (import dinámico)
     await vi.waitFor(() => expect(L.map).toHaveBeenCalled());
   });
 
@@ -89,12 +90,12 @@ describe('MapView', () => {
     expect(L.circleMarker).toHaveBeenNthCalledWith(
       1,
       [-17.38, -66.15],
-      expect.objectContaining({ fillColor: '#ef4444' }),
+      expect.objectContaining({ fillColor: '#ef4444' }), // activo
     );
     expect(L.circleMarker).toHaveBeenNthCalledWith(
       2,
       [-17.39, -66.16],
-      expect.objectContaining({ fillColor: '#22c55e' }),
+      expect.objectContaining({ fillColor: '#22c55e' }), // otro estado
     );
   });
 
@@ -110,6 +111,8 @@ describe('MapView', () => {
 
   it('should navigate to event details when popup button is clicked', () => {
     const router = TestBed.inject(Router);
+
+    // Buscamos el callback registrado para 'popupopen' en el primer marcador
     const popupOpenCall = markerMock.on.mock.calls.find(([name]) => name === 'popupopen');
     const handler = popupOpenCall![1];
 
@@ -118,6 +121,7 @@ describe('MapView', () => {
     handler({ popup: { getElement: () => popupEl } });
 
     popupEl.querySelector<HTMLButtonElement>('.btn-detalles')!.click();
+
     expect(router.navigate).toHaveBeenCalledWith(['/event-details', 1]);
   });
 });
