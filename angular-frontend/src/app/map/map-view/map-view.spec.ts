@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { vi } from 'vitest';
+import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import * as L from 'leaflet';
 import { COCHABAMBA_CENTER, COCHABAMBA_ZOOM, MapView, OSM_TILE_URL } from './map-view';
 import { EventMockService } from '../../event/event-mock';
+import { StringsService } from '../../core/strings/strings-service/strings-service';
+import { STRINGS_LOADER } from '../../core/strings/strings-token';
 
 const { mapMock, markerMock } = vi.hoisted(() => {
   const markerMock = {
@@ -44,6 +46,11 @@ describe('MapView', () => {
       providers: [
         { provide: Router, useValue: { navigate: vi.fn() } },
         { provide: EventMockService, useValue: eventServiceMock },
+        StringsService,
+        {
+          provide: STRINGS_LOADER,
+          useValue: { load: () => Promise.resolve({}) },
+        },
       ],
     }).compileComponents();
 
@@ -104,17 +111,17 @@ describe('MapView', () => {
 
   it('should navigate to event details when popup button is clicked', () => {
     const router = TestBed.inject(Router);
-  
+
     // Buscamos el callback registrado para 'popupopen' en el primer marcador
     const popupOpenCall = markerMock.on.mock.calls.find(([name]) => name === 'popupopen');
     const handler = popupOpenCall![1];
-  
+
     const popupEl = document.createElement('div');
     popupEl.innerHTML = '<button class="btn-detalles">Ver</button>';
     handler({ popup: { getElement: () => popupEl } });
-  
+
     popupEl.querySelector<HTMLButtonElement>('.btn-detalles')!.click();
-  
+
     expect(router.navigate).toHaveBeenCalledWith(['/event-details', 1]);
   });
 });
