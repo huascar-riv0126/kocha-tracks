@@ -115,6 +115,6 @@ describe('MapView', () => {
   
     popupEl.querySelector<HTMLButtonElement>('.btn-detalles')!.click();
   
-    expect(router.navigate).toHaveBeenCalledWith(['/event-details', 1]);
+    expect(router.navigate).toHaveBeenCalledWith(['/evento', 1, 'detalles']);
   });
 });

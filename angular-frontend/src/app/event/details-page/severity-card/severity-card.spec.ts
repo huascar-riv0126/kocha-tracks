@@ -18,11 +18,13 @@ describe('SeverityCard', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SeverityCard],
-      providers: [{ provide: StringsService, useClass: StringsServiceStub }],
+      providers: [
+        { provide: StringsService, useClass: StringsServiceStub }
+      ],
     }).compileComponents();
   });
 
-  it('should render the correct bar fill, width and aria value for "bajo"', () => {
+  it('should render the correct bar fill, width and aria value for "low"', () => {
     createWithSeverity('low');
     const el: HTMLElement = fixture.nativeElement;
 
@@ -34,7 +36,7 @@ describe('SeverityCard', () => {
     expect(fill.classList.contains('bg-[#10B981]')).toBe(true);
   });
 
-  it('should render the correct bar fill, width and aria value for "medio"', () => {
+  it('should render the correct bar fill, width and aria value for "mid"', () => {
     createWithSeverity('mid');
     const el: HTMLElement = fixture.nativeElement;
 
@@ -46,7 +48,7 @@ describe('SeverityCard', () => {
     expect(fill.classList.contains('bg-[#F5A54B]')).toBe(true);
   });
 
-  it('should render the correct bar fill, width and aria value for "alto"', () => {
+  it('should render the correct bar fill, width and aria value for "high"', () => {
     createWithSeverity('high');
     const el: HTMLElement = fixture.nativeElement;
 
@@ -67,7 +69,7 @@ describe('SeverityCard', () => {
     const semibold = labelEls.filter((p) => p.classList.contains('font-semibold'));
 
     expect(bold.length).toBe(1);
-    expect(bold[0].textContent?.trim()).toBe('Medio');
-    expect(semibold.map((p) => p.textContent?.trim())).toEqual(['Bajo', 'Alto']);
+    expect(bold[0].textContent?.trim()).toBe('severity.mid');
+    expect(semibold.map((p) => p.textContent?.trim())).toEqual(['severity.low', 'severity.high']);
   });
 });
