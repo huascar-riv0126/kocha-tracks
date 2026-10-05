@@ -4,9 +4,9 @@ import { GetStringsPipe } from '../../../core/strings/get-strings-pipe';
 export type Severity = 'low' | 'mid' | 'high';
 
 const SEVERITY_CONFIG: Record<Severity, { percent: number; fill: string }> = {
-  low:  { percent: 4, fill: 'bg-[#10B981]' },
-  mid: { percent: 50, fill: 'bg-[#F5A54B]' },
-  high:  { percent: 100, fill: 'bg-[#EF4444]' },
+  low:  { percent: 4, fill: 'bg-status-success-400' },
+  mid: { percent: 50, fill: 'bg-accent-warning-400' },
+  high:  { percent: 100, fill: 'bg-status-danger-400' },
 };
 
 @Component({
@@ -16,9 +16,9 @@ const SEVERITY_CONFIG: Record<Severity, { percent: number; fill: string }> = {
 })
 export class SeverityCard {
   labels = [
-    { key: 'low',  text: 'severity.low',  color: 'text-[#10B981]' },
-    { key: 'mid', text: 'severity.mid', color: 'text-[#F5A54B]' },
-    { key: 'high',  text: 'severity.high',  color: 'text-[#F05A5A]' },
+    { key: 'low',  text: 'severity.low',  color: 'text-status-success-400' },
+    { key: 'mid', text: 'severity.mid', color: 'text-accent-warning-400' },
+    { key: 'high',  text: 'severity.high',  color: 'text-status-danger-400' },
   ] as const;
 
   severity = input.required<Severity>();

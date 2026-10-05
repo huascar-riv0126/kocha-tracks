@@ -33,7 +33,7 @@ describe('SeverityCard', () => {
 
     expect(track.getAttribute('aria-valuenow')).toBe('4');
     expect(fill.style.width).toBe('4%');
-    expect(fill.classList.contains('bg-[#10B981]')).toBe(true);
+    expect(fill.classList.contains('bg-status-success-400')).toBe(true);
   });
 
   it('should render the correct bar fill, width and aria value for "mid"', () => {
@@ -45,7 +45,7 @@ describe('SeverityCard', () => {
 
     expect(track.getAttribute('aria-valuenow')).toBe('50');
     expect(fill.style.width).toBe('50%');
-    expect(fill.classList.contains('bg-[#F5A54B]')).toBe(true);
+    expect(fill.classList.contains('bg-accent-warning-400')).toBe(true);
   });
 
   it('should render the correct bar fill, width and aria value for "high"', () => {
@@ -57,7 +57,7 @@ describe('SeverityCard', () => {
 
     expect(track.getAttribute('aria-valuenow')).toBe('100');
     expect(fill.style.width).toBe('100%');
-    expect(fill.classList.contains('bg-[#EF4444]')).toBe(true);
+    expect(fill.classList.contains('bg-status-danger-400')).toBe(true);
   });
 
   it('should bold only the label matching the current severity', () => {

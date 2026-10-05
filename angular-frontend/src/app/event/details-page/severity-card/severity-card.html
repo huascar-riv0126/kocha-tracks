@@ -1,8 +1,8 @@
 <div
-    class="flex w-full flex-col items-start gap-4 rounded-xl border border-[#E5E7EB] bg-white p-6 font-outfit">
+    class="flex w-full flex-col items-start gap-4 rounded-xl border border-border-default bg-white p-6 font-outfit">
     <h4 class="text-base font-bold leading-5 text-[#111827]">{{ "event.details.severity.title" | getStrings }}</h4>
 
-    <div class="flex h-3 w-full overflow-hidden rounded-md bg-[#E2E8F0]" role="progressbar"
+    <div class="flex h-3 w-full overflow-hidden rounded-md bg-white" role="progressbar"
         aria-label="Nivel de afectación" [attr.aria-valuenow]="config().percent" aria-valuemin="0" aria-valuemax="100">
         <div class="h-full transition-all duration-300 rounded-md" [class]="config().fill" [style.width]="fillWidth()">
         </div>
