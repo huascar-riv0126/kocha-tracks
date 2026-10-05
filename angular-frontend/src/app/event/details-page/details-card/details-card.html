@@ -1,0 +1,61 @@
+@if (event(); as e) {
+<section class="flex flex-col gap-6 rounded-xl border border-border-default bg-card p-8 font-outfit text-txt-primary">
+    <h2 class="text-[32px]/10 font-bold">{{ e.title }}</h2>
+
+    <!-- Metadatos -->
+    <dl class="flex flex-wrap gap-x-6 gap-y-3 text-sm/4.5">
+        <div class="flex basis-full items-center gap-2">
+            <dt class="font-semibold text-txt-secondary">Tipo:</dt>
+            <dd>{{ e.type }}</dd>
+        </div>
+        <div class="flex min-w-56 flex-1 items-center gap-2">
+            <dt class="font-semibold text-txt-secondary">Ubicación:</dt>
+            <dd>{{ e.location }}</dd>
+        </div>
+        <div class="flex min-w-56 flex-1 items-center gap-2">
+            <dt class="font-semibold text-txt-secondary">Estado actual:</dt>
+            <dd>{{ e.state }}</dd>
+        </div>
+    </dl>
+
+    <hr class="border-border-default" />
+
+    <!-- Fechas -->
+    <dl class="flex gap-4">
+        <div class="flex flex-1 flex-col gap-1">
+            <dt class="text-xs/3.75 font-semibold uppercase text-txt-secondary">Fecha de inicio</dt>
+            <dd class="text-sm/4.5 font-bold">{{ e.startDate | date: 'dd/MM/yyyy HH:mm' }}</dd>
+        </div>
+        <div class="flex flex-1 flex-col gap-1">
+            <dt class="text-xs/3.75 font-semibold uppercase text-txt-secondary">Última actualización</dt>
+            <dd class="text-sm/4.5 font-bold text-accent-warning-500">{{ e.elapsedTime }}</dd>
+        </div>
+    </dl>
+
+    <hr class="border-border-default" />
+
+    <!-- Descripción -->
+    <div class="flex flex-col gap-3">
+        <h3 class="text-base/5 font-bold">Detalles de la Alerta</h3>
+        <p class="text-[15px]/6 text-txt-secondary">{{ e.description }}</p>
+    </div>
+
+    <!-- Mapa -->
+    <div class="h-80 overflow-hidden rounded-lg">
+        <app-map-view mapId="landing-map" [embedded]="true" />
+    </div>
+
+    <!-- <div>
+        <strong>Fuentes y Referencias</strong>
+        // ciclo for para llenar los todos
+         <div>
+            <img src="icons/external-link.svg" alt="">
+            <a href=""></a>
+         </div> 
+    </div> -->
+    <!-- Terminar mas adelante o cuando este programado la logica <div>
+        <strong># Confirmaron</strong>
+        <app-button label="Confirmar Reporte"></app-button>
+    </div> -->
+</section>
+}

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { EventMockService } from './event-mock'; 
+import { EventMockService } from './event-mock';
 import { EventMock } from './event-mock.model';
 
 describe('EventMockService', () => {
@@ -10,15 +10,15 @@ describe('EventMockService', () => {
     service = TestBed.inject(EventMockService);
   });
 
-  it('debería ser creado', () => {
+  it('should create', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Criterio 1 y 2: debería retornar una lista de eventos con las propiedades correctas', () => {
+  it('should return a Event list', () => {
     const events: EventMock[] = service.getEvents();
-    
-    expect(events.length).toBe(3); 
-    
+
+    expect(events.length).toBe(3);
+
     const firstEvent = events[0];
     expect(firstEvent.id).toBeDefined();
     expect(firstEvent.title).toBeDefined();
@@ -27,19 +27,24 @@ describe('EventMockService', () => {
     expect(firstEvent.elapsedTime).toBeDefined();
   });
 
-  it('Criterio 2: debería agregar un evento nuevo al arreglo temporal', () => {
+  it('should add a new Event into the list', () => {
     const mockNewEvent: EventMock = {
       id: 4,
-      title: 'Accidente en la Av. Suecia',
+      title: 'Test Event',
       coordinates: [-17.4000, -66.1400],
       state: 'activo',
-      elapsedTime: '10 minutos'
+      elapsedTime: '10 minutes',
+      severity: 'low',
+      type: 'Test',
+      location: 'Location for test',
+      description: 'Description for test',
+      startDate: new Date('2026-10-01T13:45:00-04:00')
     };
 
     service.addEvent(mockNewEvent);
 
     const events: EventMock[] = service.getEvents();
     expect(events.length).toBe(4);
-    expect(events[3].title).toBe('Accidente en la Av. Suecia');
+    expect(events[3]).toBe(mockNewEvent);
   });
 });

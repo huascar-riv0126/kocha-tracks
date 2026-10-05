@@ -1,0 +1,20 @@
+<div
+    class="flex w-full flex-col items-start gap-4 rounded-xl border border-border-default bg-white p-6 font-outfit">
+    <h4 class="text-base font-bold leading-5 text-[#111827]">{{ "event.details.severity.title" | getStrings }}</h4>
+
+    <div class="flex h-3 w-full overflow-hidden rounded-md bg-white" role="progressbar"
+        aria-label="Nivel de afectación" [attr.aria-valuenow]="config().percent" aria-valuemin="0" aria-valuemax="100">
+        <div class="h-full transition-all duration-300 rounded-md" [class]="config().fill" [style.width]="fillWidth()">
+        </div>
+    </div>
+
+    <!-- labels -->
+    <div class="flex w-full items-center justify-between">
+        @for (label of labels; track label.key) {
+        <p class="text-xs leading-[15px]" [class]="label.color" [class.font-bold]="label.key === severity()"
+            [class.font-semibold]="label.key !== severity()">
+            {{ label.text | getStrings }}
+        </p>
+        }
+    </div>
+</div>
