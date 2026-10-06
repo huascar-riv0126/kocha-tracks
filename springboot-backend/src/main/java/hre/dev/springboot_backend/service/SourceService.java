@@ -1,18 +1,22 @@
 package hre.dev.springboot_backend.service;
 
-import hre.dev.springboot_backend.model.Source;
-import hre.dev.springboot_backend.repository.SourceRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import hre.dev.springboot_backend.dto.SourceResponseDTO;
+import hre.dev.springboot_backend.exception.ResourceNotFoundException;
+import hre.dev.springboot_backend.model.Source;
+import hre.dev.springboot_backend.repository.SourceRepository;
 
 @Service
+@Transactional(readOnly = true)
 public class SourceService {
-
+    private static final Logger log = LoggerFactory.getLogger(SourceService.class);
     private final SourceRepository sourceRepository;
 
     public SourceService(SourceRepository sourceRepository) {
@@ -20,42 +24,45 @@ public class SourceService {
     }
 
     public List<Source> getAllActiveSources() {
-        return sourceRepository.findAll().stream()
-                .filter(source -> source.getDeletedAt() == null)
-                .collect(Collectors.toList());
+        return sourceRepository.findAllByDeletedAtIsNull();
     }
 
-    public Optional<Source> getSourceById(Long id) {
-        return sourceRepository.findById(id)
-                .filter(source -> source.getDeletedAt() == null);
+    public Source getSourceById(Long id) {
+        return sourceRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Source " + id + " not found"));
     }
 
-    public Source createSource(Source source) {
-        return sourceRepository.save(source);
+    @Transactional
+    public Source createSource(SourceResponseDTO request) {
+        Source source = new Source();
+        source.setName(request.name());
+        source.setUrl(request.url());
+        source.setDescription(request.description());
+        source.setIsActive(true);
+
+        Source saved = sourceRepository.save(source);
+        log.info("Source created: id={}, name={}", saved.getId(), saved.getName());
+        return saved;
     }
 
-    public Source updateSource(Long id, Source updatedSource) {
-        return sourceRepository.findById(id)
-                .filter(source -> source.getDeletedAt() == null) 
-                .map(existing -> {
-                    existing.setName(updatedSource.getName());
-                    existing.setUrl(updatedSource.getUrl());
-                    existing.setDescription(updatedSource.getDescription());
-                    
-                    if (updatedSource.getIsActive() != null) {
-                        existing.setIsActive(updatedSource.getIsActive());
-                    }
-                    return sourceRepository.save(existing);
-                }).orElseThrow(() -> new EntityNotFoundException("Source no encontrada o ya eliminada."));
+    @Transactional
+    public Source updateSource(Long id, SourceResponseDTO request) {
+        Source existing = getSourceById(id);
+        existing.setName(request.name());
+        existing.setUrl(request.url());
+        existing.setDescription(request.description());
+
+        Source saved = sourceRepository.save(existing);
+        log.info("Source updated: id={}", saved.getId());
+        return saved;
     }
 
+    @Transactional
     public void deleteSource(Long id) {
-        Source source = sourceRepository.findById(id)
-                .filter(s -> s.getDeletedAt() == null) 
-                .orElseThrow(() -> new EntityNotFoundException("Source no encontrada o ya eliminada."));
-        
+        Source source = getSourceById(id);
         source.setDeletedAt(LocalDateTime.now());
         source.setIsActive(false);
         sourceRepository.save(source);
+        log.info("Source soft-deleted: id={}", id);
     }
 }
