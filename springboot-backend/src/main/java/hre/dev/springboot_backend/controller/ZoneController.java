@@ -1,10 +1,10 @@
 package hre.dev.springboot_backend.controller;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,65 +16,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hre.dev.springboot_backend.exception.ResourceNotFoundException;
 import hre.dev.springboot_backend.model.Zone;
-import hre.dev.springboot_backend.repository.ZoneRepository;
+import hre.dev.springboot_backend.service.ZoneService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("api/v1/")
 public class ZoneController {
 
-    private final ZoneRepository zoneRepository;
+    private final ZoneService zoneService;
 
-    ZoneController(ZoneRepository zoneRepository) {
-        this.zoneRepository = zoneRepository;
+    public ZoneController(ZoneService zoneService) {
+        this.zoneService = zoneService;
     }
 
     @GetMapping("/zones")
-    public List<Zone> getAll() {
-        return zoneRepository.findByIsActiveTrue();
+    public ResponseEntity<List<Zone>> getAll() {
+        return ResponseEntity.ok(zoneService.getAll());
     }
 
     @GetMapping("/zones/{id}")
     public ResponseEntity<Zone> getById(@PathVariable Long id) {
-        Zone zone = zoneRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Zone doesn't exist with id: " + id));
-        return ResponseEntity.ok(zone);
+        return ResponseEntity.ok(zoneService.getById(id));
     }
 
     @PostMapping("/zones")
-    public Zone create(@RequestBody Zone zoneDetails) {
-        zoneDetails.setIsActive(true);
-        return zoneRepository.save(zoneDetails);
+    public ResponseEntity<Zone> create(@RequestBody Zone zoneDetails) {
+        Zone newZone = zoneService.create(zoneDetails);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newZone);
     }
 
     @PutMapping("/zones/{id}")
-    public ResponseEntity<Zone> updateById(@PathVariable Long id, @RequestBody Zone zoneDetails) {
-        Zone oldZone = zoneRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Zone doesn't exist with id: " + id));
+    public ResponseEntity<Zone> updateById(
+            @PathVariable Long id,
+            @RequestBody Zone zoneDetails) {
 
-        oldZone.setName(zoneDetails.getName());
-        oldZone.setType(zoneDetails.getType());
-        oldZone.setCenter(zoneDetails.getCenter());
-        oldZone.setRadiusMeters(zoneDetails.getRadiusMeters());
-        oldZone.setGeometry(zoneDetails.getGeometry());
-
-        Zone updatedZone = zoneRepository.save(oldZone);
-        return ResponseEntity.ok(updatedZone);
+        return ResponseEntity.ok(
+                zoneService.updateById(id, zoneDetails)
+        );
     }
 
     @DeleteMapping("/zones/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteById(@PathVariable Long id) {
-        Zone zone = zoneRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Zone doesn't exist with id: " + id));
+    public ResponseEntity<Map<String, Boolean>> deleteById(
+            @PathVariable Long id) {
 
-        zone.setIsActive(false);
-        zone.setDeletedAt(LocalDateTime.now());
-        zoneRepository.save(zone);
+        zoneService.deleteById(id);
 
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
+
         return ResponseEntity.ok(response);
     }
 }
