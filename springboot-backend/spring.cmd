@@ -20,6 +20,6 @@ call .\mvnw.cmd spring-boot:run "-Dspring-boot.run.arguments=--logging.level.%PK
 exit /b %errorlevel%
 
 :usage
-echo Uso: spring-task run [-log=error^|warn^|info^|debug^|trace]
+echo Uso: ./spring.cmd run -log=[error^|warn^|info^|debug^|trace]
 echo   -log   opcional, por defecto info
 exit /b 1
