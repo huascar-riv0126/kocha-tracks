@@ -1,0 +1,20 @@
+<button
+  [type]="type()"
+  [disabled]="disabled()"
+  [class]="classes()"
+  [style.--btn-bg]="bg()"
+  [style.--btn-text]="text()"
+  [style.--btn-border]="border()"
+  [style.--btn-hover-bg]="hoverBg()"
+  [style.--btn-hover-text]="hoverText()"
+  [style.--btn-hover-border]="hoverBorder()"
+  [attr.aria-label]="ariaLabel() ?? label()"
+  (click)="onClick($event)"
+>
+  @if (icon()) {
+    <img [src]="icon()" class="size-4 shrink-0" aria-hidden="true" />
+  }
+  @if (label()) {
+    <span>{{ label() }}</span>
+  }
+</button>

@@ -1,0 +1,16 @@
+<section id="como-funciona" class="flex scroll-mt-16 flex-col gap-10 bg-page px-6 py-16 lg:px-20 lg:py-20">
+  <div class="mx-auto flex w-full max-w-5xl flex-col items-center gap-3 text-center">
+    <p class="font-mono text-xs font-semibold uppercase tracking-widest text-interactive-cta">
+      {{ 'landing.steps.eyebrow' | getStrings }}
+    </p>
+    <h2 class="text-3xl font-extrabold text-txt-primary lg:text-4xl">
+      {{ 'landing.steps.title' | getStrings }}
+    </h2>
+  </div>
+  <div class="mx-auto grid w-full max-w-7xl gap-6 md:grid-cols-3">
+    @for (s of steps; track s.number) {
+    <app-data-flow-card [number]="s.number" [title]="s.titleKey | getStrings"
+      [description]="s.descKey | getStrings" [iconSrc]="s.icon" variant="left" />
+    }
+  </div>
+</section>

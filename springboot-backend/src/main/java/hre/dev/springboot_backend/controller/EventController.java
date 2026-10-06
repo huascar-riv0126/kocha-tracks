@@ -1,6 +1,7 @@
 package hre.dev.springboot_backend.controller;
 
-import hre.dev.springboot_backend.model.Event;
+import hre.dev.springboot_backend.dto.EventRequestDTO;
+import hre.dev.springboot_backend.dto.EventResponseDTO;
 import hre.dev.springboot_backend.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,41 +17,46 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+   
     @GetMapping
-    public List<Event> getAllEvents() {
-        return eventService.getAllEvents();
+    public ResponseEntity<List<EventResponseDTO>> getAllEvents() {
+        return ResponseEntity.ok(eventService.getAllEvents()); 
     }
 
+    
     @GetMapping("/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
-        return eventService.getEventById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        Event createdEvent = eventService.createEvent(event);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event eventDetails) {
-        try {
-            Event updatedEvent = eventService.updateEvent(id, eventDetails);
-            return ResponseEntity.ok(updatedEvent);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<EventResponseDTO> getEventById(@PathVariable Long id) {
+        EventResponseDTO event = eventService.getEventById(id);
+        if (event != null) {
+            return ResponseEntity.ok(event); 
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
     }
 
+    
+    @PostMapping
+    public ResponseEntity<EventResponseDTO> createEvent(@RequestBody EventRequestDTO requestDTO) {
+        EventResponseDTO createdEvent = eventService.createEvent(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent); 
+    }
+
+  
+    @PutMapping("/{id}")
+    public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable Long id, @RequestBody EventRequestDTO requestDTO) {
+        EventResponseDTO updatedEvent = eventService.updateEvent(id, requestDTO);
+        if (updatedEvent != null) {
+            return ResponseEntity.ok(updatedEvent); 
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
+    }
+
+   
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
-        try {
-            eventService.deleteEvent(id);
-            return ResponseEntity.noContent().build(); // Devuelve 204 No Content
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+        boolean deleted = eventService.deleteEvent(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build(); 
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
     }
 }

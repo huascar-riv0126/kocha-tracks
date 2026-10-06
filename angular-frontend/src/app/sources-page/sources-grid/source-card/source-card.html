@@ -4,10 +4,16 @@
       {{ title() }}
     </h3>
 
+    @if (iconSrc()) {
+    <div class="flex size-13 shrink-0 items-center justify-center p-2 rounded-lg bg-accent-warning-100">
+      <img [src]="iconSrc()" alt="" class="size-9" />
+    </div>
+    } @else {
     <a [href]="linkHref()" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Abrir enlace de ' + title()"
       class="flex size-13 shrink-0 items-center justify-center p-2 rounded-lg bg-section-alt">
       <img src="icons/external-link.svg" alt="" class="size-9" />
     </a>
+    }
   </header>
 
   <div class="flex w-full flex-col gap-2">
