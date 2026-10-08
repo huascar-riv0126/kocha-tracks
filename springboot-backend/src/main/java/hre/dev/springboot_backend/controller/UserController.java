@@ -1,80 +1,76 @@
 package hre.dev.springboot_backend.controller;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import hre.dev.springboot_backend.exception.ResourceNotFoundException;
+import hre.dev.springboot_backend.dto.UserResponseDTO;
 import hre.dev.springboot_backend.model.User;
-import hre.dev.springboot_backend.repository.UserRepository;
+import hre.dev.springboot_backend.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("api/v1/")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/users")
-    public List<User> getAll() {
-        return userRepository.findByIsActiveTrue();
+    public ResponseEntity<List<UserResponseDTO>> getAll() {
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id) {
-        User user = userRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist with id: " + id));
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserResponseDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getById(id));
     }
 
     @PostMapping("/users")
-    public User create(@RequestBody User userDetails) {
-        userDetails.setIsActive(true);
-        return userRepository.save(userDetails);
+    public ResponseEntity<UserResponseDTO> create(
+            @RequestBody User userDetails) {
+
+        UserResponseDTO createdUser = userService.create(userDetails);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdUser);
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateById(@PathVariable Long id, @RequestBody User userDetails) {
-        User oldUser = userRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist with id: " + id));
-        
-        oldUser.setUsername(userDetails.getUsername());
-        oldUser.setRole(userDetails.getRole());
-        if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
-            oldUser.setPassword(userDetails.getPassword());
-        }
+    public ResponseEntity<UserResponseDTO> updateById(
+            @PathVariable Long id,
+            @RequestBody User userDetails) {
 
-        User updatedUser = userRepository.save(oldUser);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(
+                userService.updateById(id, userDetails)
+        );
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteById(@PathVariable Long id) {
-        User user = userRepository.findByIdAndIsActiveTrue(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User doesn't exist with id: " + id));
-        
-        user.setIsActive(false);
-        user.setDeletedAt(LocalDateTime.now());
-        userRepository.save(user);
+    public ResponseEntity<Map<String, Boolean>> deleteById(
+            @PathVariable Long id) {
+
+        userService.deleteById(id);
 
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
+
         return ResponseEntity.ok(response);
     }
 }
