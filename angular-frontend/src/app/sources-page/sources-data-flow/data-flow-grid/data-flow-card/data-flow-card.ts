@@ -9,4 +9,6 @@ export class DataFlowCard {
   readonly number = input.required<string>();
   readonly title = input.required<string>();
   readonly description = input.required<string>();
+  readonly iconSrc = input<string | undefined>(undefined);
+  readonly variant = input<'center' | 'left'>('center');
 }
