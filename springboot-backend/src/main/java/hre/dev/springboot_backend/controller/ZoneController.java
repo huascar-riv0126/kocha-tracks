@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hre.dev.springboot_backend.model.Zone;
+import hre.dev.springboot_backend.dto.ZoneRequestDTO;
+import hre.dev.springboot_backend.dto.ZoneResponseDTO;
 import hre.dev.springboot_backend.service.ZoneService;
 
 @RestController
@@ -31,28 +32,35 @@ public class ZoneController {
     }
 
     @GetMapping("/zones")
-    public ResponseEntity<List<Zone>> getAll() {
+    public ResponseEntity<List<ZoneResponseDTO>> getAll() {
         return ResponseEntity.ok(zoneService.getAll());
     }
 
     @GetMapping("/zones/{id}")
-    public ResponseEntity<Zone> getById(@PathVariable Long id) {
+    public ResponseEntity<ZoneResponseDTO> getById(
+            @PathVariable Long id) {
+
         return ResponseEntity.ok(zoneService.getById(id));
     }
 
     @PostMapping("/zones")
-    public ResponseEntity<Zone> create(@RequestBody Zone zoneDetails) {
-        Zone newZone = zoneService.create(zoneDetails);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newZone);
+    public ResponseEntity<ZoneResponseDTO> create(
+            @RequestBody ZoneRequestDTO request) {
+
+        ZoneResponseDTO createdZone = zoneService.create(request);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdZone);
     }
 
     @PutMapping("/zones/{id}")
-    public ResponseEntity<Zone> updateById(
+    public ResponseEntity<ZoneResponseDTO> updateById(
             @PathVariable Long id,
-            @RequestBody Zone zoneDetails) {
+            @RequestBody ZoneRequestDTO request) {
 
         return ResponseEntity.ok(
-                zoneService.updateById(id, zoneDetails)
+                zoneService.updateById(id, request)
         );
     }
 
