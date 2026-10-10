@@ -38,7 +38,10 @@ private markersMap: Map<number, Leaflet.CircleMarker> = new Map();
   async ngAfterViewInit(): Promise<void> {
     if (!this.isBrowser) return;
 
-    const L = await import('leaflet');
+    const leafletModule = await import('leaflet');
+    const L = ((leafletModule as any).default ?? leafletModule) as typeof Leaflet;
+
+    // El componente pudo destruirse mientras cargaba Leaflet
     if (this.destroyed) return;
 
     const host = document.getElementById(this.mapId());
