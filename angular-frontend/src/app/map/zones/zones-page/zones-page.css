@@ -31,22 +31,36 @@
 .zones-map-slot {
   flex: 1 1 auto;
   height: 100%;
+  min-height: 0;
   min-width: 0;
   z-index: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .zones-map-slot app-map-view {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   height: 100%;
+  min-height: 0;
 }
 
-/* El MapView en modo embedded fija el canvas en 480px: aquí lo estiramos al slot */
+/* El MapView en modo embedded fija el canvas en 480px: aquí lo estiramos al slot
+   para que no quede franja blanca entre el mapa y el footer */
 ::ng-deep .zones-map-slot .map-page.embedded {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   height: 100%;
+  min-height: 0;
 }
 
 ::ng-deep .zones-map-slot .map-page.embedded .map-canvas {
-  height: 100%;
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
 }
 
 @media (max-width: 1024px) {
