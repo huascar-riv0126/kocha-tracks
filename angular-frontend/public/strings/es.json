@@ -121,5 +121,6 @@
   "zones.config.points.undo": "Deshacer punto",
   "zones.config.points.clear": "Limpiar",
   "zones.config.cancel": "Cancelar",
-  "zones.config.save": "Guardar Cambios"
+  "zones.config.save": "Guardar Cambios",
+  "zones.empty": "Aún no tienes zonas. Crea tu primera zona."
 }
