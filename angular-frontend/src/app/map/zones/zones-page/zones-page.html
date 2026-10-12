@@ -1,0 +1,25 @@
+<section class="zones-page" aria-label="Zonas de interés" data-testid="zones-page">
+  <aside class="zones-sidebar" aria-label="Mis zonas de interés">
+    <div class="zones-list-slot">
+      <app-zones-list
+        [zones]="zones()"
+        [selectedId]="selectedId()"
+        [editingId]="editingId()"
+        (zoneSelected)="onZoneSelected($event)"
+        (createNew)="onCreateNew()"
+        (editZone)="onEditZone($event)"
+        (deleteZone)="onDeleteZone($event)"
+      />
+    </div>
+    <div class="zones-config-slot">
+      <app-zone-config
+        [zone]="editingZone()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+      />
+    </div>
+  </aside>
+  <div class="zones-map-slot">
+    <app-map-view mapId="zones-map" [embedded]="true" />
+  </div>
+</section>

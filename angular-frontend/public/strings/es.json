@@ -106,5 +106,20 @@
   "zones.editing": "EDITANDO",
   "zones.edit": "Editar zona",
   "zones.delete": "Eliminar zona",
-  "zones.empty": "Aún no tienes zonas. Crea tu primera zona."
+  "zones.empty": "Aún no tienes zonas. Crea tu primera zona.",
+  "zones.config.title": "CONFIGURACIÓN DE LA ZONA",
+  "zones.config.name.label": "Nombre de la Zona",
+  "zones.config.name.placeholder": "Ej. Mi casa - Zona Norte",
+  "zones.config.name.required": "El nombre de la zona es requerido",
+  "zones.config.type.label": "Tipo de Zona",
+  "zones.config.type.radio": "Vigilancia por Radio",
+  "zones.config.type.polygon": "Área personalizada (Polígono)",
+  "zones.config.radius.label": "Radio de Cobertura",
+  "zones.config.radio.hint": "Clic en el mapa para mover el centro de la zona",
+  "zones.config.points.label": "Puntos del Polígono",
+  "zones.config.polygon.hint": "Clic en el mapa para agregar vértices (mínimo 3)",
+  "zones.config.points.undo": "Deshacer punto",
+  "zones.config.points.clear": "Limpiar",
+  "zones.config.cancel": "Cancelar",
+  "zones.config.save": "Guardar Cambios"
 }
