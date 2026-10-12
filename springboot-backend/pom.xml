@@ -97,9 +97,22 @@
         <artifactId>postgresql</artifactId>
         <scope>runtime</scope>
     </dependency>
-    
-	</dependencies>
 
+    <!-- Spring Boot Starter for Flyway Auto-configuration -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-flyway</artifactId>
+    </dependency>
+
+    <!-- Explicit PostgreSQL support required by modern Flyway versions -->
+    <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-database-postgresql</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+
+    </dependencies>
+    
 	<build>
 		<plugins>
 
