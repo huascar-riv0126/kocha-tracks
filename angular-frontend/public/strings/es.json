@@ -105,5 +105,6 @@
   "zones.events.none": "Sin incidentes activos",
   "zones.editing": "EDITANDO",
   "zones.edit": "Editar zona",
-  "zones.delete": "Eliminar zona"
+  "zones.delete": "Eliminar zona",
+  "zones.empty": "Aún no tienes zonas. Crea tu primera zona."
 }
