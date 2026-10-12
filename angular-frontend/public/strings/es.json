@@ -95,5 +95,15 @@
   "sidebar.category.accident": "Accidente",
   "sidebar.category.roadblock": "Corte de vía",
   "sidebar.category.protest": "Protesta",
-  "sidebar.category.other": "Otro"
+  "sidebar.category.other": "Otro",
+  "zones.my.title": "Mis Zonas de Interés",
+  "zones.new": "Nueva Zona",
+  "zones.type.radio": "Radio",
+  "zones.type.custom": "Área personalizada",
+  "zones.type.polygon": "Polígono",
+  "zones.events.active": "eventos activos",
+  "zones.events.none": "Sin incidentes activos",
+  "zones.editing": "EDITANDO",
+  "zones.edit": "Editar zona",
+  "zones.delete": "Eliminar zona"
 }
