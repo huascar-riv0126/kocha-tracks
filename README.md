@@ -61,27 +61,12 @@ touch .env
 
 ```
 
-Agrega las siguientes variables, reemplazando los valores con tus credenciales de PostgreSQL:
+Agrega las siguientes variables, reemplazando los valores con los que estan dentro de la tarjeta de Trello:
 ```properties
-DB_URL=jdbc:postgresql://localhost:5432/kocha_tracks_db
+DB_URL=jdbc:postgresql
 DB_USERNAME=tu_usuario_postgres
 DB_PASSWORD=tu_contrasena
 ```
-
-3. **Migraciones de Base de Datos (Flyway + Hibernate):**
-El proyecto utiliza Flyway para versionar la base de datos. Los scripts de migración se encuentran en `src/main/resources/db/migration/`. Al arrancar el proyecto, Flyway ejecutará automáticamente los scripts pendientes.
-*Flujo de trabajo para generar nuevas migraciones en desarrollo:*
-* Modifica tus entidades `@Entity` en Java.
-* En `application.properties`, habilita temporalmente la exportación de DDL de Hibernate:
-```properties
-spring.jpa.hibernate.ddl-auto=create
-spring.jpa.properties.jakarta.persistence.schema-generation.scripts.action=create
-spring.jpa.properties.jakarta.persistence.schema-generation.scripts.create-target=schema.sql
-```
-
-* Ejecuta el proyecto. Hibernate generará un archivo `schema.sql` en la raíz.
-* Copia el contenido de `schema.sql` y pégalo en un nuevo script de Flyway (ej. `V2__descripcion_del_cambio.sql`) dentro de la carpeta `db/migration/`.
-* Restaura tu `application.properties` para que Flyway retome el control (`spring.jpa.hibernate.ddl-auto=validate`).
 
 3. **Descargar dependencias, compilar y ejecutar:**
 ```bash
@@ -130,6 +115,35 @@ ng serve
 
 ---
 
+## Migraciones de Base de Datos (Flyway + Hibernate)
+El proyecto utiliza Flyway para versionar la **estructura** de la base de datos. Los scripts de migración se encuentran en `src/main/resources/db/migration/`. Al arrancar el proyecto, Flyway ejecutará automáticamente los scripts pendientes.
+
+Hibernate solo **valida** que las entidades coincidan con la base de datos (`spring.jpa.hibernate.ddl-auto=validate`). Nunca crea ni modifica tablas.
+
+> **Qué se versiona:** únicamente la estructura de las tablas y los cambios en sus columnas (crear tablas, agregar, modificar o eliminar columnas, constraints, índices).
+> Los datos insertados desde la API (por ejemplo, usando Bruno, Postman o el frontend) **NO** se guardan en las migraciones.
+
+> **Las migraciones se escriben manualmente en SQL.** No existe un comando que las genere automáticamente.
+
+### Flujo de trabajo para crear una nueva migración
+
+* Modifica o agrega tus entidades `@Entity` en el backend con Java.
+* Crea un nuevo script en `src/main/resources/db/migration/` con el nombre `V<n>__descripcion_del_cambio.sql` (ej. `V2__add_deleted_at_to_source.sql`). Usa la siguiente versión consecutiva y **dos guiones bajos** después del número.
+* Escribe a mano el SQL que refleje el cambio en la estructura:
+```sql
+-- V2__add_deleted_at_to_source.sql
+ALTER TABLE source ADD COLUMN deleted_at TIMESTAMP;
+```
+* Arranca el proyecto. Flyway aplicará la migración y Hibernate validará que las entidades coincidan con la base de datos. Si no coinciden, la aplicación fallará al iniciar: falta o está mal la migración.
+* Haz commit de la entidad y de su migración juntas.
+
+*Reglas importantes:*
+* **Nunca edites una migración que ya fue aplicada.** Flyway valida el checksum y fallará. Para corregir algo, crea una nueva migración.
+* Nunca uses `spring.jpa.hibernate.ddl-auto=create` o `update`: borran o alteran tablas fuera del control de Flyway.
+* Revisa el SQL antes de aplicarlo. Un renombre de columna debe escribirse como `ALTER TABLE ... RENAME COLUMN`, no como `DROP` + `ADD`, para no perder los datos de esa columna.
+
+---
+
 ## Despliegue (Deploy)
 
 El proyecto está diseñado para desplegarse en tres capas separadas utilizando servicios en la nube modernos y gratuitos (o de bajo costo).
@@ -138,20 +152,27 @@ El proyecto está diseñado para desplegarse en tres capas separadas utilizando 
 
 Supabase actúa como nuestro proveedor de base de datos en la nube.
 
-* Crea un proyecto en [Supabase](https://supabase.com/).
-* Dirígete a la sección de configuración de Base de Datos (Database) y obtén el **Connection String** (URI de conexión JDBC).
+* Crea un proyecto en [Supabase](https://supabase.com/)
+
+> Anotate la contraseña que le pusiste o auto generaste para el acceso a la base de datos.
+
 * No necesitas crear las tablas manualmente. Flyway se encargará de crear el esquema la primera vez que el Backend en producción se conecte a Supabase.
+* Dirígete a la sección de conexion directa a la Base de Datos y obtén el **Connection String** usando *session pooler* y en formato *JDBC*.
+
+> Supabase te dara un URL similar a: `jdbc:postgresql://[dominio-del-pooler]:5432/postgres?user=postgres.[id-dentro-del-dominio]&password=[YOUR-PASSWORD]` debes modificarla para que quede asi: `jdbc:postgresql://[dominio-del-pooler]:5432/postgres?sslmode=require`, no borres sin anotar antes el *id dentro del dominio* que te da Supabase. Este enlace de conexion directa y el id dentro del dominio se usan como variables de entorno para deployar el backend.
 
 ### 2. Backend: Render
 
 El backend se despliega como un contenedor Docker en [Render](https://render.com/).
 
-* Crea un nuevo "Web Service" en Render y conéctalo a tu repositorio de GitHub.
+* Crea un nuevo "Web Service" en Render y conéctalo a tu repositorio de GitHub (puedes crear un fork si no te permite hacerlo con este repositorio).
 * Configura el entorno de ejecución seleccionando **Docker** (Render detectará automáticamente el archivo `Dockerfile` ubicado en la carpeta del backend).
 * En la sección "Environment Variables" de Render, agrega las variables de entorno para producción:
-* `DB_URL`: La URL JDBC obtenida de Supabase.
-* `DB_USERNAME`: El usuario de Supabase (usualmente `postgres`).
+* `DB_URL`: La URL JDBC de Supabase modificada.
+* `DB_USERNAME`: El usuario de Supabase con id del dominio (`postgres.[id]`).
 * `DB_PASSWORD`: La contraseña de tu base de datos en Supabase.
+
+> Si ya estas en el Trello del equipo, puedes usar los valores en la tarjeta que contiene las variables de entorno.
 
 *Durante el primer despliegue exitoso, Spring Boot y Flyway se conectarán a Supabase y ejecutarán los archivos `V<Version>__*.sql` automáticamente.*
 
