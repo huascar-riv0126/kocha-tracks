@@ -68,6 +68,8 @@ DB_USERNAME=tu_usuario_postgres
 DB_PASSWORD=tu_contrasena
 ```
 
+> Si ya estas o eres parte del Tablero de Trello, puedes usar los valores para *stagging* en la tarjeta de variables de entorno del backend.
+
 3. **Descargar dependencias, compilar y ejecutar:**
 ```bash
 ./mvnw spring-boot:run
@@ -172,7 +174,7 @@ El backend se despliega como un contenedor Docker en [Render](https://render.com
 * `DB_USERNAME`: El usuario de Supabase con id del dominio (`postgres.[id]`).
 * `DB_PASSWORD`: La contraseña de tu base de datos en Supabase.
 
-> Si ya estas en el Trello del equipo, puedes usar los valores en la tarjeta que contiene las variables de entorno.
+> Si ya estas en el tablero de Trello, puedes usar los valores de *produccion* en la tarjeta que contiene las variables de entorno del backend.
 
 *Durante el primer despliegue exitoso, Spring Boot y Flyway se conectarán a Supabase y ejecutarán los archivos `V<Version>__*.sql` automáticamente.*
 
