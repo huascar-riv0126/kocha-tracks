@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import type * as Leaflet from 'leaflet';
 import { EventMockService } from '../../event/event-mock';
 import { EventMock } from '../../event/event-mock.model';
-// HU-7: Panel lateral
 import { SidebarReportsComponent } from './components/sidebar-reports/sidebar-reports';
 
 export const COCHABAMBA_CENTER: [number, number] = [-17.3895, -66.1568];
@@ -25,6 +24,8 @@ export class MapView implements AfterViewInit, OnDestroy {
   private map?: Leaflet.Map;
   private readonly isBrowser: boolean;
   private destroyed = false;
+  
+private markersMap: Map<number, Leaflet.CircleMarker> = new Map();
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -38,8 +39,6 @@ export class MapView implements AfterViewInit, OnDestroy {
     if (!this.isBrowser) return;
 
     const L = await import('leaflet');
-
-    // El componente pudo destruirse mientras cargaba Leaflet
     if (this.destroyed) return;
 
     const host = document.getElementById(this.mapId());
@@ -47,6 +46,7 @@ export class MapView implements AfterViewInit, OnDestroy {
 
     this.map?.remove();
     this.map = undefined;
+    this.markersMap.clear();
 
     if ((host as HTMLElement & { _leaflet_id?: unknown })._leaflet_id !== undefined) {
       host.innerHTML = '';
@@ -77,30 +77,47 @@ export class MapView implements AfterViewInit, OnDestroy {
         fillOpacity: 0.9,
         className: 'no-outline-marker'
       }).addTo(map);
+      
+      this.markersMap.set(event.id, marker);
 
-      // Popup informativo existente
+      const address = event.location || 'Ubicación no especificada';
+      const sourceInfo = event.sourceName || 'Múltiples reportes';
+
       const popupContent = `
-        <div style="text-align: center; font-family: sans-serif; min-width: 160px; margin: -5px;">
-          <h4 style="margin: 0 0 5px 0; color: #ffffff; font-size: 14px;">${event.title}</h4>
-          <p style="margin: 0 0 10px 0; font-size: 12px; color: ${markerColor}; font-weight: bold;">
-            Estado: ${event.state.toUpperCase()}
-          </p>
+        <div style="text-align: left; font-family: sans-serif; min-width: 240px; padding-right: 15px;">
+          <h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 16px; border-bottom: 1px solid #4b5563; padding-bottom: 8px;">
+            ${event.title}
+          </h4>
+          <div style="font-size: 13px; color: #d1d5db; margin-bottom: 15px; line-height: 1.5;">
+            <p style="margin: 5px 0;">
+              <span style="color: #9ca3af;">Ubicación:</span><br/>
+              <strong>${address}</strong>
+            </p>
+            <p style="margin: 5px 0;">
+              <span style="color: #9ca3af;">Fuentes:</span> 
+              ${sourceInfo}
+            </p>
+            
+            <div style="margin: 12px 0 6px 0; display: flex; align-items: center; gap: 8px;">
+              <span style="color: #9ca3af;">Estado actual:</span> 
+              <span style="background-color: ${markerColor}20; color: ${markerColor}; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; border: 1px solid ${markerColor}50;">
+                ${event.state.toUpperCase()}
+              </span>
+            </div>
+
+          </div>
           <button 
             class="btn-detalles" 
-            style="background-color: #f97316; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; width: 100%;">
-            Clic para ver detalles
+            style="background-color: #f97316; color: white; border: none; padding: 10px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; width: 100%; transition: background-color 0.2s;">
+            Ver información detallada
           </button>
         </div>
       `;
 
       marker.bindPopup(popupContent, {
         className: 'kocha-dark-tooltip',
-        closeButton: false,
-        offset: [0, -5]
-      });
-
-      marker.on('mouseover', () => {
-        marker.openPopup();
+        closeButton: true,
+        offset: [0, -10] 
       });
 
       marker.on('popupopen', (e) => {
@@ -119,16 +136,23 @@ export class MapView implements AfterViewInit, OnDestroy {
     });
   }
 
-  // HU-7: Al seleccionar una tarjeta en el panel lateral, el mapa se centra en las coordenadas
   onSidebarEventSelect(event: EventMock): void {
     if (this.map) {
       this.map.setView(event.coordinates, 15);
       this.map.invalidateSize();
+      
+      const marker = this.markersMap.get(event.id);
+      if (marker) {
+        setTimeout(() => {
+          marker.openPopup();
+        }, 300);
+      }
     }
   }
 
   ngOnDestroy(): void {
     this.destroyed = true;
+    this.markersMap.clear();
     this.map?.remove();
     this.map = undefined;
   }
