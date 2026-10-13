@@ -4,6 +4,8 @@ export interface EventMock {
   id: number;
   title: string;
   coordinates: [number, number]; 
+  address?: string; 
+  sourceName?: string;
   state: 'activo' | 'resuelto';
   severity: Severity;
   elapsedTime: string;

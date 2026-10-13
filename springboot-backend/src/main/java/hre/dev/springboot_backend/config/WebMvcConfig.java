@@ -1,22 +1,33 @@
 package hre.dev.springboot_backend.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import hre.dev.springboot_backend.logging.RequestLoggingInterceptor;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final RateLimitInterceptor rateLimitInterceptor;
+    private final RequestLoggingInterceptor requestLoggerInterceptor;
 
-    public WebMvcConfig(RateLimitInterceptor rateLimitInterceptor) {
+    public WebMvcConfig(RateLimitInterceptor rateLimitInterceptor, RequestLoggingInterceptor requestLoggerInterceptor) {
         this.rateLimitInterceptor = rateLimitInterceptor;
+        this.requestLoggerInterceptor = requestLoggerInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(rateLimitInterceptor).addPathPatterns("/api/**");
+        registry.addInterceptor(requestLoggerInterceptor)
+            .addPathPatterns("/api/**")
+            .excludePathPatterns("/actuator/**")
+            .order(Ordered.HIGHEST_PRECEDENCE);
+
+        registry.addInterceptor (rateLimitInterceptor)
+        .addPathPatterns("/api/**");
     }
 
     @Override

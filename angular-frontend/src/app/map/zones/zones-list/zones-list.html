@@ -1,0 +1,39 @@
+<section
+  class="flex flex-col gap-3 p-4 bg-[var(--color-surface)]"
+  aria-label="Mis zonas de interés"
+  data-testid="zones-list"
+>
+  <header class="flex items-center justify-between gap-2">
+    <h3 class="m-0 text-sm font-bold text-[var(--color-txt-primary)]">
+      {{ 'zones.my.title' | getStrings }}
+    </h3>
+    <button
+      type="button"
+      (click)="createNew.emit()"
+      class="border-0 rounded-md bg-[var(--color-interactive-cta)] px-2.5 py-1 text-[11px] font-semibold text-white cursor-pointer hover:bg-[var(--color-interactive-cta-hover)] transition-colors"
+      data-testid="zones-list-new"
+    >
+      + {{ 'zones.new' | getStrings }}
+    </button>
+  </header>
+
+  <div class="flex flex-col" data-testid="zones-list-items">
+    @for (zone of zones(); track zone.id) {
+      <app-zone-card
+        [zone]="zone"
+        [selected]="zone.id === selectedId()"
+        [editing]="zone.id === editingId()"
+        (zoneSelected)="onSelect($event)"
+        (editZone)="editZone.emit($event)"
+        (deleteZone)="deleteZone.emit($event)"
+      />
+    } @empty {
+      <p
+        class="m-0 py-6 text-center text-xs text-[var(--color-txt-secondary)]"
+        data-testid="zones-list-empty"
+      >
+        {{ 'zones.empty' | getStrings }}
+      </p>
+    }
+  </div>
+</section>
