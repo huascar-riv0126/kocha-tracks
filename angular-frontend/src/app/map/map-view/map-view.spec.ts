@@ -127,4 +127,11 @@ describe('MapView', () => {
 
     expect(router.navigate).toHaveBeenCalledWith(['/evento', 1, 'detalles']);
   });
+
+  it('should apply embedded class when embedded input is true', () => {
+    fixture.componentRef.setInput('embedded', true);
+    fixture.detectChanges();
+    const section = fixture.nativeElement.querySelector('.map-page');
+    expect(section.classList.contains('embedded')).toBe(true);
+  });
 });
