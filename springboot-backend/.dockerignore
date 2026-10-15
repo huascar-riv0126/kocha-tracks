@@ -1,0 +1,15 @@
+### IDE Configuration ###
+.idea/
+.vscode/
+
+### Build ###
+target/
+
+### Git ###
+.git/
+.gitignore
+.gitattributes
+
+### Others ###
+*.iml
+.env*

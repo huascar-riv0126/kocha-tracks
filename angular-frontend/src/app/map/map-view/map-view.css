@@ -42,6 +42,7 @@
 
 .map-page.embedded {
   display: block;
+  height: auto;
 }
 
 .map-page.embedded .map-canvas {
