@@ -1,6 +1,9 @@
 package hre.dev.springboot_backend.model;
 
 import jakarta.persistence.*;
+import org.locationtech.jts.geom.Point;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
@@ -10,51 +13,174 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String title;
+    @Column(nullable = false, length = 255)
+    private String name;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
-    private Double latitude;
+    @Column(length = 255)
+    private String location;
 
-    @Column(nullable = false)
-    private Double longitude;
+    @Column(name = "point", columnDefinition = "geometry(Point, 4326)")
+    private Point point;
 
-    private String severity;
+    @Column(name = "started")
+    private LocalDateTime started;
 
-    @Column(name = "source_id")
-    private Long sourceId;
+    @Column(name = "ended")
+    private LocalDateTime ended;
+
+    @Column(name = "state", length = 50)
+    private String state;
+
+    @Column(name = "grade", length = 50)
+    private String grade;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true; // Flag para el borrado lógico
+    private Boolean isActive = true;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     public Event() {
     }
 
+    public Event(String name, String description, String location, Point point,
+                 LocalDateTime started, LocalDateTime ended, String state, String grade) {
+        this.name = name;
+        this.description = description;
+        this.location = location;
+        this.point = point;
+        this.started = started;
+        this.ended = ended;
+        this.state = state;
+        this.grade = grade;
+        this.isActive = true;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        if (this.isActive == null) {
+            this.isActive = true;
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
     // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getName() {
+        return name;
+    }
 
-    public Double getLatitude() { return latitude; }
-    public void setLatitude(Double latitude) { this.latitude = latitude; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Double getLongitude() { return longitude; }
-    public void setLongitude(Double longitude) { this.longitude = longitude; }
+    public String getDescription() {
+        return description;
+    }
 
-    public String getSeverity() { return severity; }
-    public void setSeverity(String severity) { this.severity = severity; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public Long getSourceId() { return sourceId; }
-    public void setSourceId(Long sourceId) { this.sourceId = sourceId; }
+    public String getLocation() {
+        return location;
+    }
 
-    public Boolean getIsActive() { return isActive; }
-    public void setIsActive(Boolean isActive) { this.isActive = isActive; }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public LocalDateTime getStarted() {
+        return started;
+    }
+
+    public void setStarted(LocalDateTime started) {
+        this.started = started;
+    }
+
+    public LocalDateTime getEnded() {
+        return ended;
+    }
+
+    public void setEnded(LocalDateTime ended) {
+        this.ended = ended;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
 }
