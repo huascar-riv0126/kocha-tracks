@@ -1,0 +1,34 @@
+<!-- Versión Clickeable (Para Navbar / Footer) -->
+<ng-container *ngIf="isClickable; else nonClickable">
+  <a routerLink="/" class="flex items-center gap-3 cursor-pointer select-none transition-transform hover:scale-105">
+    <ng-container *ngTemplateOutlet="brandContent"></ng-container>
+  </a>
+</ng-container>
+
+<!-- Versión Estática (Para usar dentro de otros componentes) -->
+<ng-template #nonClickable>
+  <div class="flex items-center gap-3 cursor-default select-none pointer-events-none">
+    <ng-container *ngTemplateOutlet="brandContent"></ng-container>
+  </div>
+</ng-template>
+
+<!-- Plantilla reutilizable con el Diseño del Logo y Texto -->
+<ng-template #brandContent>
+  <!-- Contenedor del ícono (Naranja interactivo con pin blanco) -->
+  <div class="flex items-center justify-center w-10 h-10 rounded-[10px] bg-[var(--color-interactive-cta)] text-[var(--color-neutral-white)]">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+  </div>
+  
+  <!-- Texto "Kocha Tracks" que cambia de color según la variante -->
+  <span *ngIf="variant !== 'logo-only'" 
+        class="text-2xl font-bold font-sans tracking-wide"
+        [ngClass]="{
+          'text-[var(--color-on-dark)]': variant === 'dark',
+          'text-[var(--color-txt-primary)]': variant === 'light'
+        }">
+    {{ 'brand' | getStrings }}
+  </span>
+</ng-template>
