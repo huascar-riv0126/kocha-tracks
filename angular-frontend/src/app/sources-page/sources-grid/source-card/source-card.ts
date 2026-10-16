@@ -4,6 +4,9 @@ import { Component, input } from '@angular/core';
   selector: 'app-info-card',
   standalone: true,
   templateUrl: './source-card.html',
+  host: {
+    class: 'block h-full',
+  },
 })
 export class SourceCard {
   readonly title = input.required<string>();

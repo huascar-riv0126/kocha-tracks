@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import * as L from 'leaflet';
 import { COCHABAMBA_CENTER, COCHABAMBA_ZOOM, MapView, OSM_TILE_URL } from './map-view';
 import { EventMockService } from '../../event/event-mock';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
 import { STRINGS_LOADER } from '../../core/strings/strings-token';
+import * as L from 'leaflet';
 
-const { mapMock, markerMock } = vi.hoisted(() => {
+const { mapMock, markerMock, leafletApi, leafletModule } = vi.hoisted(() => {
   const markerMock = {
     addTo: vi.fn().mockReturnThis(),
     bindPopup: vi.fn().mockReturnThis(),
@@ -18,14 +17,18 @@ const { mapMock, markerMock } = vi.hoisted(() => {
     invalidateSize: vi.fn(),
     remove: vi.fn(),
   };
-  return { mapMock, markerMock };
+  const leafletApi = {
+    map: vi.fn(() => mapMock),
+    tileLayer: vi.fn(() => ({ addTo: vi.fn() })),
+    circleMarker: vi.fn(() => markerMock),
+  };
+
+  const leafletModule = Object.assign({}, leafletApi, { default: leafletApi });
+
+  return { mapMock, markerMock, leafletApi, leafletModule };
 });
 
-vi.mock('leaflet', () => ({
-  map: vi.fn(() => mapMock),
-  tileLayer: vi.fn(() => ({ addTo: vi.fn() })),
-  circleMarker: vi.fn(() => markerMock),
-}));
+vi.mock('leaflet', () => leafletModule);
 
 describe('MapView', () => {
   let component: MapView;
@@ -121,7 +124,14 @@ describe('MapView', () => {
     handler({ popup: { getElement: () => popupEl } });
 
     popupEl.querySelector<HTMLButtonElement>('.btn-detalles')!.click();
-  
+
     expect(router.navigate).toHaveBeenCalledWith(['/evento', 1, 'detalles']);
+  });
+
+  it('should apply embedded class when embedded input is true', () => {
+    fixture.componentRef.setInput('embedded', true);
+    fixture.detectChanges();
+    const section = fixture.nativeElement.querySelector('.map-page');
+    expect(section.classList.contains('embedded')).toBe(true);
   });
 });

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular-frontend": "node dist/angular-frontend/server/server.mjs"
+    "serve:ssr": "node dist/angular-frontend/server/server.mjs"
   },
   "private": true,
   "packageManager": "npm@11.19.0",
