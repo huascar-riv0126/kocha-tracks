@@ -3,9 +3,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive, GetStringsPipe],
   selector: 'app-navbar',
-  styleUrl: './navbar.css',
+  standalone: true,
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    GetStringsPipe
+  ],
   templateUrl: './navbar.html',
+  styleUrl: './navbar.css',
 })
 export class Navbar {}

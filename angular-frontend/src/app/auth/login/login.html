@@ -1,0 +1,142 @@
+<section
+  class="min-h-screen flex items-center justify-center bg-section-alt px-4 py-8"
+>
+  <div
+    class="w-full max-w-[560px] rounded-xl border border-border-default bg-surface px-6 py-8 shadow-lg sm:px-12 sm:py-11"
+  >
+
+    <div class="mb-6 flex items-center gap-3">
+      <div
+        class="flex h-8 w-8 items-center justify-center rounded-lg bg-interactive-cta text-on-dark"
+      >
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path
+            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+          ></path>
+
+          <circle
+            cx="12"
+            cy="10"
+            r="3"
+          ></circle>
+        </svg>
+      </div>
+
+      <span class="text-2xl font-bold text-txt-primary">
+        Kocha Tracks
+      </span>
+    </div>
+
+    <h1 class="text-2xl font-bold text-txt-primary">
+      Inicio de sesión
+    </h1>
+
+    <form
+      class="mt-6 space-y-4"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <div>
+        <label
+          for="email"
+          class="mb-2 block text-sm font-medium text-txt-primary"
+        >
+          Correo electrónico
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="name@example.com"
+          [ngModel]="email()"
+          (ngModelChange)="email.set($event)"
+          class="h-11 w-full rounded-md border border-border-default bg-surface px-3 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+        />
+      </div>
+
+      <div>
+        <label
+          for="password"
+          class="mb-2 block text-sm font-medium text-txt-primary"
+        >
+          Contraseña
+        </label>
+
+        <div class="relative">
+
+          <input
+            id="password"
+            name="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            placeholder="••••••••"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+            class="h-11 w-full rounded-md border border-border-default bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          />
+
+          <button
+            type="button"
+            (click)="togglePassword()"
+            aria-label="Mostrar u ocultar contraseña"
+            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary"
+          >
+            <svg
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"
+              ></path>
+
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              ></circle>
+            </svg>
+          </button>
+
+        </div>
+      </div>
+
+      <div>
+        <a
+          href="#"
+          class="text-sm text-interactive-cta underline hover:text-interactive-cta-hover"
+        >
+          ¿Olvidaste tu contraseña?
+        </a>
+      </div>
+
+      <button
+        type="submit"
+        class="h-11 w-full rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition hover:bg-interactive-cta-hover"
+      >
+        Iniciar sesión
+      </button>
+
+      <p class="pt-1 text-sm text-txt-secondary">
+        ¿No tienes una cuenta?
+
+        <a
+          routerLink="/register"
+          class="text-interactive-cta underline hover:text-interactive-cta-hover"
+        >
+          Crear cuenta
+        </a>
+      </p>
+
+    </form>
+  </div>
+</section>
