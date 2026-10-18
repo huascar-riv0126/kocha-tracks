@@ -24,22 +24,14 @@ public class EventResponseDTO {
     private String grade;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
-
-    private Boolean isActive;
-
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime deletedAt;
 
     public EventResponseDTO() {
     }
 
     public EventResponseDTO(Long id, String name, String description, String location, PointDTO point,
                             LocalDateTime started, LocalDateTime ended, String state, String grade,
-                            LocalDateTime createdAt, LocalDateTime updatedAt, Boolean isActive, LocalDateTime deletedAt) {
+                            LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -49,10 +41,7 @@ public class EventResponseDTO {
         this.ended = ended;
         this.state = state;
         this.grade = grade;
-        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.isActive = isActive;
-        this.deletedAt = deletedAt;
     }
 
     public Long getId() {
@@ -127,35 +116,11 @@ public class EventResponseDTO {
         this.grade = grade;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
     }
 }

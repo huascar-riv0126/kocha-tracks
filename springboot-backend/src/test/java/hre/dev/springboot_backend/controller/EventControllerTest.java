@@ -58,7 +58,6 @@ class EventControllerTest {
         responseDTO.setEnded(requestDTO.getEnded());
         responseDTO.setState(requestDTO.getState());
         responseDTO.setGrade(requestDTO.getGrade());
-        responseDTO.setIsActive(true);
     }
 
     @Test

@@ -102,10 +102,7 @@ public class EventService {
         dto.setEnded(event.getEnded());
         dto.setState(event.getState());
         dto.setGrade(event.getGrade());
-        dto.setCreatedAt(event.getCreatedAt());
         dto.setUpdatedAt(event.getUpdatedAt());
-        dto.setIsActive(event.getIsActive());
-        dto.setDeletedAt(event.getDeletedAt());
         return dto;
     }
 }
