@@ -1,0 +1,129 @@
+<section class="register-page">
+  <div class="register-card">
+
+    <div class="brand">
+      <div class="brand-icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+      </div>
+
+      <span>Kocha Tracks</span>
+    </div>
+
+    <h1>Crea una cuenta</h1>
+
+    <p class="subtitle">
+      Únete a Kocha Tracks, reporta y da seguimiento en tiempo real
+    </p>
+
+    <form (ngSubmit)="onSubmit()">
+
+      <div class="field">
+        <label for="username">Nombre de Usuario</label>
+
+        <input
+          id="username"
+          type="text"
+          name="username"
+          placeholder="e.g. Junpi7489"
+          [ngModel]="username()"
+          (ngModelChange)="username.set($event)"
+        />
+      </div>
+
+      <div class="field">
+        <label for="email">Dirección de correo electrónico</label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="name@example.com"
+          [ngModel]="email()"
+          (ngModelChange)="email.set($event)"
+        />
+      </div>
+
+      <div class="field">
+        <label for="password">Contraseña</label>
+
+        <div class="password-wrapper">
+          <input
+            id="password"
+            name="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            placeholder="••••••••"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+          />
+
+          <button
+            type="button"
+            class="password-button"
+            (click)="togglePassword()"
+            aria-label="Mostrar u ocultar contraseña"
+          >
+            👁
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="confirmPassword">Confirma la contraseña</label>
+
+        <div class="password-wrapper">
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            [ngModel]="confirmPassword()"
+            (ngModelChange)="confirmPassword.set($event)"
+          />
+
+          @if (passwordsMatch()) {
+            <span class="check">✓</span>
+          }
+        </div>
+      </div>
+
+      <label class="terms">
+        <input
+          type="checkbox"
+          name="acceptedTerms"
+          [ngModel]="acceptedTerms()"
+          (ngModelChange)="acceptedTerms.set($event)"
+        />
+
+        <span>
+          Acepto los
+          <a href="#">Términos de servicio</a>
+          y
+          <a href="#">Política de privacidad</a>.
+        </span>
+      </label>
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="!formValid()"
+      >
+        Crear cuenta
+      </button>
+
+      <p class="login-text">
+        ¿Ya tienes una cuenta?
+        <a routerLink="/login">Iniciar sesión</a>
+      </p>
+
+    </form>
+  </div>
+</section>
