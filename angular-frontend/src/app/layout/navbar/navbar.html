@@ -1,18 +1,70 @@
 <nav class="navbar">
+
   <div class="navbar-brand">
     <app-brand variant="dark" [isClickable]="true"></app-brand>
   </div>
 
   <ul class="navbar-links">
-    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{ "navbar.home" | getStrings }}</a></li>
-    <li><a routerLink="/map" routerLinkActive="active">{{ "navbar.map" | getStrings }}</a></li>
-    <li><a href="#">{{ "navbar.history" | getStrings }}</a></li>
-    <li><a href="#">{{ "navbar.forum" | getStrings }}</a></li>
-    <li><a routerLink="/fuentes" routerLinkActive="active">{{ "navbar.sources" | getStrings }}</a></li>
+
+    <li>
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ "navbar.home" | getStrings }}
+      </a>
+    </li>
+
+    <li>
+      <a
+        routerLink="/map"
+        routerLinkActive="active"
+      >
+        {{ "navbar.map" | getStrings }}
+      </a>
+    </li>
+
+    <li>
+      <a href="#">
+        {{ "navbar.history" | getStrings }}
+      </a>
+    </li>
+
+    <li>
+      <a href="#">
+        {{ "navbar.forum" | getStrings }}
+      </a>
+    </li>
+
+    <li>
+      <a
+        routerLink="/fuentes"
+        routerLinkActive="active"
+      >
+        {{ "navbar.sources" | getStrings }}
+      </a>
+    </li>
+
   </ul>
 
   <div class="navbar-auth">
-    <a href="#" class="btn-register">{{ "navbar.sign.out" | getStrings }}</a>
-    <button class="btn-login">{{ "navbar.sign.in" | getStrings }}</button>
+
+    <a
+      href="#"
+      class="btn-register"
+    >
+      {{ "navbar.sign.out" | getStrings }}
+    </a>
+
+    <a
+      routerLink="/login"
+      routerLinkActive="active"
+      class="btn-login"
+    >
+      {{ "navbar.sign.in" | getStrings }}
+    </a>
+
   </div>
+
 </nav>
