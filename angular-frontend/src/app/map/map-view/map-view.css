@@ -42,6 +42,7 @@
 
 :host {
   display: block;
+  height: auto;
 }
 
 /* Cuando el MapView vive dentro de Zonas, el host debe llenar el slot flex */

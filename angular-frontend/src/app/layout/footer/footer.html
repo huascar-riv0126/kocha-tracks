@@ -2,13 +2,7 @@
   <div class="footer-content">
     <div class="footer-brand-section">
       <div class="brand-header">
-        <div class="logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg>
-        </div>
-        <span class="brand-name">{{ 'brand' | getStrings }}</span>
+        <app-brand variant="dark" [isClickable]="true"></app-brand>
       </div>
       <p class="brand-description">{{ 'footer.description' | getStrings }}</p>
     </div>
