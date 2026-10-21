@@ -6,6 +6,7 @@ import { ZonesPage } from './map/zones/zones-page/zones-page';
 import { EventDetailsPage } from './event/details-page/details-page';
 import { eventResolver } from './event/event-resolver';
 import { NotFound } from './status/not-found/not-found';
+import { Register } from './auth/register/register';
 import { Login } from './auth/login/login';
 
 export const routes: Routes = [
@@ -17,6 +18,7 @@ export const routes: Routes = [
 
   { path: 'fuentes', component: SourcesPage },
 
+  { path: 'register', component: Register },
   { path: 'login', component: Login },
 
   {

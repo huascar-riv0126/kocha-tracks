@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
-import { BrandComponent } from '../../shared/brand/brand';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive, GetStringsPipe, BrandComponent],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    GetStringsPipe
+  ],
   selector: 'app-navbar',
-  templateUrl: './navbar.html',
   styleUrl: './navbar.css',
+  templateUrl: './navbar.html',
 })
 export class Navbar {}
