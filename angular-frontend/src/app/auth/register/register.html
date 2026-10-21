@@ -1,33 +1,88 @@
-<section class="register-page">
-  <div class="register-card">
+<section
+  class="min-h-screen flex items-center justify-center bg-section-alt px-4 py-8 box-border"
+>
+  <div
+    class="
+      w-full
+      max-w-[560px]
+      bg-surface
+      border
+      border-border-default
+      rounded-[10px]
+      px-[52px]
+      py-[46px]
+      shadow-[0_8px_25px_rgba(0,0,0,0.08)]
+      max-[600px]:px-6
+      max-[600px]:py-8
+    "
+  >
 
-    <div class="brand">
-      <div class="brand-icon">
+    <!-- Marca -->
+    <div
+      class="flex items-center gap-[10px] mb-[22px] text-2xl font-bold text-txt-primary"
+    >
+      <div
+        class="
+          w-8
+          h-8
+          bg-interactive-cta
+          text-on-dark
+          rounded-lg
+          flex
+          items-center
+          justify-center
+        "
+      >
         <svg
+          class="w-5 h-5"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
           aria-hidden="true"
         >
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-          <circle cx="12" cy="10" r="3"></circle>
+          <path
+            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+          ></path>
+
+          <circle
+            cx="12"
+            cy="10"
+            r="3"
+          ></circle>
         </svg>
       </div>
 
-      <span>Kocha Tracks</span>
+      <span>
+        Kocha Tracks
+      </span>
     </div>
 
-    <h1>Crea una cuenta</h1>
+    <!-- Título -->
+    <h1
+      class="m-0 text-[25px] font-bold text-txt-primary"
+    >
+      Crea una cuenta
+    </h1>
 
-    <p class="subtitle">
+    <!-- Subtítulo -->
+    <p
+      class="mt-2 mb-7 text-sm text-neutral-500"
+    >
       Únete a Kocha Tracks, reporta y da seguimiento en tiempo real
     </p>
 
     <form (ngSubmit)="onSubmit()">
 
-      <div class="field">
-        <label for="username">Nombre de Usuario</label>
+      <!-- Usuario -->
+      <div class="mb-[18px]">
+
+        <label
+          for="username"
+          class="block mb-[7px] text-[13px] font-medium text-txt-primary"
+        >
+          Nombre de Usuario
+        </label>
 
         <input
           id="username"
@@ -36,11 +91,34 @@
           placeholder="e.g. Junpi7489"
           [ngModel]="username()"
           (ngModelChange)="username.set($event)"
+          class="
+            w-full
+            h-[42px]
+            px-3
+            box-border
+            border
+            border-neutral-300
+            rounded-[7px]
+            bg-surface
+            text-sm
+            text-txt-primary
+            outline-none
+            transition
+            focus:border-interactive-cta
+          "
         />
+
       </div>
 
-      <div class="field">
-        <label for="email">Dirección de correo electrónico</label>
+      <!-- Correo -->
+      <div class="mb-[18px]">
+
+        <label
+          for="email"
+          class="block mb-[7px] text-[13px] font-medium text-txt-primary"
+        >
+          Dirección de correo electrónico
+        </label>
 
         <input
           id="email"
@@ -49,13 +127,37 @@
           placeholder="name@example.com"
           [ngModel]="email()"
           (ngModelChange)="email.set($event)"
+          class="
+            w-full
+            h-[42px]
+            px-3
+            box-border
+            border
+            border-neutral-300
+            rounded-[7px]
+            bg-surface
+            text-sm
+            text-txt-primary
+            outline-none
+            transition
+            focus:border-interactive-cta
+          "
         />
+
       </div>
 
-      <div class="field">
-        <label for="password">Contraseña</label>
+      <!-- Contraseña -->
+      <div class="mb-[18px]">
 
-        <div class="password-wrapper">
+        <label
+          for="password"
+          class="block mb-[7px] text-[13px] font-medium text-txt-primary"
+        >
+          Contraseña
+        </label>
+
+        <div class="relative">
+
           <input
             id="password"
             name="password"
@@ -63,23 +165,59 @@
             placeholder="••••••••"
             [ngModel]="password()"
             (ngModelChange)="password.set($event)"
+            class="
+              w-full
+              h-[42px]
+              px-3
+              pr-11
+              box-border
+              border
+              border-neutral-300
+              rounded-[7px]
+              bg-surface
+              text-sm
+              text-txt-primary
+              outline-none
+              transition
+              focus:border-interactive-cta
+            "
           />
 
           <button
             type="button"
-            class="password-button"
             (click)="togglePassword()"
             aria-label="Mostrar u ocultar contraseña"
+            class="
+              absolute
+              right-[11px]
+              top-1/2
+              -translate-y-1/2
+              border-0
+              bg-transparent
+              cursor-pointer
+              text-base
+              text-txt-secondary
+            "
           >
             👁
           </button>
+
         </div>
+
       </div>
 
-      <div class="field">
-        <label for="confirmPassword">Confirma la contraseña</label>
+      <!-- Confirmar contraseña -->
+      <div class="mb-[18px]">
 
-        <div class="password-wrapper">
+        <label
+          for="confirmPassword"
+          class="block mb-[7px] text-[13px] font-medium text-txt-primary"
+        >
+          Confirma la contraseña
+        </label>
+
+        <div class="relative">
+
           <input
             id="confirmPassword"
             name="confirmPassword"
@@ -87,43 +225,138 @@
             placeholder="••••••••"
             [ngModel]="confirmPassword()"
             (ngModelChange)="confirmPassword.set($event)"
+            class="
+              w-full
+              h-[42px]
+              px-3
+              pr-11
+              box-border
+              border
+              border-neutral-300
+              rounded-[7px]
+              bg-surface
+              text-sm
+              text-txt-primary
+              outline-none
+              transition
+              focus:border-interactive-cta
+            "
           />
 
           @if (passwordsMatch()) {
-            <span class="check">✓</span>
+            <span
+              class="
+                absolute
+                right-[13px]
+                top-1/2
+                -translate-y-1/2
+                text-xl
+                font-bold
+                text-status-success-500
+              "
+            >
+              ✓
+            </span>
           }
+
         </div>
+
       </div>
 
-      <label class="terms">
+      <!-- Términos -->
+      <label
+        class="
+          flex
+          items-start
+          gap-[9px]
+          mt-[6px]
+          mb-5
+          text-[13px]
+          text-neutral-500
+          cursor-pointer
+        "
+      >
+
         <input
           type="checkbox"
           name="acceptedTerms"
           [ngModel]="acceptedTerms()"
           (ngModelChange)="acceptedTerms.set($event)"
+          class="mt-[2px] accent-interactive-cta"
         />
 
         <span>
           Acepto los
-          <a href="#">Términos de servicio</a>
+
+          <a
+            href="#"
+            class="
+              text-interactive-cta
+              underline
+              hover:text-interactive-cta-hover
+            "
+          >
+            Términos de servicio
+          </a>
+
           y
-          <a href="#">Política de privacidad</a>.
+
+          <a
+            href="#"
+            class="
+              text-interactive-cta
+              underline
+              hover:text-interactive-cta-hover
+            "
+          >
+            Política de privacidad
+          </a>.
         </span>
+
       </label>
 
+      <!-- Crear cuenta -->
       <button
         type="submit"
-        class="submit-button"
         [disabled]="!formValid()"
+        class="
+          w-full
+          h-[42px]
+          border-0
+          rounded-[7px]
+          bg-interactive-cta
+          text-on-dark
+          text-sm
+          font-bold
+          cursor-pointer
+          transition
+          hover:bg-interactive-cta-hover
+          disabled:opacity-50
+          disabled:cursor-not-allowed
+        "
       >
         Crear cuenta
       </button>
 
-      <p class="login-text">
+      <!-- Login -->
+      <p
+        class="mt-[18px] text-center text-[13px] text-neutral-500"
+      >
         ¿Ya tienes una cuenta?
-        <a routerLink="/login">Iniciar sesión</a>
+
+        <a
+          routerLink="/login"
+          class="
+            text-interactive-cta
+            underline
+            hover:text-interactive-cta-hover
+          "
+        >
+          Iniciar sesión
+        </a>
       </p>
 
     </form>
+
   </div>
 </section>
