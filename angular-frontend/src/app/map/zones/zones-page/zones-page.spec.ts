@@ -11,19 +11,23 @@ import { StringsServiceStub } from '@testutils/stubs';
 import { routes } from '../../../app.routes';
 import { ZONES_MOCK } from '../zones-mock';
 
-vi.mock('leaflet', () => ({
-  map: vi.fn(() => ({
-    setView: vi.fn().mockReturnThis(),
-    invalidateSize: vi.fn(),
-    remove: vi.fn(),
-  })),
-  tileLayer: vi.fn(() => ({ addTo: vi.fn() })),
-  circleMarker: vi.fn(() => ({
-    addTo: vi.fn().mockReturnThis(),
-    bindPopup: vi.fn().mockReturnThis(),
-    on: vi.fn().mockReturnThis(),
-  })),
-}));
+vi.mock('leaflet', () => {
+  const leafletApi = {
+    map: vi.fn(() => ({
+      setView: vi.fn().mockReturnThis(),
+      invalidateSize: vi.fn(),
+      remove: vi.fn(),
+    })),
+    tileLayer: vi.fn(() => ({ addTo: vi.fn() })),
+    circleMarker: vi.fn(() => ({
+      addTo: vi.fn().mockReturnThis(),
+      bindPopup: vi.fn().mockReturnThis(),
+      on: vi.fn().mockReturnThis(),
+    })),
+  };
+
+  return { ...leafletApi, default: leafletApi };
+});
 
 describe('ZonesPage', () => {
   let component: ZonesPage;
