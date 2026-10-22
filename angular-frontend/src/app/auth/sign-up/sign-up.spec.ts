@@ -5,7 +5,12 @@ import { StringsServiceStub } from '@testutils/stubs';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
 import { SignUp, SignUpPayload } from './sign-up';
 
-describe('SignUp', () => {
+/**
+ * UH-22.2 - Sign-Up form component.
+ * Each `describe` block maps to one requirement of the user story.
+ * Texts are rendered as translation keys because StringsServiceStub returns the key itself.
+ */
+describe('UH-22.2 Sign-Up form', () => {
   let fixture: ComponentFixture<SignUp>;
   let component: SignUp;
   let root: HTMLElement;
@@ -30,6 +35,8 @@ describe('SignUp', () => {
     fixture.detectChanges();
   };
 
+  const errorText = (id: string): string | undefined => byTestId(id)?.textContent?.trim();
+
   const submitButton = (): HTMLButtonElement => byTestId<HTMLButtonElement>('signup-submit')!;
 
   const fillPasswords = (password = 'secreto123', confirm = password): void => {
@@ -49,66 +56,75 @@ describe('SignUp', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Rendering', () => {
+    it('creates the component', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('renders the title, the four fields and the terms checkbox', () => {
+      expect(root.querySelector('h1')?.textContent?.trim()).toBe('auth.signup.title');
+      expect(byTestId('signup-username')).toBeTruthy();
+      expect(byTestId('signup-email')).toBeTruthy();
+      expect(byTestId('signup-password')).toBeTruthy();
+      expect(byTestId('signup-confirm')).toBeTruthy();
+      expect(byTestId('signup-terms')).toBeTruthy();
+    });
+
+    it('does not show any validation error on first render', () => {
+      expect(root.querySelectorAll('[role="alert"]').length).toBe(0);
+    });
+
+    it('links to the login page', () => {
+      expect(byTestId<HTMLAnchorElement>('signup-login-link')?.getAttribute('href')).toBe('/login');
+    });
   });
 
-  it('should render the title, the four fields and the terms checkbox', () => {
-    expect(root.querySelector('h1')?.textContent?.trim()).toBe('auth.signup.title');
-    expect(byTestId('signup-username')).toBeTruthy();
-    expect(byTestId('signup-email')).toBeTruthy();
-    expect(byTestId('signup-password')).toBeTruthy();
-    expect(byTestId('signup-confirm')).toBeTruthy();
-    expect(byTestId('signup-terms')).toBeTruthy();
-  });
+  describe('Email field: validates that a valid email is entered', () => {
+    it.each(['plainaddress', 'missing@tld', '@no-user.com', 'two@@example.com', 'spaces in@example.com'])(
+      'rejects the invalid email "%s"',
+      (value) => {
+        typeInto('signup-email', value);
+        blur('signup-email');
 
-  it('should not show any validation error on first render', () => {
-    expect(root.querySelectorAll('[role="alert"]').length).toBe(0);
-  });
+        expect(errorText('signup-email-error')).toBe('auth.signup.error.email.invalid');
+      },
+    );
 
-  describe('email field', () => {
-    it('should show an error when the email is not valid', () => {
+    it.each(['user@example.com', 'first.last@sub.domain.org', 'user+tag@example.co'])(
+      'accepts the valid email "%s"',
+      (value) => {
+        typeInto('signup-email', value);
+        blur('signup-email');
+
+        expect(byTestId('signup-email-error')).toBeNull();
+      },
+    );
+
+    it('shows the required error when the email is left empty', () => {
+      blur('signup-email');
+
+      expect(errorText('signup-email-error')).toBe('auth.signup.error.email.required');
+    });
+
+    it('removes the error once the email is corrected', () => {
       typeInto('signup-email', 'correo-invalido');
       blur('signup-email');
+      expect(byTestId('signup-email-error')).toBeTruthy();
 
-      expect(byTestId('signup-email-error')?.textContent?.trim()).toBe(
-        'auth.signup.error.email.invalid',
-      );
-    });
-
-    it('should show the required error when the email is empty after leaving the field', () => {
-      blur('signup-email');
-
-      expect(byTestId('signup-email-error')?.textContent?.trim()).toBe(
-        'auth.signup.error.email.required',
-      );
-    });
-
-    it('should not show an error when the email is valid', () => {
       typeInto('signup-email', 'persona@example.com');
-      blur('signup-email');
 
       expect(byTestId('signup-email-error')).toBeNull();
     });
-
-    it('should paint the error message with the danger color', () => {
-      typeInto('signup-email', 'correo-invalido');
-      blur('signup-email');
-
-      expect(byTestId('signup-email-error')?.classList.contains('text-status-danger-500')).toBe(
-        true,
-      );
-    });
   });
 
-  describe('password visibility toggle', () => {
-    it('should hide the password and show the open eye by default', () => {
+  describe('Password field: eye icon shows and hides the password', () => {
+    it('hides the password with dots and shows the open eye by default', () => {
       expect(byTestId<HTMLInputElement>('signup-password')!.type).toBe('password');
       expect(byTestId('signup-eye-open')).toBeTruthy();
       expect(byTestId('signup-eye-off')).toBeNull();
     });
 
-    it('should show the password as plain text and the crossed eye after clicking the open eye', () => {
+    it('shows the password as plain text and swaps to the crossed eye when the open eye is clicked', () => {
       click('signup-password-toggle');
 
       expect(byTestId<HTMLInputElement>('signup-password')!.type).toBe('text');
@@ -116,7 +132,7 @@ describe('SignUp', () => {
       expect(byTestId('signup-eye-open')).toBeNull();
     });
 
-    it('should hide the password again after clicking the crossed eye', () => {
+    it('hides the password again and swaps back to the open eye when the crossed eye is clicked', () => {
       click('signup-password-toggle');
       click('signup-password-toggle');
 
@@ -125,20 +141,26 @@ describe('SignUp', () => {
       expect(byTestId('signup-eye-off')).toBeNull();
     });
 
-    it('should keep the confirm field hidden when the password is shown', () => {
+    it('keeps the confirm field hidden when the password is shown', () => {
       click('signup-password-toggle');
 
       expect(byTestId<HTMLInputElement>('signup-confirm')!.type).toBe('password');
     });
+
+    it('shows the required error when the password is left empty', () => {
+      blur('signup-password');
+
+      expect(errorText('signup-password-error')).toBe('auth.signup.error.password.required');
+    });
   });
 
-  describe('confirm password field', () => {
-    it('should not show any icon while it is empty', () => {
+  describe('Confirm password field: must match the password', () => {
+    it('shows no icon while it is empty', () => {
       expect(byTestId('signup-confirm-match')).toBeNull();
       expect(byTestId('signup-confirm-mismatch')).toBeNull();
     });
 
-    it('should show the danger X icon when the passwords do not match', () => {
+    it('shows the X icon in danger-500 when the passwords do not match', () => {
       fillPasswords('secreto123', 'otra-cosa');
 
       const icon = byTestId('signup-confirm-mismatch');
@@ -147,7 +169,7 @@ describe('SignUp', () => {
       expect(byTestId('signup-confirm-match')).toBeNull();
     });
 
-    it('should show the success check icon when the passwords match', () => {
+    it('shows the check icon in success-500 when the passwords match', () => {
       fillPasswords('secreto123');
 
       const icon = byTestId('signup-confirm-match');
@@ -156,7 +178,7 @@ describe('SignUp', () => {
       expect(byTestId('signup-confirm-mismatch')).toBeNull();
     });
 
-    it('should switch back to the X icon if the password is changed afterwards', () => {
+    it('switches back to the X icon if the password is changed afterwards', () => {
       fillPasswords('secreto123');
       typeInto('signup-password', 'cambiada');
 
@@ -164,58 +186,69 @@ describe('SignUp', () => {
       expect(byTestId('signup-confirm-match')).toBeNull();
     });
 
-    it('should show the mismatch error below the field after leaving it', () => {
+    it('shows the mismatch error below the field after leaving it', () => {
       fillPasswords('secreto123', 'otra-cosa');
       blur('signup-confirm');
 
-      expect(byTestId('signup-confirm-error')?.textContent?.trim()).toBe(
-        'auth.signup.error.confirm.mismatch',
-      );
+      expect(errorText('signup-confirm-error')).toBe('auth.signup.error.confirm.mismatch');
+    });
+
+    it('shows the required error when it is left empty', () => {
+      blur('signup-confirm');
+
+      expect(errorText('signup-confirm-error')).toBe('auth.signup.error.confirm.required');
     });
   });
 
-  describe('create account button', () => {
-    it('should be disabled initially', () => {
+  describe('Create account button: disabled until passwords match and terms are accepted', () => {
+    it('is disabled initially', () => {
       expect(submitButton().disabled).toBe(true);
     });
 
-    it('should stay disabled when the passwords match but the terms are not accepted', () => {
+    it('stays disabled when the passwords match but the terms are not accepted', () => {
       fillPasswords('secreto123');
 
       expect(submitButton().disabled).toBe(true);
     });
 
-    it('should stay disabled when the terms are accepted but the passwords do not match', () => {
+    it('stays disabled when the terms are accepted but the passwords do not match', () => {
       fillPasswords('secreto123', 'otra-cosa');
       click('signup-terms');
 
       expect(submitButton().disabled).toBe(true);
     });
 
-    it('should stay disabled when the terms are accepted but the passwords are empty', () => {
+    it('stays disabled when the terms are accepted but the passwords are empty', () => {
       click('signup-terms');
 
       expect(submitButton().disabled).toBe(true);
     });
 
-    it('should be enabled when the passwords match and the terms are accepted', () => {
+    it('is enabled when the passwords match and the terms are accepted', () => {
       fillPasswords('secreto123');
       click('signup-terms');
 
       expect(submitButton().disabled).toBe(false);
     });
 
-    it('should be disabled again when the terms are unchecked', () => {
+    it('is disabled again when the terms are unchecked', () => {
       fillPasswords('secreto123');
       click('signup-terms');
       click('signup-terms');
 
       expect(submitButton().disabled).toBe(true);
     });
+
+    it('shows the terms error when the checkbox is unchecked after being checked', () => {
+      click('signup-terms');
+      click('signup-terms');
+
+      expect(errorText('signup-terms-error')).toBe('auth.signup.error.terms.required');
+    });
   });
 
-  describe('validation errors on submit', () => {
-    it('should show an error below each incomplete field and not emit the form', () => {
+  describe('Validation errors: shown below the incorrect field in danger-500', () => {
+    it('shows an error below each incomplete field and does not emit the form', () => {
       const emitted = vi.fn();
       component.signUp.subscribe(emitted);
 
@@ -223,16 +256,30 @@ describe('SignUp', () => {
       click('signup-terms');
       click('signup-submit');
 
-      expect(byTestId('signup-username-error')?.textContent?.trim()).toBe(
-        'auth.signup.error.username.required',
-      );
-      expect(byTestId('signup-email-error')?.textContent?.trim()).toBe(
-        'auth.signup.error.email.required',
-      );
+      expect(errorText('signup-username-error')).toBe('auth.signup.error.username.required');
+      expect(errorText('signup-email-error')).toBe('auth.signup.error.email.required');
       expect(emitted).not.toHaveBeenCalled();
     });
 
-    it('should emit the form data when everything is valid', () => {
+    it('places the error message after its input in the same field container', () => {
+      blur('signup-email');
+
+      const input = byTestId('signup-email')!;
+      const error = byTestId('signup-email-error')!;
+
+      expect(error.parentElement).toBe(input.parentElement);
+      expect(input.compareDocumentPosition(error) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it('paints the error message with the danger-500 color', () => {
+      blur('signup-email');
+
+      expect(byTestId('signup-email-error')?.classList.contains('text-status-danger-500')).toBe(
+        true,
+      );
+    });
+
+    it('emits the form data when everything is valid', () => {
       const emitted = vi.fn<(payload: SignUpPayload) => void>();
       component.signUp.subscribe(emitted);
 
@@ -251,9 +298,13 @@ describe('SignUp', () => {
     });
   });
 
-  it('should link to the login page', () => {
-    const link = byTestId<HTMLAnchorElement>('signup-login-link');
+  describe('Styling: Tailwind 4 classes and color variables', () => {
+    it('does not use inline styles', () => {
+      expect(root.querySelectorAll('[style]').length).toBe(0);
+    });
 
-    expect(link?.getAttribute('href')).toBe('/login');
+    it('uses the interactive-cta color variable on the submit button', () => {
+      expect(submitButton().classList.contains('bg-interactive-cta')).toBe(true);
+    });
   });
 });
