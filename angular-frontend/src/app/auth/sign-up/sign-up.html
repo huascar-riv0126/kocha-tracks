@@ -1,0 +1,322 @@
+<section class="min-h-screen flex items-center justify-center bg-section-alt px-4 py-8">
+  <div
+    class="w-full max-w-[664px] rounded-xl border border-border-default bg-surface px-6 py-8 shadow-lg sm:px-[62px] sm:py-[62px]"
+  >
+    <app-brand variant="light" [isClickable]="false" />
+
+    <h1 class="mt-6 text-2xl font-bold text-txt-primary">
+      {{ 'auth.signup.title' | getStrings }}
+    </h1>
+    <p class="mt-2 text-sm text-txt-secondary">
+      {{ 'auth.signup.subtitle' | getStrings }}
+    </p>
+
+    <form class="mt-6 space-y-5" novalidate (submit)="onSubmit($event)" data-testid="signup-form">
+      <!-- Nombre de usuario -->
+      <div>
+        <label for="signup-username" class="mb-2 block text-sm font-medium text-txt-primary">
+          {{ 'auth.signup.username.label' | getStrings }}
+        </label>
+        <input
+          id="signup-username"
+          name="username"
+          type="text"
+          autocomplete="username"
+          [placeholder]="'auth.signup.username.placeholder' | getStrings"
+          [value]="username()"
+          (input)="onUsernameInput($event)"
+          (blur)="touch('username')"
+          [attr.aria-invalid]="usernameError() ? 'true' : null"
+          [attr.aria-describedby]="usernameError() ? 'signup-username-error' : null"
+          [class]="usernameError() ? 'border-status-danger-500' : 'border-border-default'"
+          class="h-11 w-full rounded-md border bg-surface px-3 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="signup-username"
+        />
+        @if (usernameError(); as error) {
+          <p
+            id="signup-username-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="signup-username-error"
+          >
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Correo electrónico -->
+      <div>
+        <label for="signup-email" class="mb-2 block text-sm font-medium text-txt-primary">
+          {{ 'auth.signup.email.label' | getStrings }}
+        </label>
+        <input
+          id="signup-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          [placeholder]="'auth.signup.email.placeholder' | getStrings"
+          [value]="email()"
+          (input)="onEmailInput($event)"
+          (blur)="touch('email')"
+          [attr.aria-invalid]="emailError() ? 'true' : null"
+          [attr.aria-describedby]="emailError() ? 'signup-email-error' : null"
+          [class]="emailError() ? 'border-status-danger-500' : 'border-border-default'"
+          class="h-11 w-full rounded-md border bg-surface px-3 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="signup-email"
+        />
+        @if (emailError(); as error) {
+          <p
+            id="signup-email-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="signup-email-error"
+          >
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Contraseña -->
+      <div>
+        <label for="signup-password" class="mb-2 block text-sm font-medium text-txt-primary">
+          {{ 'auth.signup.password.label' | getStrings }}
+        </label>
+        <div class="relative">
+          <input
+            id="signup-password"
+            name="password"
+            autocomplete="new-password"
+            [type]="showPassword() ? 'text' : 'password'"
+            [placeholder]="'auth.signup.password.placeholder' | getStrings"
+            [value]="password()"
+            (input)="onPasswordInput($event)"
+            (blur)="touch('password')"
+            [attr.aria-invalid]="passwordError() ? 'true' : null"
+            [attr.aria-describedby]="passwordError() ? 'signup-password-error' : null"
+            [class]="passwordError() ? 'border-status-danger-500' : 'border-border-default'"
+            class="h-11 w-full rounded-md border bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+            data-testid="signup-password"
+          />
+          <button
+            type="button"
+            (click)="togglePassword()"
+            [attr.aria-label]="
+              (showPassword() ? 'auth.signup.password.hide' : 'auth.signup.password.show')
+                | getStrings
+            "
+            [attr.aria-pressed]="showPassword()"
+            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary"
+            data-testid="signup-password-toggle"
+          >
+            @if (showPassword()) {
+              <!-- Ojo tachado: la contraseña está visible -->
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                data-testid="signup-eye-off"
+              >
+                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                <line x1="2" y1="2" x2="22" y2="22" />
+              </svg>
+            } @else {
+              <!-- Ojo abierto: la contraseña está oculta -->
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                data-testid="signup-eye-open"
+              >
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            }
+          </button>
+        </div>
+        @if (passwordError(); as error) {
+          <p
+            id="signup-password-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="signup-password-error"
+          >
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Confirmar contraseña -->
+      <div>
+        <label for="signup-confirm" class="mb-2 block text-sm font-medium text-txt-primary">
+          {{ 'auth.signup.confirm.label' | getStrings }}
+        </label>
+        <div class="relative">
+          <input
+            id="signup-confirm"
+            name="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            [placeholder]="'auth.signup.password.placeholder' | getStrings"
+            [value]="confirmPassword()"
+            (input)="onConfirmPasswordInput($event)"
+            (blur)="touch('confirmPassword')"
+            [attr.aria-invalid]="confirmError() ? 'true' : null"
+            [attr.aria-describedby]="confirmError() ? 'signup-confirm-error' : null"
+            [class]="
+              confirmStatus() === 'mismatch' || confirmError()
+                ? 'border-status-danger-500'
+                : 'border-border-default'
+            "
+            class="h-11 w-full rounded-md border bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+            data-testid="signup-confirm"
+          />
+          @if (confirmStatus() === 'match') {
+            <span
+              role="img"
+              [attr.aria-label]="'auth.signup.confirm.match' | getStrings"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-status-success-500"
+              data-testid="signup-confirm-match"
+            >
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+                <path d="m9 11 3 3L22 4" />
+              </svg>
+            </span>
+          } @else if (confirmStatus() === 'mismatch') {
+            <span
+              role="img"
+              [attr.aria-label]="'auth.signup.confirm.mismatch' | getStrings"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-status-danger-500"
+              data-testid="signup-confirm-mismatch"
+            >
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="m15 9-6 6" />
+                <path d="m9 9 6 6" />
+              </svg>
+            </span>
+          }
+        </div>
+        @if (confirmError(); as error) {
+          <p
+            id="signup-confirm-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="signup-confirm-error"
+          >
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Términos y condiciones -->
+      <div>
+        <div class="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-txt-secondary">
+                    <span class="relative mr-1.5 inline-flex size-5 shrink-0">
+            <input
+              id="signup-terms"
+              name="terms"
+              type="checkbox"
+              [checked]="termsAccepted()"
+              (change)="onTermsChange($event)"
+              [attr.aria-invalid]="termsError() ? 'true' : null"
+              [attr.aria-describedby]="termsError() ? 'signup-terms-error' : null"
+              class="peer size-5 cursor-pointer appearance-none rounded border border-border-default bg-surface transition checked:border-interactive-cta checked:bg-interactive-cta focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-cta"
+              data-testid="signup-terms"
+            />
+            <svg
+              class="pointer-events-none absolute inset-0 m-auto size-3.5 text-on-dark opacity-0 peer-checked:opacity-100"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m3.5 8.5 3 3 6-7" />
+            </svg>
+          </span>
+          <label for="signup-terms" class="cursor-pointer">
+            {{ 'auth.signup.terms.prefix' | getStrings }}
+          </label>
+          <a
+            href="#"
+            (click)="$event.preventDefault()"
+            class="font-medium text-interactive-cta underline hover:text-interactive-cta-hover"
+          >
+            {{ 'auth.signup.terms.link' | getStrings }}
+          </a>
+          <span>{{ 'auth.signup.terms.and' | getStrings }}</span>
+          <a
+            href="#"
+            (click)="$event.preventDefault()"
+            class="font-medium text-interactive-cta underline hover:text-interactive-cta-hover"
+          >
+            {{ 'auth.signup.privacy.link' | getStrings }}
+          </a>
+        </div>
+        @if (termsError(); as error) {
+          <p
+            id="signup-terms-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="signup-terms-error"
+          >
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="!canSubmit()"
+        class="h-11 w-full cursor-pointer rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition enabled:hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
+        data-testid="signup-submit"
+      >
+        {{ 'auth.signup.submit' | getStrings }}
+      </button>
+
+      <p class="text-center text-sm text-txt-secondary">
+        {{ 'auth.signup.has.account' | getStrings }}
+        <a
+          routerLink="/login"
+          class="font-medium text-interactive-cta underline hover:text-interactive-cta-hover"
+          data-testid="signup-login-link"
+        >
+          {{ 'auth.signup.signin' | getStrings }}
+        </a>
+      </p>
+    </form>
+  </div>
+</section>

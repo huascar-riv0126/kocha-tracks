@@ -7,6 +7,7 @@ import { EventDetailsPage } from './event/details-page/details-page';
 import { eventResolver } from './event/event-resolver';
 import { NotFound } from './status/not-found/not-found';
 import { Login } from './auth/login/login';
+import { SignUp } from './auth/sign-up/sign-up';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
@@ -18,6 +19,8 @@ export const routes: Routes = [
   { path: 'fuentes', component: SourcesPage },
 
   { path: 'login', component: Login },
+
+  { path: 'register', component: SignUp },
 
   {
     path: 'evento/:eventId',
