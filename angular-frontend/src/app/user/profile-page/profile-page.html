@@ -1,43 +1,56 @@
-<main class="profile-viewport">
-  <div class="profile-card-container">
+<main class="min-h-screen bg-(--color-page) flex justify-center items-start p-4 sm:p-8 md:p-12 font-sans text-(--color-txt-primary)">
+  <div class="bg-(--color-surface) border border-(--color-border-default) rounded-xl p-6 sm:p-10 w-full max-w-[960px] shadow-xs">
+    
     <!-- Branding Header -->
-    <header class="brand-header">
-      <div class="brand-logo-container">
-        <svg class="brand-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="32" height="32" rx="8" fill="#EA580C"/>
-          <circle cx="16" cy="16" r="6" fill="#FFFFFF"/>
+    <header class="flex items-center gap-3 mb-7">
+    <div class="w-8 h-8 flex items-center justify-center shrink-0">
+        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" class="fill-(--color-interactive-cta)"/>
+        <circle cx="16" cy="16" r="6" fill="#FFFFFF"/>
         </svg>
-      </div>
-      <h1 class="brand-name">Kocha Tracks</h1>
+    </div>
+    <h1 class="text-xl font-bold text-(--color-txt-primary) m-0">
+        {{ 'brand' | getStrings }}
+    </h1>
     </header>
 
-    <div class="profile-grid">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-8">
+      
       <!-- Columna Izquierda: Información del perfil -->
-      <section class="profile-info-section">
-        <h2 class="section-title">Información del perfil</h2>
+      <section class="flex flex-col">
+        <h2 class="text-lg font-bold text-(--color-txt-primary) mb-4">
+          {{ 'profile.info.title' | getStrings }}
+        </h2>
 
         <!-- Banner Slider 'Editando' -->
-        <div class="editing-banner">
-          <div class="banner-text">
-            <span class="banner-title">Editando</span>
-            <span class="banner-desc">Presiona nuevamente para cancelar y deshabilitar la edicion.</span>
+        <div class="flex justify-between items-center border border-(--color-border-default) rounded-lg p-3.5 sm:p-4 mb-6">
+          <div class="flex flex-col pr-4">
+            <span class="text-sm font-semibold text-(--color-txt-primary)">
+              {{ 'profile.editing.title' | getStrings }}
+            </span>
+            <span class="text-xs text-(--color-txt-secondary)">
+              {{ 'profile.editing.desc' | getStrings }}
+            </span>
           </div>
-          <label class="toggle-switch">
+          
+          <label class="relative inline-flex items-center cursor-pointer shrink-0 w-11 h-6">
             <input 
               type="checkbox" 
               role="switch" 
-              aria-label="Habilitar edición de perfil" 
+              class="sr-only peer"
               [checked]="isEditing()" 
               (change)="toggleEditing()">
-            <span class="slider"></span>
+            <div class="w-11 h-6 bg-(--color-neutral-300) peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[3px] after:bg-white after:rounded-full after:h-4.5 after:w-4.5 after:transition-all peer-checked:bg-(--color-interactive-cta)"></div>
           </label>
         </div>
 
         <!-- Imagen de Perfil -->
-        <div class="profile-avatar-block">
-          <span class="field-label">Imagen de Perfil</span>
-          <div class="avatar-placeholder">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="mb-5">
+          <span class="block text-xs font-semibold text-(--color-txt-primary) mb-2">
+            {{ 'profile.avatar.label' | getStrings }}
+          </span>
+          <div class="w-14 h-14 rounded-full bg-(--color-brand-primary-50) flex items-center justify-center">
+            <svg class="w-7 h-7 text-(--color-brand-primary-500)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
@@ -45,94 +58,126 @@
         </div>
 
         <!-- Formulario de perfil -->
-        <form [formGroup]="profileForm" (ngSubmit)="onSaveProfile()" class="profile-form">
-          <div class="form-field">
-            <label for="usernameInput" class="field-label">Nombre de Usuario</label>
+        <form [formGroup]="profileForm" (ngSubmit)="onSaveProfile()" class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="usernameInput" class="text-xs font-semibold text-(--color-txt-primary)">
+              {{ 'profile.username.label' | getStrings }}
+            </label>
             <input 
               id="usernameInput"
               type="text" 
               formControlName="username" 
-              class="text-input" 
-              [class.is-disabled]="!isEditing()">
+              class="w-full px-3.5 py-2.5 text-sm rounded-md border transition-colors outline-hidden text-(--color-txt-primary)"
+              [ngClass]="isEditing() 
+                ? 'bg-(--color-surface) border-(--color-interactive-cta) focus:ring-1 focus:ring-(--color-interactive-cta)' 
+                : 'bg-(--color-neutral-100) border-(--color-border-default) text-(--color-txt-secondary) cursor-not-allowed'">
           </div>
 
-          <div class="form-field">
-            <label for="emailInput" class="field-label">Dirección de correo electrónico</label>
+          <div class="flex flex-col gap-1.5">
+            <label for="emailInput" class="text-xs font-semibold text-(--color-txt-primary)">
+              {{ 'profile.email.label' | getStrings }}
+            </label>
             <input 
               id="emailInput"
               type="email" 
               formControlName="email" 
-              class="text-input" 
-              [class.is-disabled]="!isEditing()">
+              class="w-full px-3.5 py-2.5 text-sm rounded-md border transition-colors outline-hidden text-(--color-txt-primary)"
+              [ngClass]="isEditing() 
+                ? 'bg-(--color-surface) border-(--color-interactive-cta) focus:ring-1 focus:ring-(--color-interactive-cta)' 
+                : 'bg-(--color-neutral-100) border-(--color-border-default) text-(--color-txt-secondary) cursor-not-allowed'">
           </div>
 
           <button 
             *ngIf="isEditing()" 
             type="submit" 
-            class="btn-submit-profile" 
+            class="w-full mt-2 py-3 px-4 bg-(--color-interactive-cta) hover:bg-(--color-interactive-cta-hover) disabled:opacity-50 text-white font-semibold text-sm rounded-md transition-colors cursor-pointer disabled:cursor-not-allowed"
             [disabled]="profileForm.invalid">
-            Guardar cambios
+            {{ 'profile.btn.save_changes' | getStrings }}
           </button>
         </form>
       </section>
 
       <!-- Columna Derecha: Seguridad y Notificaciones -->
-      <aside class="profile-sidebar">
+      <aside class="flex flex-col gap-5">
+        
         <!-- Tarjeta: Seguridad -->
-        <section class="sidebar-card">
-          <h3 class="card-title">Seguridad</h3>
-          <button type="button" class="btn-security" (click)="navigateToChangePassword()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <section class="border border-(--color-border-default) rounded-lg p-5 bg-(--color-surface)">
+          <h3 class="text-base font-bold text-(--color-txt-primary) mb-4">
+            {{ 'profile.security.title' | getStrings }}
+          </h3>
+          <button 
+            type="button" 
+            class="w-full py-2.5 px-4 bg-(--color-interactive-cta) hover:bg-(--color-interactive-cta-hover) text-white font-semibold text-xs sm:text-sm rounded-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
+            (click)="navigateToChangePassword()">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            Cambiar contraseña
+            {{ 'profile.security.change_password' | getStrings }}
           </button>
         </section>
 
         <!-- Tarjeta: Notificaciones -->
-        <section class="sidebar-card" [formGroup]="notificationForm">
-          <h3 class="card-title">Notificaciones</h3>
+        <section class="border border-(--color-border-default) rounded-lg p-5 bg-(--color-surface)" [formGroup]="notificationForm">
+          <h3 class="text-base font-bold text-(--color-txt-primary) mb-4">
+            {{ 'profile.notifications.title' | getStrings }}
+          </h3>
 
-          <div class="notification-row">
-            <div class="notif-copy">
-              <span class="notif-title">Nuevos eventos</span>
-              <p class="notif-desc">Alertas de incidentes recién reportados en tus zonas de interés.</p>
+          <!-- Toggle: Nuevos eventos -->
+          <div class="flex justify-between items-start gap-3 mb-4">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-(--color-txt-primary)">
+                {{ 'profile.notifications.new_events.title' | getStrings }}
+              </span>
+              <p class="text-[11px] text-(--color-txt-secondary) m-0 mt-0.5 leading-tight">
+                {{ 'profile.notifications.new_events.desc' | getStrings }}
+              </p>
             </div>
-            <label class="toggle-switch">
-              <input type="checkbox" role="switch" formControlName="newEvents">
-              <span class="slider"></span>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0 w-11 h-6">
+              <input type="checkbox" role="switch" formControlName="newEvents" class="sr-only peer">
+              <div class="w-11 h-6 bg-(--color-neutral-300) peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[3px] after:bg-white after:rounded-full after:h-4.5 after:w-4.5 after:transition-all peer-checked:bg-(--color-interactive-cta)"></div>
             </label>
           </div>
 
-          <div class="notification-row">
-            <div class="notif-copy">
-              <span class="notif-title">Actualizaciones de eventos</span>
-              <p class="notif-desc">Cambios en severidad, cierres parciales o nuevos desvíos.</p>
+          <!-- Toggle: Actualizaciones -->
+          <div class="flex justify-between items-start gap-3 mb-4">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-(--color-txt-primary)">
+                {{ 'profile.notifications.updates.title' | getStrings }}
+              </span>
+              <p class="text-[11px] text-(--color-txt-secondary) m-0 mt-0.5 leading-tight">
+                {{ 'profile.notifications.updates.desc' | getStrings }}
+              </p>
             </div>
-            <label class="toggle-switch">
-              <input type="checkbox" role="switch" formControlName="eventUpdates">
-              <span class="slider"></span>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0 w-11 h-6">
+              <input type="checkbox" role="switch" formControlName="eventUpdates" class="sr-only peer">
+              <div class="w-11 h-6 bg-(--color-neutral-300) peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[3px] after:bg-white after:rounded-full after:h-4.5 after:w-4.5 after:transition-all peer-checked:bg-(--color-interactive-cta)"></div>
             </label>
           </div>
 
-          <div class="notification-row">
-            <div class="notif-copy">
-              <span class="notif-title">Finalizaciones</span>
-              <p class="notif-desc">Reportes de paso totalmente libre tras un evento cerrado.</p>
+          <!-- Toggle: Finalizaciones -->
+          <div class="flex justify-between items-start gap-3 mb-4">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-(--color-txt-primary)">
+                {{ 'profile.notifications.endings.title' | getStrings }}
+              </span>
+              <p class="text-[11px] text-(--color-txt-secondary) m-0 mt-0.5 leading-tight">
+                {{ 'profile.notifications.endings.desc' | getStrings }}
+              </p>
             </div>
-            <label class="toggle-switch">
-              <input type="checkbox" role="switch" formControlName="eventEndings">
-              <span class="slider"></span>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0 w-11 h-6">
+              <input type="checkbox" role="switch" formControlName="eventEndings" class="sr-only peer">
+              <div class="w-11 h-6 bg-(--color-neutral-300) peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[3px] after:bg-white after:rounded-full after:h-4.5 after:w-4.5 after:transition-all peer-checked:bg-(--color-interactive-cta)"></div>
             </label>
           </div>
 
+          <!-- Botón Guardar Preferencias -->
           <button 
             type="button" 
-            class="btn-save-preferences" 
+            class="w-full mt-1 py-2.5 px-4 bg-(--color-interactive-cta) hover:bg-(--color-interactive-cta-hover) disabled:opacity-50 text-white font-semibold text-xs sm:text-sm rounded-md transition-colors cursor-pointer disabled:cursor-not-allowed"
             [disabled]="!hasNotificationChanges()" 
             (click)="onSaveNotifications()">
-            Guardar Preferencias
+            {{ 'profile.notifications.btn.save' | getStrings }}
           </button>
         </section>
       </aside>

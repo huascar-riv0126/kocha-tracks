@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 
 export interface UserProfileData {
   username: string;
@@ -17,9 +18,9 @@ export interface UserNotificationPreferences {
 @Component({
   selector: 'app-profile-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, GetStringsPipe],
   templateUrl: './profile-page.html',
-  styleUrls: ['./profile-page.scss']
+  styleUrls: ['./profile-page.css']
 })
 export class ProfilePageComponent implements OnInit {
   isEditing = signal<boolean>(false);
@@ -49,20 +50,17 @@ export class ProfilePageComponent implements OnInit {
   }
 
   private buildForms(): void {
-    // 1. Campos deshabilitados por defecto
     this.profileForm = this.fb.group({
       username: [{ value: this.initialProfile.username, disabled: true }, [Validators.required]],
       email: [{ value: this.initialProfile.email, disabled: true }, [Validators.required, Validators.email]]
     });
 
-    // 2. Notificaciones con sliders/toggles
     this.notificationForm = this.fb.group({
       newEvents: [this.initialNotifications.newEvents],
       eventUpdates: [this.initialNotifications.eventUpdates],
       eventEndings: [this.initialNotifications.eventEndings]
     });
 
-    // 4. Detección de cambios en notificaciones para habilitar el botón
     this.notificationForm.valueChanges.subscribe((vals: UserNotificationPreferences) => {
       const changed =
         vals.newEvents !== this.initialNotifications.newEvents ||
@@ -72,7 +70,6 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  // 2. Comportamiento del slider de edición
   toggleEditing(): void {
     const nextState = !this.isEditing();
     this.isEditing.set(nextState);
@@ -81,7 +78,6 @@ export class ProfilePageComponent implements OnInit {
       this.profileForm.get('username')?.enable();
       this.profileForm.get('email')?.enable();
     } else {
-      // 2.3 Si se aprieta de nuevo, se cancelan los cambios y se deshabilitan
       this.profileForm.reset(this.initialProfile);
       this.profileForm.get('username')?.disable();
       this.profileForm.get('email')?.disable();
@@ -91,7 +87,6 @@ export class ProfilePageComponent implements OnInit {
   onSaveProfile(): void {
     if (this.profileForm.valid && this.isEditing()) {
       const updated = this.profileForm.getRawValue() as UserProfileData;
-      // Aquí se conectará el servicio con PUT/PATCH
       this.initialProfile = { ...updated };
       this.toggleEditing();
     }
@@ -100,13 +95,11 @@ export class ProfilePageComponent implements OnInit {
   onSaveNotifications(): void {
     if (this.hasNotificationChanges()) {
       const updated = this.notificationForm.value as UserNotificationPreferences;
-      // Aquí se conectará el servicio con PUT/PATCH de notificaciones
       this.initialNotifications = { ...updated };
       this.hasNotificationChanges.set(false);
     }
   }
 
-  // 3. Redirección a cambio de contraseña
   navigateToChangePassword(): void {
     this.router.navigate(['/auth/cambiar-contrasena']);
   }
