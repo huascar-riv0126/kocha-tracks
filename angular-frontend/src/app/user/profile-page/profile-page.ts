@@ -20,7 +20,7 @@ export interface UserNotificationPreferences {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, GetStringsPipe],
   templateUrl: './profile-page.html',
-  styleUrls: ['./profile-page.css']
+  styleUrls: ['./profile-page.scss']
 })
 export class ProfilePageComponent implements OnInit {
   isEditing = signal<boolean>(false);
