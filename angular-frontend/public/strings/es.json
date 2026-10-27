@@ -165,5 +165,6 @@
   "profile.notifications.updates.desc": "Cambios en severidad, cierres parciales o nuevos desvíos.",
   "profile.notifications.endings.title": "Finalizaciones",
   "profile.notifications.endings.desc": "Reportes de paso totalmente libre tras un evento cerrado.",
-  "profile.notifications.btn.save": "Guardar Preferencias"
+  "profile.notifications.btn.save": "Guardar Preferencias",
+  "filter.all": "Todos"
 }

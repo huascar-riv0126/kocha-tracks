@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingFeatures } from './landing-features';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
+import { getTranslocoTestingModule } from '../../testing/stubs';
 
 describe('LandingFeatures', () => {
   let component: LandingFeatures;
@@ -8,7 +9,7 @@ describe('LandingFeatures', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LandingFeatures],
+      imports: [LandingFeatures, getTranslocoTestingModule()],
       providers: [{ provide: StringsService, useValue: { get: (key: string) => key } }],
     }).compileComponents();
 
