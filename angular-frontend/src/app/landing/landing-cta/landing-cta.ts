@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
-  imports: [GetStringsPipe],
+  imports: [TranslocoPipe],
   selector: 'app-landing-cta',
   templateUrl: './landing-cta.html',
 })

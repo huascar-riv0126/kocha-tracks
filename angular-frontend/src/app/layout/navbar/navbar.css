@@ -84,6 +84,40 @@
   background-color: var(--color-interactive-cta-hover);
 }
 
+.lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--color-neutral-400);
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+  color: var(--color-on-dark);
+}
+
+.lang-btn.active {
+  color: var(--color-interactive-cta);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lang-sep {
+  color: var(--color-neutral-400);
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
+
 @media (max-width: 768px) {
   .navbar { padding: 1rem 2rem; flex-wrap: wrap; gap: 1rem; }
   .navbar-links { display: none; }

@@ -3,12 +3,15 @@ import { provideServerRendering, withRoutes } from '@angular/ssr';
 import { appConfig } from './app.config';
 import { serverRoutes } from './app.routes.server';
 import { provideStringsServer } from './core/strings/strings-provider/strings-provider-server';
+import { TRANSLOCO_LOADER } from '@jsverse/transloco';
+import { TranslocoServerLoader } from './transloco-server-loader';
 
 const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(withRoutes(serverRoutes)),
-    provideStringsServer()
-  ]
+    provideStringsServer(),
+    { provide: TRANSLOCO_LOADER, useClass: TranslocoServerLoader },
+  ],
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);

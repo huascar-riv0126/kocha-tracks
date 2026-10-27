@@ -2,20 +2,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Navbar } from './navbar';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
+import { getTranslocoTestingModule } from '../../testing/stubs';
+import { TranslocoService } from '@jsverse/transloco';
 
 describe('Navbar', () => {
   let component: Navbar;
   let fixture: ComponentFixture<Navbar>;
+  let translocoService: TranslocoService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Navbar],
+      imports: [Navbar, getTranslocoTestingModule()],
       providers: [
         provideRouter([]),
         { provide: StringsService, useValue: { get: (key: string) => key } },
       ],
     }).compileComponents();
 
+    translocoService = TestBed.inject(TranslocoService);
     fixture = TestBed.createComponent(Navbar);
     component = fixture.componentInstance;
     await fixture.whenStable();
@@ -41,5 +45,15 @@ describe('Navbar', () => {
     );
     const homeLink = links.find(link => link.getAttribute('href') === '/');
     expect(homeLink).toBeTruthy();
+  });
+
+  it('should change language dynamically when changeLang is called', () => {
+    component.changeLang('en');
+    expect(translocoService.getActiveLang()).toBe('en');
+    expect(component.currentLang()).toBe('en');
+
+    component.changeLang('es');
+    expect(translocoService.getActiveLang()).toBe('es');
+    expect(component.currentLang()).toBe('es');
   });
 });
