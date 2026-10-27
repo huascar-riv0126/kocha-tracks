@@ -8,12 +8,13 @@ import { eventResolver } from './event/event-resolver';
 import { NotFound } from './status/not-found/not-found';
 import { SignInPage } from './auth/sign-in-page/sign-in-page';
 import { SignUp } from './auth/sign-up/sign-up';
+import { ProfilePageComponent } from './user/profile-page/profile-page';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
 
   { path: 'map', component: MapView },
-  
+
   { path: 'zonas-interes', component: ZonesPage },
 
   { path: 'fuentes', component: SourcesPage },
@@ -21,6 +22,8 @@ export const routes: Routes = [
   { path: 'login', component: SignInPage },
 
   { path: 'register', component: SignUp },
+
+  { path: 'perfil', component: ProfilePageComponent },
 
   {
     path: 'evento/:eventId',

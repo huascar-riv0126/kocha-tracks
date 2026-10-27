@@ -3,6 +3,7 @@ import { StringsService } from './strings-service/strings-service';
 
 @Pipe({
   name: 'getStrings',
+  pure: false,
 })
 export class GetStringsPipe implements PipeTransform {
   private readonly stringsService = inject(StringsService);
