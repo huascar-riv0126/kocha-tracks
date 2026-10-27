@@ -1,22 +1,19 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { BrandComponent } from '../../shared/brand/brand';
+import { LanguageToggle } from '../../shared/language-toggle/language-toggle';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive, TranslocoPipe, BrandComponent],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    BrandComponent,
+    LanguageToggle,
+    TranslocoPipe
+  ],
   selector: 'app-navbar',
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {
-  private readonly translocoService = inject(TranslocoService, { optional: true });
-  readonly currentLang = signal<string>(this.translocoService?.getActiveLang() || 'es');
-
-  changeLang(lang: string): void {
-    if (this.translocoService) {
-      this.translocoService.setActiveLang(lang);
-      this.currentLang.set(lang);
-    }
-  }
-}
+export class Navbar { }

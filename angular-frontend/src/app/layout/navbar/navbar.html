@@ -7,20 +7,13 @@
   <ul class="navbar-links">
 
     <li>
-      <a
-        routerLink="/"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         {{ "navbar.home" | transloco }}
       </a>
     </li>
 
     <li>
-      <a
-        routerLink="/map"
-        routerLinkActive="active"
-      >
+      <a routerLink="/map" routerLinkActive="active">
         {{ "navbar.map" | transloco }}
       </a>
     </li>
@@ -38,10 +31,7 @@
     </li>
 
     <li>
-      <a
-        routerLink="/fuentes"
-        routerLinkActive="active"
-      >
+      <a routerLink="/fuentes" routerLinkActive="active">
         {{ "navbar.sources" | transloco }}
       </a>
     </li>
@@ -50,40 +40,13 @@
 
   <div class="navbar-auth">
 
-    <div class="lang-selector">
-      <button
-        type="button"
-        class="lang-btn"
-        [class.active]="currentLang() === 'es'"
-        (click)="changeLang('es')"
-        aria-label="Español"
-      >
-        ES
-      </button>
-      <span class="lang-sep">|</span>
-      <button
-        type="button"
-        class="lang-btn"
-        [class.active]="currentLang() === 'en'"
-        (click)="changeLang('en')"
-        aria-label="English"
-      >
-        EN
-      </button>
-    </div>
+    <app-language-toggle></app-language-toggle>
 
-    <a
-      routerLink="/register"
-      class="btn-register"
-    >
+    <a routerLink="/register" class="btn-register">
       {{ "navbar.sign.out" | transloco }}
     </a>
 
-    <a
-      routerLink="/login"
-      routerLinkActive="active"
-      class="btn-login"
-    >
+    <a routerLink="/login" routerLinkActive="active" class="btn-login">
       {{ "navbar.sign.in" | transloco }}
     </a>
 
