@@ -149,5 +149,15 @@
   "zones.config.cancel": "Cancel",
   "zones.config.save": "Save Changes",
   "zones.empty": "You don't have any zones yet. Create your first zone.",
-  "filter.all": "All"
+  "filter.all": "All",
+  "eventHistory.title": "Changes over time",
+  "eventHistory.count": "{{count}} records",
+  "eventHistory.singleRecord": "1 record",
+  "eventHistory.version": "Version {{version}}",
+  "eventHistory.example": "Example",
+  "eventHistory.before": "Before",
+  "eventHistory.after": "After",
+  "eventHistory.newestFirst": "Newest first",
+  "eventHistory.oldestFirst": "Oldest first",
+  "eventHistory.empty": "No changes recorded."
 }
