@@ -1,7 +1,8 @@
-import { Component, computed, output, signal } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 import { BrandComponent } from '../../shared/brand/brand';
+import { UserService } from '../../user/user-service';
 
 export interface SignUpPayload {
   username: string;
@@ -21,7 +22,8 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   templateUrl: './sign-up.html',
 })
 export class SignUp {
-  /** Se emite solo cuando todos los campos son válidos. */
+  private readonly userService = inject(UserService);
+
   readonly signUp = output<SignUpPayload>();
 
   readonly username = signal('');
@@ -33,21 +35,17 @@ export class SignUp {
 
   private readonly touched = signal<ReadonlySet<Field>>(new Set());
 
-  /** Las contraseñas coinciden (y no están vacías). */
   readonly passwordsMatch = computed(
     () => this.password().length > 0 && this.password() === this.confirmPassword(),
   );
 
-  /** Estado del icono del campo "Confirma la contraseña". */
   readonly confirmStatus = computed<'match' | 'mismatch' | null>(() => {
     if (this.confirmPassword().length === 0) return null;
     return this.passwordsMatch() ? 'match' : 'mismatch';
   });
 
-  /** El botón "Crear cuenta" se habilita solo si coinciden las contraseñas y se aceptan los TyC. */
   readonly canSubmit = computed(() => this.passwordsMatch() && this.termsAccepted());
 
-  // --- Validez de cada campo (independiente de si ya se tocó o no) ---
 
   private readonly usernameKey = computed(() =>
     this.username().trim().length > 0 ? null : 'auth.signup.error.username.required',
@@ -81,7 +79,6 @@ export class SignUp {
       !this.termsKey(),
   );
 
-  // --- Errores visibles: solo después de que el usuario tocó el campo ---
 
   readonly usernameError = computed(() => this.visible('username', this.usernameKey()));
   readonly emailError = computed(() => this.visible('email', this.emailKey()));
@@ -124,11 +121,14 @@ export class SignUp {
 
     if (!this.formValid()) return;
 
-    this.signUp.emit({
+    const payload: SignUpPayload = {
       username: this.username().trim(),
       email: this.email().trim(),
       password: this.password(),
-    });
+    };
+
+    this.signUp.emit(payload);
+    this.userService.createUser(payload).subscribe();
   }
 
   private visible(field: Field, key: string | null): string | null {
