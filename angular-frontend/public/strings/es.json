@@ -1,3 +1,4 @@
+
 {
   "brand": "Kocha Tracks",
   "navbar.home": "Inicio",
@@ -166,5 +167,14 @@
   "profile.notifications.endings.title": "Finalizaciones",
   "profile.notifications.endings.desc": "Reportes de paso totalmente libre tras un evento cerrado.",
   "profile.notifications.btn.save": "Guardar Preferencias",
-  "filter.all": "Todos"
+  "filter.all": "Todos",
+  "auth.changePassword.title": "Cambiar contraseña",
+  "auth.changePassword.current": "Contraseña anterior",
+  "auth.changePassword.new": "Nueva contraseña",
+  "auth.changePassword.confirm": "Confirma la nueva contraseña",
+  "auth.changePassword.show": "Mostrar contraseña",
+  "auth.changePassword.hide": "Ocultar contraseña",
+  "auth.changePassword.match": "Las contraseñas coinciden",
+  "auth.changePassword.mismatch": "Las contraseñas no coinciden",
+  "auth.changePassword.submit": "Cambiar contraseña"
 }
