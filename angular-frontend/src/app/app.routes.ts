@@ -1,3 +1,4 @@
+
 import { Routes } from '@angular/router';
 import { MapView } from './map/map-view/map-view';
 import { SourcesPage } from './sources-page/sources-page';
@@ -9,21 +10,21 @@ import { NotFound } from './status/not-found/not-found';
 import { Login } from './auth/login/login';
 import { SignUp } from './auth/sign-up/sign-up';
 import { ProfilePageComponent } from './user/profile-page/profile-page';
+import { ChangePassword } from './auth/change-password/change-password';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
-
   { path: 'map', component: MapView },
-
   { path: 'zonas-interes', component: ZonesPage },
-
   { path: 'fuentes', component: SourcesPage },
-
   { path: 'login', component: Login },
-
   { path: 'register', component: SignUp },
-
   { path: 'perfil', component: ProfilePageComponent },
+
+  {
+    path: 'auth/cambiar-contrasena',
+    component: ChangePassword,
+  },
 
   {
     path: 'evento/:eventId',
@@ -31,9 +32,9 @@ export const routes: Routes = [
     children: [
       { path: 'detalles', component: EventDetailsPage },
       { path: 'historial', component: EventDetailsPage },
-      { path: '', redirectTo: 'detalles', pathMatch: 'full' }
-    ]
+      { path: '', redirectTo: 'detalles', pathMatch: 'full' },
+    ],
   },
 
-  { path: '**', component: NotFound }
+  { path: '**', component: NotFound },
 ];
