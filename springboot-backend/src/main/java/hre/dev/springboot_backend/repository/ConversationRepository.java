@@ -1,6 +1,7 @@
 package hre.dev.springboot_backend.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
     List<Conversation> findAllByCreator_IdAndIsActiveTrue(Long creatorId);
 
     List<Conversation> findByNameContainingIgnoreCase(String name);
+
+    Optional<Conversation> findByIdAndIsActiveTrue(Long id);
 }

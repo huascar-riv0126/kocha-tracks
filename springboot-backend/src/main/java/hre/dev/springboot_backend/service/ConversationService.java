@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import hre.dev.springboot_backend.dto.ConversationRequestDTO;
-import hre.dev.springboot_backend.dto.ConversationResponseDTO;
+import hre.dev.springboot_backend.dto.conversation.ConversationRequestDTO;
+import hre.dev.springboot_backend.dto.conversation.ConversationResponseDTO;
 import hre.dev.springboot_backend.exception.ResourceNotFoundException;
 import hre.dev.springboot_backend.model.Conversation;
 import hre.dev.springboot_backend.model.User;

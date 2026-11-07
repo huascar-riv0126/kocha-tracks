@@ -1,4 +1,4 @@
-package hre.dev.springboot_backend.dto;
+package hre.dev.springboot_backend.dto.conversation;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
