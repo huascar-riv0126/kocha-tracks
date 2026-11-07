@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { DataFlowCard } from '../../sources-page/sources-data-flow/data-flow-grid/data-flow-card/data-flow-card';
 
 @Component({
-  imports: [GetStringsPipe, DataFlowCard],
+  imports: [TranslocoPipe, DataFlowCard],
   selector: 'app-landing-steps',
   templateUrl: './landing-steps.html',
 })

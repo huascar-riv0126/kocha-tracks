@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 import { LandingHero } from './landing-hero';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
+import { getTranslocoTestingModule } from '../../testing/stubs';
 
 describe('LandingHero', () => {
   let component: LandingHero;
@@ -9,7 +10,7 @@ describe('LandingHero', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LandingHero],
+      imports: [LandingHero, getTranslocoTestingModule()],
       providers: [{ provide: StringsService, useValue: { get: (key: string) => key } }],
     }).compileComponents();
 

@@ -1,0 +1,18 @@
+<button
+  type="button"
+  class="inline-flex size-8 shrink-0 items-center justify-center
+        rounded-full border border-transparent
+        font-bold text-on-dark text-sm
+        transition-colors duration-200
+        hover:bg-interactive-cta hover:border-border-default
+        focus-visible:outline-2 focus-visible:outline-offset-2
+        focus-visible:outline-blue-500"
+  (click)="toggleLang()"
+  [attr.aria-label]="
+    currentLang() === 'es'
+    ? 'Cambiar idioma a inglés'
+    : 'Switch language to Spanish'
+  "
+>
+  {{ currentLang().toUpperCase() }}
+</button>

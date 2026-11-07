@@ -24,8 +24,8 @@ export class MapView implements AfterViewInit, OnDestroy {
   private map?: Leaflet.Map;
   private readonly isBrowser: boolean;
   private destroyed = false;
-  
-private markersMap: Map<number, Leaflet.CircleMarker> = new Map();
+  private resizeObserver?: ResizeObserver;
+  private markersMap: Map<number, Leaflet.CircleMarker> = new Map();
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
@@ -61,6 +61,23 @@ private markersMap: Map<number, Leaflet.CircleMarker> = new Map();
     L.tileLayer(OSM_TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION }).addTo(map);
     map.invalidateSize();
     this.map = map;
+
+    // El slot flex puede crecer tras el init (ej. Zonas): revalidar tamaño
+    // para que Leaflet pinte tiles hasta abajo y no quede franja en blanco.
+    window.setTimeout(() => map.invalidateSize(), 100);
+    window.setTimeout(() => map.invalidateSize(), 500);
+    if (typeof ResizeObserver !== 'undefined') {
+      let scheduled = false;
+      this.resizeObserver = new ResizeObserver(() => {
+        if (scheduled || this.destroyed) return;
+        scheduled = true;
+        window.requestAnimationFrame(() => {
+          scheduled = false;
+          if (!this.destroyed) map.invalidateSize();
+        });
+      });
+      this.resizeObserver.observe(host);
+    }
 
     this.renderMarkers(L, map);
   }
@@ -155,6 +172,8 @@ private markersMap: Map<number, Leaflet.CircleMarker> = new Map();
 
   ngOnDestroy(): void {
     this.destroyed = true;
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = undefined;
     this.markersMap.clear();
     this.map?.remove();
     this.map = undefined;

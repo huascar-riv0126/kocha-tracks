@@ -52,7 +52,8 @@
   transition: color 0.3s;
 }
 
-.navbar-links a:hover, .navbar-links a.active {
+.navbar-links a:hover,
+.navbar-links a.active {
   color: var(--color-interactive-cta);
 }
 
@@ -85,6 +86,13 @@
 }
 
 @media (max-width: 768px) {
-  .navbar { padding: 1rem 2rem; flex-wrap: wrap; gap: 1rem; }
-  .navbar-links { display: none; }
+  .navbar {
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .navbar-links {
+    display: none;
+  }
 }

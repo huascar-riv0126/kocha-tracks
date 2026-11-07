@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
 import { StringsService } from './core/strings/strings-service/strings-service';
-import { StringsServiceStub } from '@testutils/stubs';
+import { StringsServiceStub, getTranslocoTestingModule } from '@testutils/stubs';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [App, getTranslocoTestingModule()],
       providers: [
         provideRouter([]),
         { provide: StringsService, useClass: StringsServiceStub },

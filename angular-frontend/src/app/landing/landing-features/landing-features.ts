@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { SourceCard } from '../../sources-page/sources-grid/source-card/source-card';
 
 @Component({
-  imports: [GetStringsPipe, SourceCard],
+  imports: [TranslocoPipe, SourceCard],
   selector: 'app-landing-features',
   templateUrl: './landing-features.html',
 })

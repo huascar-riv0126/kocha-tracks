@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Navbar } from './navbar';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
+import { getTranslocoTestingModule } from '@testutils/stubs';
 
 describe('Navbar', () => {
   let component: Navbar;
@@ -9,7 +10,7 @@ describe('Navbar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Navbar],
+      imports: [Navbar, getTranslocoTestingModule()],
       providers: [
         provideRouter([]),
         { provide: StringsService, useValue: { get: (key: string) => key } },

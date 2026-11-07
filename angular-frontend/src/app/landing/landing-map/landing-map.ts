@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { MapView } from '../../map/map-view/map-view';
 
 @Component({
-  imports: [GetStringsPipe, MapView],
+  imports: [TranslocoPipe, MapView],
   selector: 'app-landing-map',
   templateUrl: './landing-map.html',
 })

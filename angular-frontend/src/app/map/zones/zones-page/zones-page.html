@@ -1,0 +1,37 @@
+<section 
+  class="zones-page flex flex-col-reverse lg:flex-row items-stretch w-full lg:h-[calc(100vh-64px)] h-auto overflow-hidden"
+  aria-label="Zonas de interés" 
+  data-testid="zones-page"
+>
+  <aside 
+    class="zones-sidebar w-full min-w-full lg:min-w-[340px] lg:w-[340px] max-w-none lg:max-w-[360px] h-auto lg:h-full max-h-[70vh] lg:max-h-none overflow-y-auto z-10 bg-white border-t lg:border-t-0 lg:border-r border-[var(--color-border-default)] flex flex-col"
+    aria-label="Mis zonas de interés"
+  >
+    <div class="zones-list-slot shrink-0">
+      <app-zones-list
+        [zones]="zones()"
+        [selectedId]="selectedId()"
+        [editingId]="editingId()"
+        (zoneSelected)="onZoneSelected($event)"
+        (createNew)="onCreateNew()"
+        (editZone)="onEditZone($event)"
+        (deleteZone)="onDeleteZone($event)"
+      />
+    </div>
+    <div class="zones-config-slot shrink-0 border-t border-[var(--color-border-default)]">
+      <app-zone-config
+        [zone]="editingZone()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+      />
+    </div>
+  </aside>
+
+  <div class="zones-map-slot flex flex-col flex-1 h-[55vh] lg:h-full min-h-0 min-w-0 z-0 bg-[var(--color-section-alt,#f8fafc)]">
+    <app-map-view 
+      mapId="zones-map" 
+      [embedded]="true"
+      class="flex flex-col flex-1 h-full min-h-0"
+    />
+  </div>
+</section>
