@@ -1,19 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 import { vi } from 'vitest';
 import { StringsServiceStub } from '@testutils/stubs';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
+import { UserService } from '../../user/user-service';
 import { SignUp, SignUpPayload } from './sign-up';
 
 /**
- * UH-22.2 - Sign-Up form component.
+ * UH-22.2 & UH-37 - Sign-Up form component.
  * Each `describe` block maps to one requirement of the user story.
  * Texts are rendered as translation keys because StringsServiceStub returns the key itself.
  */
-describe('UH-22.2 Sign-Up form', () => {
+describe('UH-22.2 & UH-37 Sign-Up form', () => {
   let fixture: ComponentFixture<SignUp>;
   let component: SignUp;
   let root: HTMLElement;
+  let userServiceMock: { createUser: ReturnType<typeof vi.fn> };
 
   const byTestId = <T extends Element = HTMLElement>(id: string): T | null =>
     root.querySelector<T>(`[data-testid="${id}"]`);
@@ -45,9 +48,17 @@ describe('UH-22.2 Sign-Up form', () => {
   };
 
   beforeEach(async () => {
+    userServiceMock = {
+      createUser: vi.fn().mockReturnValue(of({ id: 1, username: 'Junpi7489', role: 'USER' })),
+    };
+
     await TestBed.configureTestingModule({
       imports: [SignUp],
-      providers: [provideRouter([]), { provide: StringsService, useClass: StringsServiceStub }],
+      providers: [
+        provideRouter([]),
+        { provide: StringsService, useClass: StringsServiceStub },
+        { provide: UserService, useValue: userServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SignUp);
@@ -259,6 +270,7 @@ describe('UH-22.2 Sign-Up form', () => {
       expect(errorText('signup-username-error')).toBe('auth.signup.error.username.required');
       expect(errorText('signup-email-error')).toBe('auth.signup.error.email.required');
       expect(emitted).not.toHaveBeenCalled();
+      expect(userServiceMock.createUser).not.toHaveBeenCalled();
     });
 
     it('places the error message after its input in the same field container', () => {
@@ -279,7 +291,7 @@ describe('UH-22.2 Sign-Up form', () => {
       );
     });
 
-    it('emits the form data when everything is valid', () => {
+    it('emits the form data and calls UserService.createUser when everything is valid', () => {
       const emitted = vi.fn<(payload: SignUpPayload) => void>();
       component.signUp.subscribe(emitted);
 
@@ -289,12 +301,16 @@ describe('UH-22.2 Sign-Up form', () => {
       click('signup-terms');
       click('signup-submit');
 
-      expect(emitted).toHaveBeenCalledTimes(1);
-      expect(emitted).toHaveBeenCalledWith({
+      const expectedPayload = {
         username: 'Junpi7489',
         email: 'junpi@example.com',
         password: 'secreto123',
-      });
+      };
+
+      expect(emitted).toHaveBeenCalledTimes(1);
+      expect(emitted).toHaveBeenCalledWith(expectedPayload);
+      expect(userServiceMock.createUser).toHaveBeenCalledTimes(1);
+      expect(userServiceMock.createUser).toHaveBeenCalledWith(expectedPayload);
     });
   });
 
