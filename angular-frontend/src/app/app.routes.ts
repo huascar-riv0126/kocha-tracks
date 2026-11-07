@@ -4,6 +4,7 @@ import { SourcesPage } from './sources-page/sources-page';
 import { LandingPage } from './landing/landing-page';
 import { ZonesPage } from './map/zones/zones-page/zones-page';
 import { EventDetailsPage } from './event/details-page/details-page';
+import { EventHistoryPage } from './event/history-page/history-page';
 import { eventResolver } from './event/event-resolver';
 import { NotFound } from './status/not-found/not-found';
 import { Login } from './auth/login/login';
@@ -30,10 +31,10 @@ export const routes: Routes = [
     resolve: { event: eventResolver },
     children: [
       { path: 'detalles', component: EventDetailsPage },
-      { path: 'historial', component: EventDetailsPage },
-      { path: '', redirectTo: 'detalles', pathMatch: 'full' }
-    ]
+      { path: 'historial', component: EventHistoryPage },
+      { path: '', redirectTo: 'detalles', pathMatch: 'full' },
+    ],
   },
 
-  { path: '**', component: NotFound }
+  { path: '**', component: NotFound },
 ];

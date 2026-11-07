@@ -80,7 +80,10 @@
         <p class="mb-1 text-xs text-txt-secondary">
           {{ change().field }} · {{ 'eventHistory.after' | transloco }}
         </p>
-        <p class="wrap-anywhere text-base font-semibold" [class]="appearance().text">
+        <p
+          class="wrap-anywhere text-base font-semibold"
+          [class]="change().type === 'finished' ? 'text-txt-primary' : appearance().text"
+        >
           {{ change().after }}
         </p>
       </div>

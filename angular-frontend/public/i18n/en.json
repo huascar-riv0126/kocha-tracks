@@ -171,5 +171,21 @@
   "historyHelp.title": "How to read this history",
   "historyHelp.changes": "Each record shows what changed and when it happened, with the previous and new values. You can switch between the newest and oldest dates.",
   "historyHelp.status": "The current status appears in red while the event is active and in green once it has finished.",
-  "historyHelp.timezone": "Times are shown in Bolivia time (UTC−4)."
+  "historyHelp.timezone": "Times are shown in Bolivia time (UTC−4).",
+  "eventHistoryPage.title": "Event history",
+  "eventHistoryPage.description": "See how the event changed over time and review its related sources.",
+  "eventHistoryPage.backToMap": "Back to map",
+  "eventHistoryPage.openHistory": "View event history",
+  "eventHistoryPage.exampleNotice": "Example data: these changes and sources illustrate how history works; they are not verified reports.",
+  "eventHistoryPage.fixture.startedTitle": "Initial report",
+  "eventHistoryPage.fixture.updatedTitle": "Impact update",
+  "eventHistoryPage.fixture.finishedTitle": "Event ended",
+  "eventHistoryPage.fixture.state": "Status",
+  "eventHistoryPage.fixture.severity": "Impact level",
+  "eventHistoryPage.fixture.unrecorded": "No record",
+  "eventHistoryPage.fixture.active": "Active",
+  "eventHistoryPage.fixture.resolved": "Resolved",
+  "eventHistoryPage.fixture.startedDescription": "The initial event report is published.",
+  "eventHistoryPage.fixture.updatedDescription": "The impact level is updated as traffic improves.",
+  "eventHistoryPage.fixture.finishedDescription": "Roadworks end and traffic is restored."
 }
