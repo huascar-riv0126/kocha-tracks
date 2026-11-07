@@ -23,7 +23,7 @@ public class EventHistoryService {
     }
 
     public List<EventHistoryResponseDTO> getAllByEventId(Long eventId) {
-        return this.repository.findAllByEventIdOrderByCreatedAtDesc(eventId)
+        return this.repository.findAllByEvent_IdOrderByCreatedAtDesc(eventId)
                 .stream()
                 .map(EventHistoryResponseDTO::mapToDTO)
                 .toList();
