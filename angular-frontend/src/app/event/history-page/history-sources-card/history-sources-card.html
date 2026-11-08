@@ -1,0 +1,31 @@
+<section
+  class="flex h-full flex-col rounded-xl border border-border-default bg-card p-6 font-sans text-txt-primary"
+>
+  <h2 class="text-lg font-bold">{{ 'historySources.title' | transloco }}</h2>
+  <ul class="mt-4 flex flex-col gap-3">
+    @for (source of sources(); track source.id) {
+      <li>
+        <a
+          [href]="source.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-sm text-sm text-link underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-interactive-primary"
+        >
+          <img src="icons/external-link.svg" alt="" class="size-4 shrink-0" />
+          <span class="wrap-anywhere">{{ source.name }}</span>
+        </a>
+      </li>
+    } @empty {
+      <li class="text-sm text-txt-secondary">{{ 'historySources.empty' | transloco }}</li>
+    }
+  </ul>
+  <div class="mt-auto pt-5">
+    <a
+      [routerLink]="['/evento', eventId(), 'detalles']"
+      class="flex items-center justify-between gap-3 rounded-sm border-t border-border-default pt-4 text-sm font-semibold text-link underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-interactive-primary"
+    >
+      {{ 'historySources.details' | transloco }}
+      <img src="icons/right-arrow.svg" alt="" class="size-4 shrink-0" />
+    </a>
+  </div>
+</section>

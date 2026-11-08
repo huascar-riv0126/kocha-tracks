@@ -1,0 +1,93 @@
+<article
+  class="grid grid-cols-[1rem_minmax(0,1fr)] gap-x-3 font-sans text-txt-primary sm:grid-cols-[6rem_1.5rem_minmax(0,1fr)] sm:gap-x-4"
+>
+  <div class="col-start-2 mb-3 text-sm sm:col-start-1 sm:row-start-1 sm:mb-0 sm:pt-6">
+    <time [attr.datetime]="change().occurredAt.toISOString()" class="font-bold">
+      <span class="block">{{
+        change().occurredAt | date: 'dd MMM yyyy' : '-0400' : transloco.getActiveLang()
+      }}</span>
+      <span class="mt-1 block text-base">{{ change().occurredAt | date: 'HH:mm' : '-0400' }}</span>
+    </time>
+    <span class="mt-1 block text-xs text-txt-secondary"
+      >UTC−4
+      @if (change().isExample) {
+        · {{ 'eventHistory.example' | transloco }}
+      }
+    </span>
+  </div>
+
+  <div
+    class="relative col-start-1 row-start-1 row-span-2 flex justify-center sm:col-start-2 sm:row-span-1"
+    aria-hidden="true"
+  >
+    @if (!last()) {
+      <span class="absolute top-11 -bottom-4 w-px bg-neutral-300"></span>
+    }
+    <span class="absolute top-6 size-3 rounded-full bg-current" [class]="appearance().text"></span>
+  </div>
+
+  <div
+    class="col-start-2 min-w-0 rounded-md border border-border-default bg-card p-4 sm:col-start-3 sm:row-start-1 sm:p-6"
+  >
+    <div class="mb-4 flex items-center justify-between gap-4 text-xs text-txt-secondary">
+      <span class="font-semibold">{{
+        'eventHistory.version' | transloco: { version: change().version }
+      }}</span>
+      @if (change().isExample) {
+        <span class="rounded bg-neutral-100 px-2 py-1">{{
+          'eventHistory.example' | transloco
+        }}</span>
+      }
+    </div>
+    <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
+      <svg
+        class="size-5 shrink-0"
+        [class]="appearance().text"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path [attr.d]="appearance().icon" />
+      </svg>
+      {{ change().title }}
+    </h3>
+    <div
+      class="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-center sm:gap-4"
+    >
+      <div class="min-w-0 rounded-md border border-border-default bg-neutral-50 p-3">
+        <p class="mb-1 text-xs text-txt-secondary">
+          {{ change().field }} · {{ 'eventHistory.before' | transloco }}
+        </p>
+        <p class="wrap-anywhere text-base">{{ change().before }}</p>
+      </div>
+      <svg
+        class="size-5 justify-self-center text-txt-secondary rotate-90 sm:rotate-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14m-6-6 6 6-6 6" />
+      </svg>
+      <div class="min-w-0 rounded-md p-3" [class]="appearance().background">
+        <p class="mb-1 text-xs text-txt-secondary">
+          {{ change().field }} · {{ 'eventHistory.after' | transloco }}
+        </p>
+        <p
+          class="wrap-anywhere text-base font-semibold"
+          [class]="change().type === 'finished' ? 'text-txt-primary' : appearance().text"
+        >
+          {{ change().after }}
+        </p>
+      </div>
+    </div>
+    <p class="mt-4 wrap-anywhere text-sm text-txt-secondary">{{ change().description }}</p>
+  </div>
+</article>
