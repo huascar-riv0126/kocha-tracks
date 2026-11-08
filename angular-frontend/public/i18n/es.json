@@ -159,5 +159,17 @@
   "eventHistory.after": "Después",
   "eventHistory.newestFirst": "Más recientes primero",
   "eventHistory.oldestFirst": "Más antiguos primero",
-  "eventHistory.empty": "No hay cambios registrados."
+  "eventHistory.empty": "No hay cambios registrados.",
+  "historyEvent.type": "Tipo de evento",
+  "historyEvent.location": "Ubicación",
+  "historyEvent.active": "Activo",
+  "historyEvent.finished": "Finalizado",
+  "historyEvent.startedAt": "Fecha de inicio",
+  "historySources.title": "Fuentes y referencias",
+  "historySources.details": "Ver ficha del evento",
+  "historySources.empty": "No hay fuentes vinculadas a este evento.",
+  "historyHelp.title": "Cómo leer este historial",
+  "historyHelp.changes": "Cada registro muestra qué cambió y cuándo ocurrió, con los valores anteriores y nuevos. Puedes alternar entre las fechas más recientes y las más antiguas.",
+  "historyHelp.status": "El estado actual aparece en rojo si el evento sigue activo y en verde cuando ya finalizó.",
+  "historyHelp.timezone": "Las horas se muestran en horario de Bolivia (UTC−4)."
 }

@@ -159,5 +159,17 @@
   "eventHistory.after": "After",
   "eventHistory.newestFirst": "Newest first",
   "eventHistory.oldestFirst": "Oldest first",
-  "eventHistory.empty": "No changes recorded."
+  "eventHistory.empty": "No changes recorded.",
+  "historyEvent.type": "Event type",
+  "historyEvent.location": "Location",
+  "historyEvent.active": "Active",
+  "historyEvent.finished": "Finished",
+  "historyEvent.startedAt": "Start date",
+  "historySources.title": "Sources and references",
+  "historySources.details": "View event details",
+  "historySources.empty": "No sources are linked to this event.",
+  "historyHelp.title": "How to read this history",
+  "historyHelp.changes": "Each record shows what changed and when it happened, with the previous and new values. You can switch between the newest and oldest dates.",
+  "historyHelp.status": "The current status appears in red while the event is active and in green once it has finished.",
+  "historyHelp.timezone": "Times are shown in Bolivia time (UTC−4)."
 }
