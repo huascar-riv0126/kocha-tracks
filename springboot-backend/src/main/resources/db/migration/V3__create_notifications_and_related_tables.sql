@@ -174,4 +174,3 @@ ALTER TABLE ONLY public.user_votes
 -- 8. Additional indexes for Zones supporting spatial searches
 CREATE INDEX IF NOT EXISTS idx_zones_is_active ON public.zones (is_active);
 CREATE INDEX IF NOT EXISTS idx_zones_user_id ON public.zones (user_id);
-
