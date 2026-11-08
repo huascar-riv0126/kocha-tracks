@@ -12,20 +12,20 @@ describe('UH-47 Recover Password', () => {
   let fixture: ComponentFixture<RecoverPassword>;
   let root: HTMLElement;
 
-  const emailInput = (): HTMLInputElement =>
+  const input = (testId: string): HTMLInputElement =>
     root.querySelector<HTMLInputElement>(
-      '[data-testid="recovery-email"]'
+      `[data-testid="${testId}"]`
     )!;
 
-  const submitButton = (): HTMLButtonElement =>
+  const button = (testId: string): HTMLButtonElement =>
     root.querySelector<HTMLButtonElement>(
-      '[data-testid="recovery-submit"]'
+      `[data-testid="${testId}"]`
     )!;
 
-  const typeEmail = (value: string): void => {
-    const input = emailInput();
-    input.value = value;
-    input.dispatchEvent(new Event('input'));
+  const write = (testId: string, value: string): void => {
+    const element = input(testId);
+    element.value = value;
+    element.dispatchEvent(new Event('input'));
     fixture.detectChanges();
   };
 
@@ -43,11 +43,11 @@ describe('UH-47 Recover Password', () => {
 
     fixture = TestBed.createComponent(RecoverPassword);
     component = fixture.componentInstance;
-    root = fixture.nativeElement as HTMLElement;
+    root = fixture.nativeElement;
     fixture.detectChanges();
   });
 
-  it('should create the recovery component', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -55,73 +55,106 @@ describe('UH-47 Recover Password', () => {
     expect(root.querySelector('h1')).toBeTruthy();
   });
 
-  it('should render email input', () => {
-    expect(emailInput()).toBeTruthy();
-    expect(emailInput().type).toBe('email');
+  it('should render two password fields', () => {
+    expect(input('recovery-new-password')).toBeTruthy();
+    expect(input('recovery-confirm-password')).toBeTruthy();
   });
 
-  it('should disable submit initially', () => {
-    expect(submitButton().disabled).toBe(true);
+  it('should hide passwords initially', () => {
+    expect(input('recovery-new-password').type).toBe('password');
+    expect(input('recovery-confirm-password').type).toBe('password');
   });
 
-  it('should reject empty email', () => {
-    emailInput().dispatchEvent(new Event('blur'));
+  it('should show and hide new password', () => {
+    button('toggle-recovery-new-password').click();
     fixture.detectChanges();
 
-    expect(component.emailError())
-      .toBe('auth.recovery.error.required');
+    expect(input('recovery-new-password').type).toBe('text');
 
-    expect(submitButton().disabled).toBe(true);
-  });
-
-  it('should reject invalid email', () => {
-    typeEmail('correo-invalido');
-    emailInput().dispatchEvent(new Event('blur'));
+    button('toggle-recovery-new-password').click();
     fixture.detectChanges();
 
-    expect(component.emailValid()).toBe(false);
-    expect(component.emailError())
-      .toBe('auth.recovery.error.invalid');
+    expect(input('recovery-new-password').type).toBe('password');
   });
 
-  it('should accept valid email', () => {
-    typeEmail('usuario@example.com');
-
-    expect(component.emailValid()).toBe(true);
-    expect(submitButton().disabled).toBe(false);
-  });
-
-  it('should remove error after correcting email', () => {
-    typeEmail('incorrecto');
-    emailInput().dispatchEvent(new Event('blur'));
+  it('should show and hide confirm password', () => {
+    button('toggle-recovery-confirm-password').click();
     fixture.detectChanges();
 
-    expect(component.emailError()).not.toBeNull();
+    expect(input('recovery-confirm-password').type).toBe('text');
 
-    typeEmail('correcto@example.com');
+    button('toggle-recovery-confirm-password').click();
+    fixture.detectChanges();
 
-    expect(component.emailError()).toBeNull();
+    expect(input('recovery-confirm-password').type).toBe('password');
   });
 
-  it('should emit trimmed email on valid submit', () => {
+  it('should keep password toggles independent', () => {
+    button('toggle-recovery-new-password').click();
+    fixture.detectChanges();
+
+    expect(input('recovery-new-password').type).toBe('text');
+    expect(input('recovery-confirm-password').type).toBe('password');
+  });
+
+  it('should disable submit with empty fields', () => {
+    expect(button('recovery-submit').disabled).toBe(true);
+  });
+
+  it('should detect matching passwords', () => {
+    write('recovery-new-password', 'Clave123!');
+    write('recovery-confirm-password', 'Clave123!');
+
+    expect(component.passwordsMatch()).toBe(true);
+    expect(
+      root.querySelector('[data-testid="recovery-password-match"]')
+    ).toBeTruthy();
+  });
+
+  it('should detect mismatching passwords', () => {
+    write('recovery-new-password', 'Clave123!');
+    write('recovery-confirm-password', 'OtraClave123!');
+
+    expect(component.passwordsMismatch()).toBe(true);
+    expect(
+      root.querySelector('[data-testid="recovery-password-mismatch"]')
+    ).toBeTruthy();
+  });
+
+  it('should disable submit when passwords differ', () => {
+    write('recovery-new-password', 'Clave123!');
+    write('recovery-confirm-password', 'OtraClave123!');
+
+    expect(button('recovery-submit').disabled).toBe(true);
+  });
+
+  it('should enable submit when passwords match', () => {
+    write('recovery-new-password', 'Clave123!');
+    write('recovery-confirm-password', 'Clave123!');
+
+    expect(button('recovery-submit').disabled).toBe(false);
+  });
+
+  it('should emit new password on valid submit', () => {
     const spy = vi.fn();
-
     component.recoveryRequested.subscribe(spy);
 
-    typeEmail('  usuario@example.com  ');
-    submitButton().click();
+    write('recovery-new-password', 'Clave123!');
+    write('recovery-confirm-password', 'Clave123!');
+
+    button('recovery-submit').click();
 
     expect(spy).toHaveBeenCalledWith({
-      email: 'usuario@example.com',
+      newPassword: 'Clave123!',
     });
   });
 
-  it('should not emit invalid email', () => {
+  it('should not emit when passwords do not match', () => {
     const spy = vi.fn();
-
     component.recoveryRequested.subscribe(spy);
 
-    typeEmail('correo-invalido');
+    write('recovery-new-password', 'Clave123!');
+    write('recovery-confirm-password', 'Incorrecta123!');
 
     root.querySelector('form')!.dispatchEvent(
       new Event('submit', {
@@ -131,23 +164,5 @@ describe('UH-47 Recover Password', () => {
     );
 
     expect(spy).not.toHaveBeenCalled();
-  });
-
-  it('should disable submit while submitting', () => {
-    typeEmail('usuario@example.com');
-
-    component.isSubmitting.set(true);
-    fixture.detectChanges();
-
-    expect(submitButton().disabled).toBe(true);
-  });
-
-  it('should render link back to login', () => {
-    const link = root.querySelector<HTMLAnchorElement>(
-      '[data-testid="back-to-login"]'
-    );
-
-    expect(link).toBeTruthy();
-    expect(link?.getAttribute('href')).toBe('/login');
   });
 });

@@ -1,78 +1,73 @@
 
 import { Component, computed, output, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-
 import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 import { BrandComponent } from '../../shared/brand/brand';
 
 export interface RecoverPasswordPayload {
-  email: string;
+  newPassword: string;
 }
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 @Component({
   selector: 'app-recover-password',
   standalone: true,
-  imports: [
-    RouterLink,
-    GetStringsPipe,
-    BrandComponent,
-  ],
+  imports: [GetStringsPipe, BrandComponent],
   templateUrl: './recover-password.html',
 })
 export class RecoverPassword {
   readonly recoveryRequested = output<RecoverPasswordPayload>();
 
-  readonly email = signal('');
-  readonly touched = signal(false);
+  readonly newPassword = signal('');
+  readonly confirmPassword = signal('');
 
-  readonly isSubmitting = signal(false);
+  readonly showNewPassword = signal(false);
+  readonly showConfirmPassword = signal(false);
 
-  readonly emailValid = computed(() =>
-    EMAIL_PATTERN.test(this.email().trim())
+  readonly passwordsMatch = computed(() =>
+    this.newPassword().length > 0 &&
+    this.confirmPassword().length > 0 &&
+    this.newPassword() === this.confirmPassword()
+  );
+
+  readonly passwordsMismatch = computed(() =>
+    this.confirmPassword().length > 0 &&
+    this.newPassword() !== this.confirmPassword()
   );
 
   readonly canSubmit = computed(() =>
-    this.emailValid() && !this.isSubmitting()
+    this.newPassword().length > 0 &&
+    this.confirmPassword().length > 0 &&
+    this.passwordsMatch()
   );
 
-  readonly emailError = computed<string | null>(() => {
-    if (!this.touched()) {
-      return null;
-    }
-
-    if (this.email().trim().length === 0) {
-      return 'auth.recovery.error.required';
-    }
-
-    if (!this.emailValid()) {
-      return 'auth.recovery.error.invalid';
-    }
-
-    return null;
-  });
-
-  onEmailInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.email.set(input.value);
+  onNewPasswordInput(event: Event): void {
+    this.newPassword.set(
+      (event.target as HTMLInputElement).value
+    );
   }
 
-  onEmailBlur(): void {
-    this.touched.set(true);
+  onConfirmPasswordInput(event: Event): void {
+    this.confirmPassword.set(
+      (event.target as HTMLInputElement).value
+    );
+  }
+
+  toggleNewPassword(): void {
+    this.showNewPassword.update(value => !value);
+  }
+
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword.update(value => !value);
   }
 
   onSubmit(event: Event): void {
     event.preventDefault();
-
-    this.touched.set(true);
 
     if (!this.canSubmit()) {
       return;
     }
 
     this.recoveryRequested.emit({
-      email: this.email().trim(),
+      newPassword: this.newPassword(),
     });
   }
 }

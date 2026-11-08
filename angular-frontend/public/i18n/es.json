@@ -1,3 +1,4 @@
+
 {
   "brand": "Kocha Tracks",
   "navbar.home": "Inicio",
@@ -7,7 +8,7 @@
   "navbar.sources": "Fuentes",
   "navbar.sign.out": "Registrarse",
   "navbar.sign.in": "Iniciar Sesión",
-    "auth.signup.title": "Crea una cuenta",
+  "auth.signup.title": "Crea una cuenta",
   "auth.signup.subtitle": "Únete a Kocha Tracks, reporta y da seguimiento en tiempo real",
   "auth.signup.username.label": "Nombre de Usuario",
   "auth.signup.username.placeholder": "e.g. Junpi7489",
@@ -150,14 +151,12 @@
   "zones.config.save": "Guardar Cambios",
   "zones.empty": "Aún no tienes zonas. Crea tu primera zona.",
   "filter.all": "Todos",
-  
-"auth.recovery.title": "Recuperar contraseña",
-"auth.recovery.description": "Ingresa tu correo electrónico para solicitar un enlace de recuperación de contraseña.",
-"auth.recovery.email.label": "Correo electrónico",
-"auth.recovery.email.placeholder": "name@example.com",
-"auth.recovery.submit": "Enviar enlace de recuperación",
-"auth.recovery.back": "Volver a iniciar sesión",
-"auth.recovery.error.required": "El correo electrónico es obligatorio",
-"auth.recovery.error.invalid": "Ingresa un correo electrónico válido"
-
+  "auth.recovery.title": "Recuperar contraseña",
+  "auth.recovery.new": "Nueva contraseña",
+  "auth.recovery.confirm": "Confirma la nueva contraseña",
+  "auth.recovery.show": "Mostrar contraseña",
+  "auth.recovery.hide": "Ocultar contraseña",
+  "auth.recovery.match": "Las contraseñas coinciden",
+  "auth.recovery.mismatch": "Las contraseñas no coinciden",
+  "auth.recovery.submit": "Recuperar contraseña"
 }
