@@ -2,6 +2,12 @@
   <app-details-card [event]="event()" class="min-w-0 flex-2" />
   <div class="flex min-w-0 flex-1 flex-col gap-6">
     <app-severity-card [severity]="event()!.severity" />
+    <a
+      [routerLink]="['/evento', event().id, 'historial']"
+      class="inline-flex items-center justify-center rounded-md border border-border-default bg-surface px-4 py-3 text-sm font-semibold text-link hover:bg-section-alt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary"
+    >
+      {{ 'eventHistoryPage.openHistory' | getStrings }}
+    </a>
     <app-actions-card />
   </div>
 </main>
