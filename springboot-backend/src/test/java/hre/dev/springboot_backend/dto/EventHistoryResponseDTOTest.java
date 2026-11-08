@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import hre.dev.springboot_backend.model.Event;
 import hre.dev.springboot_backend.model.EventHistory;
 
 class EventHistoryResponseDTOTest {
@@ -18,7 +19,9 @@ class EventHistoryResponseDTOTest {
     @DisplayName("mapToDTO() copies change, content and createdAt from the entity")
     void testMapToDTO() {
         LocalDateTime createdAt = LocalDateTime.of(2026, 1, 1, 1, 1);
-        EventHistory entity = new EventHistory(10L, change, content);
+        Event event = new Event();
+        event.setId(10L);
+        EventHistory entity = new EventHistory(event, change, content);
         ReflectionTestUtils.setField(entity, "createdAt", createdAt);
 
         EventHistoryResponseDTO dto = EventHistoryResponseDTO.mapToDTO(entity);

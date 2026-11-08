@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import hre.dev.springboot_backend.dto.EventHistoryResponseDTO;
+import hre.dev.springboot_backend.model.Event;
 import hre.dev.springboot_backend.model.EventHistory;
 import hre.dev.springboot_backend.repository.EventHistoryRepository;
 
@@ -26,7 +27,9 @@ class EventHistoryServiceTest {
     private EventHistoryService service;
 
     private EventHistory buildHistory(Long eventId) {
-        EventHistory history = new EventHistory(eventId, "test change", "lorem ipsum");
+        Event event = new Event();
+        event.setId(eventId);
+        EventHistory history = new EventHistory(event, "test change", "lorem ipsum");
         return history;
     }
 
@@ -58,9 +61,9 @@ class EventHistoryServiceTest {
     @Test
     @DisplayName("getAllByEventId() queries the repository with the given eventId")
     void testGetAllByEventId_usesGivenId() {
-        when(repository.findAllByEventIdOrderByCreatedAtDesc(10L))
+        when(repository.findAllByEvent_IdOrderByCreatedAtDesc(10L))
                 .thenReturn(List.of(buildHistory(10L)));
-        when(repository.findAllByEventIdOrderByCreatedAtDesc(11L))
+        when(repository.findAllByEvent_IdOrderByCreatedAtDesc(11L))
                 .thenReturn(List.of(buildHistory(11L), buildHistory(11L)));
 
         assertThat(service.getAllByEventId(10L)).hasSize(1);
@@ -70,11 +73,11 @@ class EventHistoryServiceTest {
     @Test
     @DisplayName("getAllByEventId() returns an empty list if there is no entries for the event")
     void testGetAllByEventId_empty() {
-        when(repository.findAllByEventIdOrderByCreatedAtDesc(99L)).thenReturn(List.of());
+        when(repository.findAllByEvent_IdOrderByCreatedAtDesc(99L)).thenReturn(List.of());
 
         List<EventHistoryResponseDTO> result = service.getAllByEventId(99L);
 
         assertThat(result).isEmpty();
-        verify(repository).findAllByEventIdOrderByCreatedAtDesc(99L);
+        verify(repository).findAllByEvent_IdOrderByCreatedAtDesc(99L);
     }
 }
