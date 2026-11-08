@@ -1,0 +1,40 @@
+<section class="font-sans text-txt-primary">
+  <h2 class="text-2xl font-bold">{{ 'eventHistory.title' | transloco }}</h2>
+  <div class="mt-6 mb-6 flex flex-wrap items-center justify-between gap-4">
+    <p class="text-sm text-txt-secondary" aria-live="polite">
+      {{
+        (changes().length === 1 ? 'eventHistory.singleRecord' : 'eventHistory.count')
+          | transloco: { count: changes().length }
+      }}
+    </p>
+    <button
+      type="button"
+      class="flex cursor-pointer items-center gap-2 rounded border border-border-default bg-surface px-3 py-2 text-sm hover:bg-section-alt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary"
+      (click)="toggleOrder()"
+    >
+      {{ (ascending() ? 'eventHistory.oldestFirst' : 'eventHistory.newestFirst') | transloco }}
+      <svg
+        class="size-4"
+        [class.rotate-180]="ascending()"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </button>
+  </div>
+  <ol class="flex flex-col gap-4">
+    @for (change of sortedChanges(); track change.id; let last = $last) {
+      <li><app-event-change-row [change]="change" [last]="last" /></li>
+    } @empty {
+      <li class="rounded-md border border-border-default bg-card p-6 text-sm text-txt-secondary">
+        {{ 'eventHistory.empty' | transloco }}
+      </li>
+    }
+  </ol>
+</section>
