@@ -3,6 +3,9 @@ package hre.dev.springboot_backend.model;
 import jakarta.persistence.*;
 import org.locationtech.jts.geom.Point;
 
+import hre.dev.springboot_backend.dto.EventRequestDTO;
+import hre.dev.springboot_backend.util.GeometryUtil;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -53,7 +56,7 @@ public class Event {
     }
 
     public Event(String name, String description, String location, Point point,
-                 LocalDateTime started, LocalDateTime ended, String state, String grade) {
+            LocalDateTime started, LocalDateTime ended, String state, String grade) {
         this.name = name;
         this.description = description;
         this.location = location;
@@ -65,10 +68,20 @@ public class Event {
         this.isActive = true;
     }
 
+    public void updateFromDTO(EventRequestDTO dto) {
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.location = dto.getLocation();
+        this.point = GeometryUtil.toPoint(dto.getPoint());
+        this.started = dto.getStarted();
+        this.ended = dto.getEnded();
+        this.state = dto.getState();
+        this.grade = dto.getGrade();
+    }
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
         if (this.isActive == null) {
             this.isActive = true;
         }

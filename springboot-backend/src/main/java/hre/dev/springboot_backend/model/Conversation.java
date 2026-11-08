@@ -69,6 +69,7 @@ public class Conversation {
 
     public Conversation(User creator, String name) {
         this.creator = creator;
+        this.name = name;
     }
 
     public void softDelete() {

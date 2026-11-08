@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import hre.dev.springboot_backend.model.UserNotification;
 import hre.dev.springboot_backend.model.UserNotificationId;
 
-public interface UserNotificationRepository extends JpaRepository<UserNotification, UserNotificationId> {
+public interface UserNotificationRepository extends JpaRepository<UserNotification, UserNotificationId>, UserNotificationRepositoryCustom {
     @Query("""
             select un from UserNotification un
             join fetch un.notification n

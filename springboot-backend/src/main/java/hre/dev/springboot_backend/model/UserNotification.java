@@ -48,8 +48,16 @@ public class UserNotification {
     }
 
     public UserNotification(Long userId, Notification notification) {
-        this.id = new UserNotificationId(userId, notification.getId());
+        this.id = new UserNotificationId(userId, notification != null ? notification.getId() : null);
         this.notification = notification;
+    }
+
+    public UserNotification(User user, Notification notification) {
+        this.user = user;
+        this.notification = notification;
+        this.id = new UserNotificationId(
+                user != null ? user.getId() : null,
+                notification != null ? notification.getId() : null);
     }
 
     public void markAsRead() {
