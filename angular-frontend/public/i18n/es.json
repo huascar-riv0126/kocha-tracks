@@ -149,5 +149,15 @@
   "zones.config.cancel": "Cancelar",
   "zones.config.save": "Guardar Cambios",
   "zones.empty": "Aún no tienes zonas. Crea tu primera zona.",
-  "filter.all": "Todos"
+  "filter.all": "Todos",
+  
+"auth.recovery.title": "Recuperar contraseña",
+"auth.recovery.description": "Ingresa tu correo electrónico para solicitar un enlace de recuperación de contraseña.",
+"auth.recovery.email.label": "Correo electrónico",
+"auth.recovery.email.placeholder": "name@example.com",
+"auth.recovery.submit": "Enviar enlace de recuperación",
+"auth.recovery.back": "Volver a iniciar sesión",
+"auth.recovery.error.required": "El correo electrónico es obligatorio",
+"auth.recovery.error.invalid": "Ingresa un correo electrónico válido"
+
 }
