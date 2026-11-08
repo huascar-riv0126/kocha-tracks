@@ -1,4 +1,4 @@
-# Kocha Tracks
+s# Kocha Tracks
 
 Kocha Tracks es un proyecto full-stack que permite a los usuarios consultar sobre eventos que afectan la transitabilidad de las calles de Cochabamba, sin requerir tener el GPS activo en todo momento ni iniciar sesión. 
 
@@ -10,12 +10,12 @@ Los usuarios que deseen registrarse con una cuenta podrán crear zonas personali
 | --- | --- |
 | Frontend | Angular 22.1, dependencias fijadas en `angular-frontend/package-lock.json` |
 | Backend | Spring Boot 4.1.1 y Java **JDK 21** (incluye `javac`) |
-| Base de datos | PostgreSQL 18 |
+| Base de datos | PostgreSQL 18 con la extensión **PostGIS** (necesaria por los tipos de datos espaciales) |
 | Node.js | `^22.22.3`, `^24.15.0` o `>=26.0.0`, según Angular en el lockfile |
 | npm | El proyecto declara `npm@11.19.0` en `angular-frontend/package.json` |
 | Maven | El wrapper `mvnw` descarga Maven 3.9.16; no hace falta instalarlo globalmente |
 
-Instala [Git](https://git-scm.com/downloads), [Node.js](https://nodejs.org/) y un [JDK 21, por ejemplo Eclipse Temurin](https://adoptium.net/temurin/releases/?version=21). Para la base local, elige **Docker con Compose** (ruta descrita abajo) o una instalación propia de [PostgreSQL 18](https://www.postgresql.org/download/). pgAdmin y DBeaver son opcionales.
+Instala [Git](https://git-scm.com/downloads), [Node.js](https://nodejs.org/) y un [JDK 21, por ejemplo Eclipse Temurin](https://adoptium.net/temurin/releases/?version=21). Para la base local, elige **Docker con Compose** (ruta descrita abajo) o una instalación propia de [PostgreSQL 18](https://www.postgresql.org/download/) junto con [PostGIS](https://postgis.net/documentation/getting_started/). El proyecto usa tipos de datos espaciales, por lo que **PostGIS es obligatorio** para el desarrollo local. pgAdmin y DBeaver son opcionales.
 
 Comprueba las herramientas antes de continuar:
 
@@ -72,11 +72,13 @@ No ejecutes manualmente la migración SQL: Flyway creará las tablas al iniciar 
 
 **Opción B: PostgreSQL ya instalado**
 
-Arranca tu servicio PostgreSQL 18. En `psql`, conectado con un usuario administrador, crea un usuario y una base propios para el proyecto:
+Instala PostGIS para tu versión de PostgreSQL (en Windows suele ofrecerse en el instalador mediante Stack Builder; en Linux/macOS, con tu gestor de paquetes). Arranca tu servicio PostgreSQL 18. En `psql`, conectado con un usuario administrador, crea un usuario y una base propios para el proyecto y habilita la extensión:
 
 ```sql
 CREATE USER kocha WITH PASSWORD 'kocha_local';
 CREATE DATABASE kocha_tracks_db OWNER kocha;
+\c kocha_tracks_db
+CREATE EXTENSION IF NOT EXISTS postgis;
 ```
 
 Puedes elegir otros valores; ajusta el `.env` del siguiente paso. No necesitas arrancar Compose si usas esta opción.
@@ -102,7 +104,7 @@ DB_PASSWORD=kocha_local
 
 Spring carga ese archivo mediante `spring.config.import=optional:file:.env[.properties]`, relativo al **directorio desde donde ejecutas Maven**. Por eso debes ejecutar el wrapper dentro de `springboot-backend`. Usa el formato `CLAVE=valor`, sin `export`; no hace falta cargarlo con `source`. Las variables exportadas en tu terminal tienen prioridad sobre el archivo: comprueba que no haya valores antiguos de `DB_URL`, `DB_USERNAME` o `DB_PASSWORD` antes de arrancar.
 
-El wrapper debe mostrar Java 21. En el primer inicio, Flyway aplica `V1__baseline.sql` y Hibernate valida las entidades. Espera el mensaje `Started SpringbootBackendApplication`; la API queda en `http://localhost:8080`.
+El wrapper debe mostrar Java 21. En el primer inicio, Flyway aplica las migraciones `V1` hasta `V4` y Hibernate valida las entidades. Espera el mensaje `Started SpringbootBackendApplication`; la API queda en `http://localhost:8080`.
 
 ### 4. Instalar y arrancar el frontend
 
@@ -201,6 +203,15 @@ Ejemplos del repositorio: [documentación del setup (#37)](https://github.com/hu
 
 ---
 
+## Documentación de la API
+
+La documentación de la API se generó con [Bruno](https://www.usebruno.com/), a partir de la colección de requests del proyecto.
+
+* **Versión publicada (GitHub Pages):** <!-- TODO: agregar URL cuando se haga el deploy --> _Próximamente_
+* **Versión local:** abre directamente en tu navegador el archivo `docs/api/kocha-tracks-api-documentation.html`. No requiere levantar el backend.
+
+---
+
 ## Migraciones de Base de Datos (Flyway + Hibernate)
 El proyecto utiliza Flyway para versionar la **estructura** de la base de datos. Los scripts de migración se encuentran en `springboot-backend/src/main/resources/db/migration/` (las rutas de los ejemplos siguientes son relativas al backend). Al arrancar el proyecto, Flyway ejecutará automáticamente los scripts pendientes.
 
@@ -246,6 +257,8 @@ Supabase actúa como nuestro proveedor de base de datos en la nube.
 * Dirígete a la sección de conexion directa a la Base de Datos y obtén el **Connection String** usando *session pooler* y en formato *JDBC*.
 
 > Supabase te dara un URL similar a: `jdbc:postgresql://[dominio-del-pooler]:5432/postgres?user=postgres.[id-dentro-del-dominio]&password=[YOUR-PASSWORD]` debes modificarla para que quede asi: `jdbc:postgresql://[dominio-del-pooler]:5432/postgres?sslmode=require`, no borres sin anotar antes el *id dentro del dominio* que te da Supabase. Este enlace de conexion directa y el id dentro del dominio se usan como variables de entorno para deployar el backend.
+
+> Si la migración V2 falla al crear la extensión PostGIS, habilítala desde el panel de Supabase (*Database → Extensions*) y reinicia el backend.
 
 ### 2. Backend: Render
 
