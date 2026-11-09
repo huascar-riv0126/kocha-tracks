@@ -197,5 +197,20 @@
   "eventHistoryPage.fixture.resolved": "Resolved",
   "eventHistoryPage.fixture.startedDescription": "The initial event report is published.",
   "eventHistoryPage.fixture.updatedDescription": "The impact level is updated as traffic improves.",
-  "eventHistoryPage.fixture.finishedDescription": "Roadworks end and traffic is restored."
+  "eventHistoryPage.fixture.finishedDescription": "Roadworks end and traffic is restored.",
+
+  "auth.login.title": "Log in",
+  "auth.login.email.label": "Email address",
+  "auth.login.email.placeholder": "name@example.com",
+  "auth.login.password.label": "Password",
+  "auth.login.password.placeholder": "••••••••",
+  "auth.login.password.show": "Show password",
+  "auth.login.password.hide": "Hide password",
+  "auth.login.error.email.required": "Email address is required.",
+  "auth.login.error.email.invalid": "Enter a valid email address.",
+  "auth.login.error.password.required": "Password is required.",
+  "auth.login.forgotPassword": "Forgot your password?",
+  "auth.login.submit": "Log in",
+  "auth.login.noAccount": "Don't have an account?",
+  "auth.login.createAccount": "Create account"
 }

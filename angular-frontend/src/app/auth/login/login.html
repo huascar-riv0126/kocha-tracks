@@ -1,3 +1,4 @@
+
 <section
   class="min-h-screen flex items-center justify-center bg-section-alt px-4 py-8"
 >
@@ -5,6 +6,7 @@
     class="w-full max-w-[560px] rounded-xl border border-border-default bg-surface px-6 py-8 shadow-lg sm:px-12 sm:py-11"
   >
 
+    <!-- LOGO KOCHA TRACKS -->
     <div class="mb-6 flex items-center gap-3">
       <div
         class="flex h-8 w-8 items-center justify-center rounded-lg bg-interactive-cta text-on-dark"
@@ -19,121 +21,193 @@
         >
           <path
             d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-          ></path>
-
-          <circle
-            cx="12"
-            cy="10"
-            r="3"
-          ></circle>
+          />
+          <circle cx="12" cy="10" r="3" />
         </svg>
       </div>
 
       <span class="text-2xl font-bold text-txt-primary">
-        Kocha Tracks
+        {{ 'brand' | transloco }}
       </span>
     </div>
 
+    <!-- TÍTULO -->
     <h1 class="text-2xl font-bold text-txt-primary">
-      Inicio de sesión
+      {{ 'auth.login.title' | transloco }}
     </h1>
 
     <form
       class="mt-6 space-y-4"
       (ngSubmit)="onSubmit()"
+      novalidate
     >
-
+      <!-- CORREO ELECTRÓNICO -->
       <div>
         <label
           for="email"
           class="mb-2 block text-sm font-medium text-txt-primary"
         >
-          Correo electrónico
+          {{ 'auth.login.email.label' | transloco }}
         </label>
 
         <input
           id="email"
+          data-testid="login-email"
           type="email"
           name="email"
-          placeholder="name@example.com"
+          [placeholder]="'auth.login.email.placeholder' | transloco"
+          autocomplete="email"
+          required
           [ngModel]="email()"
-          (ngModelChange)="email.set($event)"
-          class="h-11 w-full rounded-md border border-border-default bg-surface px-3 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          (ngModelChange)="onEmailChange($event)"
+          (blur)="onEmailBlur()"
+          [attr.aria-invalid]="showEmailError()"
+          aria-describedby="email-error"
+          class="h-11 w-full rounded-md border bg-surface px-3 text-sm text-txt-primary outline-none transition focus:ring-1"
+          [class.border-red-500]="showEmailError()"
+          [class.border-border-default]="!showEmailError()"
+          [class.focus:border-interactive-cta]="!showEmailError()"
+          [class.focus:ring-interactive-cta]="!showEmailError()"
         />
+
+        @if (showEmailError()) {
+          <p
+            id="email-error"
+            data-testid="login-email-error"
+            role="alert"
+            class="mt-2 text-sm text-red-600"
+          >
+            @if (emailRequired()) {
+              {{ 'auth.login.error.email.required' | transloco }}
+            } @else if (emailInvalid()) {
+              {{ 'auth.login.error.email.invalid' | transloco }}
+            }
+          </p>
+        }
       </div>
 
+      <!-- CONTRASEÑA -->
       <div>
         <label
           for="password"
           class="mb-2 block text-sm font-medium text-txt-primary"
         >
-          Contraseña
+          {{ 'auth.login.password.label' | transloco }}
         </label>
 
         <div class="relative">
-
           <input
             id="password"
+            data-testid="login-password"
             name="password"
             [type]="showPassword() ? 'text' : 'password'"
-            placeholder="••••••••"
+            [placeholder]="'auth.login.password.placeholder' | transloco"
+            autocomplete="current-password"
+            required
             [ngModel]="password()"
-            (ngModelChange)="password.set($event)"
-            class="h-11 w-full rounded-md border border-border-default bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+            (ngModelChange)="onPasswordChange($event)"
+            (blur)="onPasswordBlur()"
+            [attr.aria-invalid]="showPasswordError()"
+            aria-describedby="password-error"
+            class="h-11 w-full rounded-md border bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:ring-1"
+            [class.border-red-500]="showPasswordError()"
+            [class.border-border-default]="!showPasswordError()"
+            [class.focus:border-interactive-cta]="!showPasswordError()"
+            [class.focus:ring-interactive-cta]="!showPasswordError()"
           />
 
+          <!-- MOSTRAR / OCULTAR CONTRASEÑA -->
           <button
             type="button"
+            data-testid="login-toggle-password"
             (click)="togglePassword()"
-            aria-label="Mostrar u ocultar contraseña"
-            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary"
+            [attr.aria-pressed]="showPassword()"
+            [attr.aria-label]="
+              (showPassword()
+                ? 'auth.login.password.hide'
+                : 'auth.login.password.show') | transloco
+            "
+            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary transition hover:text-txt-primary"
           >
-            <svg
-              class="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"
-              ></path>
-
-              <circle
-                cx="12"
-                cy="12"
-                r="3"
-              ></circle>
-            </svg>
+            @if (showPassword()) {
+              <!-- OJO TACHADO -->
+              <svg
+                data-testid="eye-closed-icon"
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m3 3 18 18" />
+                <path d="M10.58 10.58a2 2 0 0 0 2.84 2.84" />
+                <path d="M9.88 5.09A10.8 10.8 0 0 1 12 4.9c7 0 10 7.1 10 7.1a13.2 13.2 0 0 1-4.24 5.24" />
+                <path d="M6.61 6.61A13.3 13.3 0 0 0 2 12s3 7.1 10 7.1a10.5 10.5 0 0 0 4.5-.99" />
+              </svg>
+            } @else {
+              <!-- OJO ABIERTO -->
+              <svg
+                data-testid="eye-open-icon"
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            }
           </button>
-
         </div>
+
+        @if (showPasswordError()) {
+          <p
+            id="password-error"
+            data-testid="login-password-error"
+            role="alert"
+            class="mt-2 text-sm text-red-600"
+          >
+            {{ 'auth.login.error.password.required' | transloco }}
+          </p>
+        }
       </div>
 
+      <!-- RECUPERACIÓN -->
       <div>
         <a
-          href="#"
+          routerLink="/auth/recuperar-contrasena"
           class="text-sm text-interactive-cta underline hover:text-interactive-cta-hover"
         >
-          ¿Olvidaste tu contraseña?
+          {{ 'auth.login.forgotPassword' | transloco }}
         </a>
       </div>
 
+      <!-- BOTÓN DE INICIO DE SESIÓN -->
       <button
         type="submit"
-        class="h-11 w-full rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition hover:bg-interactive-cta-hover"
+        data-testid="login-submit"
+        [disabled]="!canSubmit()"
+        class="h-11 w-full rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Iniciar sesión
+        {{ 'auth.login.submit' | transloco }}
       </button>
 
+      <!-- REGISTRO -->
       <p class="pt-1 text-sm text-txt-secondary">
-        ¿No tienes una cuenta?
+        {{ 'auth.login.noAccount' | transloco }}
 
         <a
           routerLink="/register"
           class="text-interactive-cta underline hover:text-interactive-cta-hover"
         >
-          Crear cuenta
+          {{ 'auth.login.createAccount' | transloco }}
         </a>
       </p>
 
