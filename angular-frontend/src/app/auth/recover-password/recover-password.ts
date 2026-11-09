@@ -1,6 +1,6 @@
 
 import { Component, computed, output, signal } from '@angular/core';
-import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { BrandComponent } from '../../shared/brand/brand';
 
 export interface RecoverPasswordPayload {
@@ -10,7 +10,7 @@ export interface RecoverPasswordPayload {
 @Component({
   selector: 'app-recover-password',
   standalone: true,
-  imports: [GetStringsPipe, BrandComponent],
+  imports: [TranslocoPipe, BrandComponent],
   templateUrl: './recover-password.html',
 })
 export class RecoverPassword {

@@ -1,11 +1,32 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { RecoverPassword } from './recover-password';
-import { StringsService } from '../../core/strings/strings-service/strings-service';
-import { StringsServiceStub } from '@testutils/stubs';
+
+const es = {
+  'auth.recovery.title': 'Recuperar contraseña',
+  'auth.recovery.new': 'Nueva contraseña',
+  'auth.recovery.confirm': 'Confirma la nueva contraseña',
+  'auth.recovery.show': 'Mostrar contraseña',
+  'auth.recovery.hide': 'Ocultar contraseña',
+  'auth.recovery.match': 'Las contraseñas coinciden',
+  'auth.recovery.mismatch': 'Las contraseñas no coinciden',
+  'auth.recovery.submit': 'Recuperar contraseña',
+};
+
+const en = {
+  'auth.recovery.title': 'Recover password',
+  'auth.recovery.new': 'New password',
+  'auth.recovery.confirm': 'Confirm new password',
+  'auth.recovery.show': 'Show password',
+  'auth.recovery.hide': 'Hide password',
+  'auth.recovery.match': 'Passwords match',
+  'auth.recovery.mismatch': 'Passwords do not match',
+  'auth.recovery.submit': 'Recover password',
+};
 
 describe('UH-47 Recover Password', () => {
   let component: RecoverPassword;
@@ -25,25 +46,37 @@ describe('UH-47 Recover Password', () => {
   const write = (testId: string, value: string): void => {
     const element = input(testId);
     element.value = value;
-    element.dispatchEvent(new Event('input'));
+    element.dispatchEvent(
+      new Event('input', { bubbles: true })
+    );
     fixture.detectChanges();
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecoverPassword],
+      imports: [
+        RecoverPassword,
+        TranslocoTestingModule.forRoot({
+          langs: { es, en },
+          translocoConfig: {
+            availableLangs: ['es', 'en'],
+            defaultLang: 'es',
+            reRenderOnLangChange: true,
+          },
+          preloadLangs: true,
+        }),
+      ],
       providers: [
         provideRouter([]),
-        {
-          provide: StringsService,
-          useClass: StringsServiceStub,
-        },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RecoverPassword);
     component = fixture.componentInstance;
-    root = fixture.nativeElement;
+    root = fixture.nativeElement as HTMLElement;
+
+    fixture.detectChanges();
+    await fixture.whenStable();
     fixture.detectChanges();
   });
 
@@ -53,6 +86,9 @@ describe('UH-47 Recover Password', () => {
 
   it('should render recovery title', () => {
     expect(root.querySelector('h1')).toBeTruthy();
+    expect(root.querySelector('h1')?.textContent).toContain(
+      'Recuperar contraseña'
+    );
   });
 
   it('should render two password fields', () => {
@@ -164,5 +200,18 @@ describe('UH-47 Recover Password', () => {
     );
 
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should render translated form labels', () => {
+    const labels = Array.from(
+      root.querySelectorAll('label')
+    ).map(label => label.textContent?.trim());
+
+    expect(labels).toContain('Nueva contraseña');
+    expect(labels).toContain('Confirma la nueva contraseña');
+
+    expect(button('recovery-submit').textContent).toContain(
+      'Recuperar contraseña'
+    );
   });
 });
