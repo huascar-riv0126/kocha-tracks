@@ -9,6 +9,7 @@ import { EventHistoryPage } from './event/history-page/history-page';
 import { eventResolver } from './event/event-resolver';
 import { NotFound } from './status/not-found/not-found';
 import { Login } from './auth/login/login';
+import { RecoverPassword } from './auth/recover-password/recover-password'; // UH-47
 import { SignUp } from './auth/sign-up/sign-up';
 import { ProfilePageComponent } from './user/profile-page/profile-page';
 import { ChangePassword } from './auth/change-password/change-password';
@@ -19,14 +20,10 @@ export const routes: Routes = [
   { path: 'zonas-interes', component: ZonesPage },
   { path: 'fuentes', component: SourcesPage },
   { path: 'login', component: Login },
+  { path: 'auth/recuperar-contrasena', component: RecoverPassword },
   { path: 'register', component: SignUp },
   { path: 'perfil', component: ProfilePageComponent },
-
-  {
-    path: 'auth/cambiar-contrasena',
-    component: ChangePassword,
-  },
-
+  { path: 'auth/cambiar-contrasena', component: ChangePassword },
   {
     path: 'evento/:eventId',
     resolve: { event: eventResolver },
@@ -36,6 +33,5 @@ export const routes: Routes = [
       { path: '', redirectTo: 'detalles', pathMatch: 'full' },
     ],
   },
-
   { path: '**', component: NotFound },
 ];
