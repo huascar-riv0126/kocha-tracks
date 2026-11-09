@@ -21,24 +21,19 @@
         >
           <path
             d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-          ></path>
-
-          <circle
-            cx="12"
-            cy="10"
-            r="3"
-          ></circle>
+          />
+          <circle cx="12" cy="10" r="3" />
         </svg>
       </div>
 
       <span class="text-2xl font-bold text-txt-primary">
-        Kocha Tracks
+        {{ 'brand' | transloco }}
       </span>
     </div>
 
-    <!-- TITULO -->
+    <!-- TÍTULO -->
     <h1 class="text-2xl font-bold text-txt-primary">
-      Inicio de sesión
+      {{ 'auth.login.title' | transloco }}
     </h1>
 
     <form
@@ -46,14 +41,13 @@
       (ngSubmit)="onSubmit()"
       novalidate
     >
-
-      <!-- CORREO ELECTRONICO -->
+      <!-- CORREO ELECTRÓNICO -->
       <div>
         <label
           for="email"
           class="mb-2 block text-sm font-medium text-txt-primary"
         >
-          Correo electrónico
+          {{ 'auth.login.email.label' | transloco }}
         </label>
 
         <input
@@ -61,7 +55,7 @@
           data-testid="login-email"
           type="email"
           name="email"
-          placeholder="name@example.com"
+          [placeholder]="'auth.login.email.placeholder' | transloco"
           autocomplete="email"
           required
           [ngModel]="email()"
@@ -84,9 +78,9 @@
             class="mt-2 text-sm text-red-600"
           >
             @if (emailRequired()) {
-              El correo electrónico es obligatorio.
+              {{ 'auth.login.error.email.required' | transloco }}
             } @else if (emailInvalid()) {
-              Ingresa un correo electrónico válido.
+              {{ 'auth.login.error.email.invalid' | transloco }}
             }
           </p>
         }
@@ -98,7 +92,7 @@
           for="password"
           class="mb-2 block text-sm font-medium text-txt-primary"
         >
-          Contraseña
+          {{ 'auth.login.password.label' | transloco }}
         </label>
 
         <div class="relative">
@@ -107,7 +101,7 @@
             data-testid="login-password"
             name="password"
             [type]="showPassword() ? 'text' : 'password'"
-            placeholder="••••••••"
+            [placeholder]="'auth.login.password.placeholder' | transloco"
             autocomplete="current-password"
             required
             [ngModel]="password()"
@@ -122,22 +116,21 @@
             [class.focus:ring-interactive-cta]="!showPasswordError()"
           />
 
-          <!-- BOTON PARA MOSTRAR / OCULTAR CONTRASEÑA -->
+          <!-- MOSTRAR / OCULTAR CONTRASEÑA -->
           <button
             type="button"
             data-testid="login-toggle-password"
             (click)="togglePassword()"
             [attr.aria-pressed]="showPassword()"
             [attr.aria-label]="
-              showPassword()
-                ? 'Ocultar contraseña'
-                : 'Mostrar contraseña'
+              (showPassword()
+                ? 'auth.login.password.hide'
+                : 'auth.login.password.show') | transloco
             "
             class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary transition hover:text-txt-primary"
           >
-
             @if (showPassword()) {
-              <!-- OJO TACHADO: CONTRASEÑA VISIBLE -->
+              <!-- OJO TACHADO -->
               <svg
                 data-testid="eye-closed-icon"
                 class="h-5 w-5"
@@ -149,19 +142,13 @@
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="m3 3 18 18"></path>
-                <path
-                  d="M10.58 10.58a2 2 0 0 0 2.84 2.84"
-                ></path>
-                <path
-                  d="M9.88 5.09A10.8 10.8 0 0 1 12 4.9c7 0 10 7.1 10 7.1a13.2 13.2 0 0 1-4.24 5.24"
-                ></path>
-                <path
-                  d="M6.61 6.61A13.3 13.3 0 0 0 2 12s3 7.1 10 7.1a10.5 10.5 0 0 0 4.5-.99"
-                ></path>
+                <path d="m3 3 18 18" />
+                <path d="M10.58 10.58a2 2 0 0 0 2.84 2.84" />
+                <path d="M9.88 5.09A10.8 10.8 0 0 1 12 4.9c7 0 10 7.1 10 7.1a13.2 13.2 0 0 1-4.24 5.24" />
+                <path d="M6.61 6.61A13.3 13.3 0 0 0 2 12s3 7.1 10 7.1a10.5 10.5 0 0 0 4.5-.99" />
               </svg>
             } @else {
-              <!-- OJO ABIERTO: CONTRASEÑA OCULTA -->
+              <!-- OJO ABIERTO -->
               <svg
                 data-testid="eye-open-icon"
                 class="h-5 w-5"
@@ -173,15 +160,8 @@
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path
-                  d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
-                ></path>
-
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="3"
-                ></circle>
+                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                <circle cx="12" cy="12" r="3" />
               </svg>
             }
           </button>
@@ -194,40 +174,40 @@
             role="alert"
             class="mt-2 text-sm text-red-600"
           >
-            La contraseña es obligatoria.
+            {{ 'auth.login.error.password.required' | transloco }}
           </p>
         }
       </div>
 
-      <!-- RECUPERACION -->
+      <!-- RECUPERACIÓN -->
       <div>
         <a
           routerLink="/auth/recuperar-contrasena"
           class="text-sm text-interactive-cta underline hover:text-interactive-cta-hover"
         >
-          ¿Olvidaste tu contraseña?
+          {{ 'auth.login.forgotPassword' | transloco }}
         </a>
       </div>
 
-      <!-- INICIAR SESION -->
+      <!-- BOTÓN DE INICIO DE SESIÓN -->
       <button
         type="submit"
         data-testid="login-submit"
         [disabled]="!canSubmit()"
         class="h-11 w-full rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Iniciar sesión
+        {{ 'auth.login.submit' | transloco }}
       </button>
 
       <!-- REGISTRO -->
       <p class="pt-1 text-sm text-txt-secondary">
-        ¿No tienes una cuenta?
+        {{ 'auth.login.noAccount' | transloco }}
 
         <a
           routerLink="/register"
           class="text-interactive-cta underline hover:text-interactive-cta-hover"
         >
-          Crear cuenta
+          {{ 'auth.login.createAccount' | transloco }}
         </a>
       </p>
 

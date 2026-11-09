@@ -1,3 +1,4 @@
+
 {
   "brand": "Kocha Tracks",
   "navbar.home": "Inicio",
@@ -187,5 +188,20 @@
   "eventHistoryPage.fixture.resolved": "Resuelto",
   "eventHistoryPage.fixture.startedDescription": "Se publica el reporte inicial del evento.",
   "eventHistoryPage.fixture.updatedDescription": "Se actualiza el grado de afectación a medida que mejora la circulación.",
-  "eventHistoryPage.fixture.finishedDescription": "Finalizan los trabajos y se restablece el tránsito."
+  "eventHistoryPage.fixture.finishedDescription": "Finalizan los trabajos y se restablece el tránsito.",
+
+  "auth.login.title": "Inicio de sesión",
+  "auth.login.email.label": "Correo electrónico",
+  "auth.login.email.placeholder": "name@example.com",
+  "auth.login.password.label": "Contraseña",
+  "auth.login.password.placeholder": "••••••••",
+  "auth.login.password.show": "Mostrar contraseña",
+  "auth.login.password.hide": "Ocultar contraseña",
+  "auth.login.error.email.required": "El correo electrónico es obligatorio.",
+  "auth.login.error.email.invalid": "Ingresa un correo electrónico válido.",
+  "auth.login.error.password.required": "La contraseña es obligatoria.",
+  "auth.login.forgotPassword": "¿Olvidaste tu contraseña?",
+  "auth.login.submit": "Iniciar sesión",
+  "auth.login.noAccount": "¿No tienes una cuenta?",
+  "auth.login.createAccount": "Crear cuenta"
 }
