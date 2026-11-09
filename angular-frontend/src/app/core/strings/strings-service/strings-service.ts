@@ -1,4 +1,12 @@
-import { Injectable, inject, signal, TransferState, makeStateKey, Injector, DestroyRef } from '@angular/core';
+import {
+  Injectable,
+  inject,
+  signal,
+  TransferState,
+  makeStateKey,
+  Injector,
+  DestroyRef,
+} from '@angular/core';
 import { STRINGS_LOADER } from '../strings-token';
 import { TranslocoService, TRANSLOCO_TRANSPILER } from '@jsverse/transloco';
 
@@ -33,8 +41,8 @@ export class StringsService {
           }
         }
 
-        const sub = this._transloco.langChanges$.subscribe((lang) => {
-          const trans = this._transloco!.getTranslation(lang);
+        // A language change can precede its HTTP response; wait for the dictionary.
+        const sub = this._transloco.selectTranslation().subscribe((trans) => {
           if (trans && Object.keys(trans).length > 0) {
             this._strings.set(trans as Record<string, string>);
           }

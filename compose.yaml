@@ -1,6 +1,7 @@
 services:
   db:
-    image: postgres:18-alpine
+    image: postgis/postgis:18-3.7-alpine
+    container_name: kocha-tracks-db
     environment:
       POSTGRES_DB: kocha_tracks_db
       POSTGRES_USER: kocha

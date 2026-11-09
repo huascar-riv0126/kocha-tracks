@@ -158,5 +158,15 @@
   "auth.recovery.hide": "Hide password",
   "auth.recovery.match": "Passwords match",
   "auth.recovery.mismatch": "Passwords do not match",
-  "auth.recovery.submit": "Recover password"
+  "auth.recovery.submit": "Recover password",
+
+  "auth.changePassword.title": "Change password",
+  "auth.changePassword.current": "Current password",
+  "auth.changePassword.new": "New password",
+  "auth.changePassword.confirm": "Confirm new password",
+  "auth.changePassword.show": "Show password",
+  "auth.changePassword.hide": "Hide password",
+  "auth.changePassword.match": "Passwords match",
+  "auth.changePassword.mismatch": "Passwords do not match",
+  "auth.changePassword.submit": "Change password"
 }

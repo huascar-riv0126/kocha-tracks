@@ -175,5 +175,14 @@
   "auth.recovery.hide": "Ocultar contraseña",
   "auth.recovery.match": "Las contraseñas coinciden",
   "auth.recovery.mismatch": "Las contraseñas no coinciden",
-  "auth.recovery.submit": "Recuperar contraseña"
+  "auth.recovery.submit": "Recuperar contraseña",
+  "auth.changePassword.title": "Cambiar contraseña",
+  "auth.changePassword.current": "Contraseña anterior",
+  "auth.changePassword.new": "Nueva contraseña",
+  "auth.changePassword.confirm": "Confirma la nueva contraseña",
+  "auth.changePassword.show": "Mostrar contraseña",
+  "auth.changePassword.hide": "Ocultar contraseña",
+  "auth.changePassword.match": "Las contraseñas coinciden",
+  "auth.changePassword.mismatch": "Las contraseñas no coinciden",
+  "auth.changePassword.submit": "Cambiar contraseña"
 }
