@@ -1,3 +1,4 @@
+
 {
   "brand": "Kocha Tracks",
   "navbar.home": "Inicio",
@@ -150,6 +151,15 @@
   "zones.config.save": "Guardar Cambios",
   "zones.empty": "Aún no tienes zonas. Crea tu primera zona.",
   "filter.all": "Todos",
+  "auth.changePassword.title": "Cambiar contraseña",
+  "auth.changePassword.current": "Contraseña anterior",
+  "auth.changePassword.new": "Nueva contraseña",
+  "auth.changePassword.confirm": "Confirma la nueva contraseña",
+  "auth.changePassword.show": "Mostrar contraseña",
+  "auth.changePassword.hide": "Ocultar contraseña",
+  "auth.changePassword.match": "Las contraseñas coinciden",
+  "auth.changePassword.mismatch": "Las contraseñas no coinciden",
+  "auth.changePassword.submit": "Cambiar contraseña",
   "eventHistory.title": "Cambios en el tiempo",
   "eventHistory.count": "{{count}} registros",
   "eventHistory.singleRecord": "1 registro",
