@@ -19,7 +19,9 @@ describe('ZoneConfig', () => {
   let component: ZoneConfig;
   let fixture: ComponentFixture<ZoneConfig>;
 
-  async function setup(inputs: { zone?: Zone | null; center?: LatLng | null; points?: LatLng[] } = {}) {
+  async function setup(
+    inputs: { zone?: Zone | null; center?: LatLng | null; points?: LatLng[] } = {},
+  ) {
     await TestBed.configureTestingModule({
       imports: [ZoneConfig],
       providers: [{ provide: StringsService, useClass: StringsServiceStub }],
@@ -38,7 +40,7 @@ describe('ZoneConfig', () => {
 
   beforeEach(async () => {
     TestBed.resetTestingModule();
-    await setup();
+    await setup({ center });
   });
 
   it('should create in create mode with defaults', () => {
@@ -51,7 +53,7 @@ describe('ZoneConfig', () => {
 
   it('should preload the form when editing a zone', async () => {
     TestBed.resetTestingModule();
-    await setup({ zone: radioZone });
+    await setup({ zone: radioZone, center });
     expect(component.name()).toBe(radioZone.name);
     expect(component.zoneType()).toBe('radio');
     expect(component.radius()).toBe(radioZone.radiusMeters);
@@ -82,6 +84,29 @@ describe('ZoneConfig', () => {
     expect(el.querySelector('[data-testid="zone-config-radius-value"]')?.textContent?.trim()).toBe(
       '2.0 km',
     );
+  });
+
+  it('should emit radiusChange and typeChange to update the map live', () => {
+    const radiusSpy = vi.spyOn(component.radiusChange, 'emit');
+    const typeSpy = vi.spyOn(component.typeChange, 'emit');
+
+    component.onRadiusChange('1200');
+    component.onTypeChange('polygon');
+
+    expect(radiusSpy).toHaveBeenCalledWith(1200);
+    expect(typeSpy).toHaveBeenCalledWith('polygon');
+  });
+
+  it('should require a center to validate a radio zone', async () => {
+    TestBed.resetTestingModule();
+    await setup({ center: null });
+    component.onNameChange('Sin centro');
+    fixture.detectChanges();
+    expect(component.isValid()).toBe(false);
+
+    fixture.componentRef.setInput('center', center);
+    fixture.detectChanges();
+    expect(component.isValid()).toBe(true);
   });
 
   it('should switch to polygon mode and hide the slider', async () => {
