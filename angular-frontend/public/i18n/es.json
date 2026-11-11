@@ -220,5 +220,7 @@
   "auth.login.forgotPassword": "¿Olvidaste tu contraseña?",
   "auth.login.submit": "Iniciar sesión",
   "auth.login.noAccount": "¿No tienes una cuenta?",
-  "auth.login.createAccount": "Crear cuenta"
+  "auth.login.createAccount": "Crear cuenta",
+  "notifications.card.open": "Abrir notificación",
+  "notifications.card.menu": "Más opciones"
 }
