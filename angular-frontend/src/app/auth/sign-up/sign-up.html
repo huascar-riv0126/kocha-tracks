@@ -3,7 +3,18 @@
     class="w-full max-w-[664px] rounded-xl border border-border-default bg-surface px-6 py-8 shadow-lg sm:px-[62px] sm:py-[62px]"
   >
     <app-brand variant="light" [isClickable]="false" />
-
+   <!-- MODAL DE ÉXITO -->
+    @if (showSuccessModal()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+      <div class="flex flex-col items-center rounded-xl bg-surface p-8 shadow-2xl text-center border border-border-default transform transition-transform scale-100 animate-fade-in-up">
+        <svg class="h-16 w-16 text-green-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 class="text-2xl font-bold text-txt-primary">{{ 'auth.signup.successTitle' | getStrings }}</h2>
+        <p class="mt-2 text-sm text-txt-secondary">{{ 'auth.signup.successSub' | getStrings }}</p>
+      </div>
+    </div>
+    }
     <h1 class="mt-6 text-2xl font-bold text-txt-primary">
       {{ 'auth.signup.title' | getStrings }}
     </h1>
@@ -298,13 +309,28 @@
         }
       </div>
 
+      <!-- Mensaje de error general (Ej. Usuario ya existe) -->
+      @if (registerError(); as errorMsg) {
+        <div class="rounded-md border border-status-danger-500/20 bg-status-danger-500/10 p-3 text-center text-sm text-status-danger-500 mb-4">
+          {{ errorMsg | getStrings }}
+        </div>
+      }
+
       <button
         type="submit"
-        [disabled]="!canSubmit()"
-        class="h-11 w-full cursor-pointer rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition enabled:hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
+        [disabled]="!canSubmit() || isLoading()"
+        class="flex h-11 w-full cursor-pointer items-center justify-center rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition enabled:hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
         data-testid="signup-submit"
       >
-        {{ 'auth.signup.submit' | getStrings }}
+        @if (isLoading()) {
+          <svg class="mr-2 h-5 w-5 animate-spin text-white" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          {{ 'auth.signup.loading' | getStrings }}
+        } @else {
+          {{ 'auth.signup.submit' | getStrings }}
+        }
       </button>
 
       <p class="text-center text-sm text-txt-secondary">

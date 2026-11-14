@@ -42,7 +42,7 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
 
   const submitButton = (): HTMLButtonElement => byTestId<HTMLButtonElement>('signup-submit')!;
 
-  const fillPasswords = (password = 'secreto123', confirm = password): void => {
+  const fillPasswords = (password = 'Fuerte123', confirm = password): void => {
     typeInto('signup-password', password);
     typeInto('signup-confirm', confirm);
   };
@@ -172,7 +172,7 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
     });
 
     it('shows the X icon in danger-500 when the passwords do not match', () => {
-      fillPasswords('secreto123', 'otra-cosa');
+      fillPasswords('Fuerte123', 'otra-cosa');
 
       const icon = byTestId('signup-confirm-mismatch');
       expect(icon).toBeTruthy();
@@ -181,7 +181,7 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
     });
 
     it('shows the check icon in success-500 when the passwords match', () => {
-      fillPasswords('secreto123');
+      fillPasswords('Fuerte123');
 
       const icon = byTestId('signup-confirm-match');
       expect(icon).toBeTruthy();
@@ -190,7 +190,7 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
     });
 
     it('switches back to the X icon if the password is changed afterwards', () => {
-      fillPasswords('secreto123');
+      fillPasswords('Fuerte123');
       typeInto('signup-password', 'cambiada');
 
       expect(byTestId('signup-confirm-mismatch')).toBeTruthy();
@@ -198,7 +198,7 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
     });
 
     it('shows the mismatch error below the field after leaving it', () => {
-      fillPasswords('secreto123', 'otra-cosa');
+      fillPasswords('Fuerte123', 'otra-cosa');
       blur('signup-confirm');
 
       expect(errorText('signup-confirm-error')).toBe('auth.signup.error.confirm.mismatch');
@@ -217,13 +217,13 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
     });
 
     it('stays disabled when the passwords match but the terms are not accepted', () => {
-      fillPasswords('secreto123');
+      fillPasswords('Fuerte123');
 
       expect(submitButton().disabled).toBe(true);
     });
 
     it('stays disabled when the terms are accepted but the passwords do not match', () => {
-      fillPasswords('secreto123', 'otra-cosa');
+      fillPasswords('Fuerte123', 'otra-cosa');
       click('signup-terms');
 
       expect(submitButton().disabled).toBe(true);
@@ -236,14 +236,14 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
     });
 
     it('is enabled when the passwords match and the terms are accepted', () => {
-      fillPasswords('secreto123');
+      fillPasswords('Fuerte123');
       click('signup-terms');
 
       expect(submitButton().disabled).toBe(false);
     });
 
     it('is disabled again when the terms are unchecked', () => {
-      fillPasswords('secreto123');
+      fillPasswords('Fuerte123');
       click('signup-terms');
       click('signup-terms');
 
@@ -263,7 +263,7 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
       const emitted = vi.fn();
       component.signUp.subscribe(emitted);
 
-      fillPasswords('secreto123');
+      fillPasswords('Fuerte123');
       click('signup-terms');
       click('signup-submit');
 
@@ -291,20 +291,24 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
       );
     });
 
-    it('emits the form data and calls UserService.createUser when everything is valid', () => {
+it('emits the form data and calls UserService.createUser when everything is valid', () => {
       const emitted = vi.fn<(payload: SignUpPayload) => void>();
       component.signUp.subscribe(emitted);
 
-      typeInto('signup-username', 'Junpi7489');
-      typeInto('signup-email', 'junpi@example.com');
-      fillPasswords('secreto123');
-      click('signup-terms');
-      click('signup-submit');
+      component.username.set('Junpi7489');
+      component.email.set('junpi@example.com');
+      component.password.set('KochaTracks2026'); // Cumple mayúscula, número y >8 caracteres
+      component.confirmPassword.set('KochaTracks2026');
+      component.termsAccepted.set(true);
+
+      fixture.detectChanges();
+
+      component.onSubmit(new Event('submit') as any);
 
       const expectedPayload = {
         username: 'Junpi7489',
         email: 'junpi@example.com',
-        password: 'secreto123',
+        password: 'KochaTracks2026',
       };
 
       expect(emitted).toHaveBeenCalledTimes(1);

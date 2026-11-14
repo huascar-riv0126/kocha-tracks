@@ -93,4 +93,14 @@ public class UserService {
                         )
                 );
     }
+
+public UserResponseDTO login(String email, String rawPassword) {
+        User user = userRepository.findByEmailAndIsActiveTrue(email)
+                .orElseThrow(() -> new IllegalArgumentException("Credenciales inválidas"));
+
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Credenciales inválidas");
+        }
+        return UserResponseDTO.fromEntity(user);
+    }
 }

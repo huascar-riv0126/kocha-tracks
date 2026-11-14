@@ -8,4 +8,6 @@ import hre.dev.springboot_backend.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByIsActiveTrue();
     Optional<User> findByIdAndIsActiveTrue(Long id);
+    Optional<User> findByUsernameAndIsActiveTrue(String username);
+    Optional<User> findByEmailAndIsActiveTrue(String email);
 }
