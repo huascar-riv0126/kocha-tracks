@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { BrandComponent } from '../../shared/brand/brand';
 import { LanguageToggle } from '../../shared/language-toggle/language-toggle';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { currentUser, UserService } from '../../user/user-service';
 
 @Component({
   imports: [
@@ -16,4 +17,12 @@ import { TranslocoPipe } from '@jsverse/transloco';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar { }
+export class Navbar {
+  readonly user = currentUser;
+
+  constructor(private userService: UserService) {}
+
+  logout(): void {
+    this.userService.logout();
+  }
+}

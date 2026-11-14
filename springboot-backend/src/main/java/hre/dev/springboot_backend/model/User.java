@@ -39,6 +39,10 @@ public class User {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Column(name = "email", unique = true)
+    private String email;
+    
+
     public User() {
     }
 
@@ -125,4 +129,12 @@ public class User {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
+
+    public String getEmail() { 
+        return email; 
+    }
+
+    public void setEmail(String email) { 
+        this.email = email;
+     }
 }

@@ -1,8 +1,8 @@
-
-import { Component, computed, output, signal } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { UserService, currentUser } from '../../user/user-service';
 
 export interface LoginCredentials {
   email: string;
@@ -21,6 +21,10 @@ export interface LoginCredentials {
   styleUrl: './login.css',
 })
 export class Login {
+  
+  private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+
   readonly email = signal('');
   readonly password = signal('');
   readonly showPassword = signal(false);
@@ -28,6 +32,10 @@ export class Login {
   readonly emailTouched = signal(false);
   readonly passwordTouched = signal(false);
   readonly submitted = signal(false);
+
+  readonly isLoading = signal(false);
+  readonly loginError = signal<string | null>(null);
+  readonly showSuccessModal = signal(false);
 
   readonly loginRequested = output<LoginCredentials>();
 
@@ -49,7 +57,7 @@ export class Login {
   );
 
   readonly canSubmit = computed(() =>
-    this.emailValid() && !this.passwordRequired()
+    this.emailValid() && !this.passwordRequired() && !this.isLoading()
   );
 
   readonly showEmailError = computed(() =>
@@ -68,10 +76,12 @@ export class Login {
 
   onEmailChange(value: string): void {
     this.email.set(value);
+    this.loginError.set(null); 
   }
 
   onPasswordChange(value: string): void {
     this.password.set(value);
+    this.loginError.set(null);
   }
 
   onEmailBlur(): void {
@@ -89,9 +99,31 @@ export class Login {
       return;
     }
 
-    this.loginRequested.emit({
+    const payload = {
       email: this.email().trim(),
       password: this.password(),
+    };
+    
+    this.loginRequested.emit(payload);
+
+    this.isLoading.set(true);
+    this.loginError.set(null);
+
+    this.userService.loginUser(payload).subscribe({
+      next: (response) => {
+        currentUser.set(response); 
+        this.isLoading.set(false);
+        this.showSuccessModal.set(true);
+        
+        setTimeout(() => {
+          this.showSuccessModal.set(false);
+          this.router.navigate(['/']);
+        }, 1500); 
+      },
+      error: () => {
+        this.isLoading.set(false);
+        this.loginError.set('auth.login.error.credentials'); 
+      }
     });
   }
 }

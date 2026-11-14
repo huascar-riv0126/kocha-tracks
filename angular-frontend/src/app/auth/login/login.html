@@ -1,55 +1,48 @@
+<section class="min-h-screen flex items-center justify-center bg-section-alt px-4 py-8 relative">
+  
+  <!-- MODAL DE ÉXITO -->
+  @if (showSuccessModal()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+      <div class="flex flex-col items-center rounded-xl bg-surface p-8 shadow-2xl text-center border border-border-default transform transition-transform scale-100 animate-fade-in-up">
+        <svg class="h-16 w-16 text-green-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 class="text-2xl font-bold text-txt-primary">{{ 'auth.login.successTitle' | transloco }}</h2>
+        <p class="mt-2 text-sm text-txt-secondary">{{ 'auth.login.successSub' | transloco }}</p>
+      </div>
+    </div>
+  }
 
-<section
-  class="min-h-screen flex items-center justify-center bg-section-alt px-4 py-8"
->
-  <div
-    class="w-full max-w-[560px] rounded-xl border border-border-default bg-surface px-6 py-8 shadow-lg sm:px-12 sm:py-11"
-  >
+  <div class="w-full max-w-[560px] rounded-xl border border-border-default bg-surface px-6 py-8 shadow-lg sm:px-12 sm:py-11">
 
     <!-- LOGO KOCHA TRACKS -->
     <div class="mb-6 flex items-center gap-3">
-      <div
-        class="flex h-8 w-8 items-center justify-center rounded-lg bg-interactive-cta text-on-dark"
-      >
-        <svg
-          class="h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          aria-hidden="true"
-        >
-          <path
-            d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-          />
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-interactive-cta text-on-dark">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
           <circle cx="12" cy="10" r="3" />
         </svg>
       </div>
-
-      <span class="text-2xl font-bold text-txt-primary">
-        {{ 'brand' | transloco }}
-      </span>
+      <span class="text-2xl font-bold text-txt-primary">{{ 'brand' | transloco }}</span>
     </div>
 
     <!-- TÍTULO -->
-    <h1 class="text-2xl font-bold text-txt-primary">
-      {{ 'auth.login.title' | transloco }}
-    </h1>
+    <h1 class="text-2xl font-bold text-txt-primary">{{ 'auth.login.title' | transloco }}</h1>
 
-    <form
-      class="mt-6 space-y-4"
-      (ngSubmit)="onSubmit()"
-      novalidate
-    >
+    <form class="mt-6 space-y-4" (ngSubmit)="onSubmit()" novalidate>
+      
+      <!-- ALERTA DE ERROR GENERAL (Credenciales incorrectas) -->
+      @if (loginError()) {
+        <div class="rounded-md bg-red-50 p-3 text-sm text-red-600 border border-red-200" role="alert">
+          {{ loginError()! | transloco }}
+        </div>
+      }
+
       <!-- CORREO ELECTRÓNICO -->
       <div>
-        <label
-          for="email"
-          class="mb-2 block text-sm font-medium text-txt-primary"
-        >
+        <label for="email" class="mb-2 block text-sm font-medium text-txt-primary">
           {{ 'auth.login.email.label' | transloco }}
         </label>
-
         <input
           id="email"
           data-testid="login-email"
@@ -68,15 +61,10 @@
           [class.border-border-default]="!showEmailError()"
           [class.focus:border-interactive-cta]="!showEmailError()"
           [class.focus:ring-interactive-cta]="!showEmailError()"
+          [disabled]="isLoading()"
         />
-
         @if (showEmailError()) {
-          <p
-            id="email-error"
-            data-testid="login-email-error"
-            role="alert"
-            class="mt-2 text-sm text-red-600"
-          >
+          <p id="email-error" data-testid="login-email-error" role="alert" class="mt-2 text-sm text-red-600">
             @if (emailRequired()) {
               {{ 'auth.login.error.email.required' | transloco }}
             } @else if (emailInvalid()) {
@@ -88,13 +76,9 @@
 
       <!-- CONTRASEÑA -->
       <div>
-        <label
-          for="password"
-          class="mb-2 block text-sm font-medium text-txt-primary"
-        >
+        <label for="password" class="mb-2 block text-sm font-medium text-txt-primary">
           {{ 'auth.login.password.label' | transloco }}
         </label>
-
         <div class="relative">
           <input
             id="password"
@@ -114,66 +98,26 @@
             [class.border-border-default]="!showPasswordError()"
             [class.focus:border-interactive-cta]="!showPasswordError()"
             [class.focus:ring-interactive-cta]="!showPasswordError()"
+            [disabled]="isLoading()"
           />
-
-          <!-- MOSTRAR / OCULTAR CONTRASEÑA -->
           <button
             type="button"
             data-testid="login-toggle-password"
             (click)="togglePassword()"
+            [disabled]="isLoading()"
             [attr.aria-pressed]="showPassword()"
-            [attr.aria-label]="
-              (showPassword()
-                ? 'auth.login.password.hide'
-                : 'auth.login.password.show') | transloco
-            "
-            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary transition hover:text-txt-primary"
+            [attr.aria-label]="(showPassword() ? 'auth.login.password.hide' : 'auth.login.password.show') | transloco"
+            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary transition hover:text-txt-primary disabled:opacity-50"
           >
             @if (showPassword()) {
-              <!-- OJO TACHADO -->
-              <svg
-                data-testid="eye-closed-icon"
-                class="h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="m3 3 18 18" />
-                <path d="M10.58 10.58a2 2 0 0 0 2.84 2.84" />
-                <path d="M9.88 5.09A10.8 10.8 0 0 1 12 4.9c7 0 10 7.1 10 7.1a13.2 13.2 0 0 1-4.24 5.24" />
-                <path d="M6.61 6.61A13.3 13.3 0 0 0 2 12s3 7.1 10 7.1a10.5 10.5 0 0 0 4.5-.99" />
-              </svg>
+              <svg data-testid="eye-closed-icon" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 3 18 18" /><path d="M10.58 10.58a2 2 0 0 0 2.84 2.84" /><path d="M9.88 5.09A10.8 10.8 0 0 1 12 4.9c7 0 10 7.1 10 7.1a13.2 13.2 0 0 1-4.24 5.24" /><path d="M6.61 6.61A13.3 13.3 0 0 0 2 12s3 7.1 10 7.1a10.5 10.5 0 0 0 4.5-.99" /></svg>
             } @else {
-              <!-- OJO ABIERTO -->
-              <svg
-                data-testid="eye-open-icon"
-                class="h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
+              <svg data-testid="eye-open-icon" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /><circle cx="12" cy="12" r="3" /></svg>
             }
           </button>
         </div>
-
         @if (showPasswordError()) {
-          <p
-            id="password-error"
-            data-testid="login-password-error"
-            role="alert"
-            class="mt-2 text-sm text-red-600"
-          >
+          <p id="password-error" data-testid="login-password-error" role="alert" class="mt-2 text-sm text-red-600">
             {{ 'auth.login.error.password.required' | transloco }}
           </p>
         }
@@ -181,10 +125,7 @@
 
       <!-- RECUPERACIÓN -->
       <div>
-        <a
-          routerLink="/auth/recuperar-contrasena"
-          class="text-sm text-interactive-cta underline hover:text-interactive-cta-hover"
-        >
+        <a routerLink="/auth/recuperar-contrasena" class="text-sm text-interactive-cta underline hover:text-interactive-cta-hover">
           {{ 'auth.login.forgotPassword' | transloco }}
         </a>
       </div>
@@ -194,19 +135,20 @@
         type="submit"
         data-testid="login-submit"
         [disabled]="!canSubmit()"
-        class="h-11 w-full rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
+        class="h-11 w-full flex items-center justify-center rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {{ 'auth.login.submit' | transloco }}
+        @if (isLoading()) {
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          {{ 'auth.login.loading' | transloco }}
+        } @else {
+          {{ 'auth.login.submit' | transloco }}
+        }
       </button>
 
       <!-- REGISTRO -->
       <p class="pt-1 text-sm text-txt-secondary">
         {{ 'auth.login.noAccount' | transloco }}
-
-        <a
-          routerLink="/register"
-          class="text-interactive-cta underline hover:text-interactive-cta-hover"
-        >
+        <a routerLink="/register" class="text-interactive-cta underline hover:text-interactive-cta-hover">
           {{ 'auth.login.createAccount' | transloco }}
         </a>
       </p>

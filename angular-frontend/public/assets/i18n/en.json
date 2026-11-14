@@ -8,6 +8,8 @@
   "navbar.sign.out": "Sign Up",
   "navbar.sign.in": "Log In",
   "auth.signup.title": "Create an account",
+  "auth.signup.successTitle": "Registration successful!",
+  "auth.signup.successSub": "Redirecting to login...",
   "auth.signup.subtitle": "Join Kocha Tracks, report and track in real time",
   "auth.signup.username.label": "Username",
   "auth.signup.username.placeholder": "e.g. Junpi7489",
