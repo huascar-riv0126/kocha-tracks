@@ -206,7 +206,6 @@
   "eventHistoryPage.fixture.startedDescription": "The initial event report is published.",
   "eventHistoryPage.fixture.updatedDescription": "The impact level is updated as traffic improves.",
   "eventHistoryPage.fixture.finishedDescription": "Roadworks end and traffic is restored.",
-
   "auth.login.title": "Log in",
   "auth.login.email.label": "Email address",
   "auth.login.email.placeholder": "name@example.com",
@@ -220,5 +219,12 @@
   "auth.login.forgotPassword": "Forgot your password?",
   "auth.login.submit": "Log in",
   "auth.login.noAccount": "Don't have an account?",
-  "auth.login.createAccount": "Create account"
+  "auth.login.createAccount": "Create account",
+  "inProgress.badge": "Under construction",
+  "inProgress.title": "We are preparing this space",
+  "inProgress.description": "This page or feature is still under development. We are working to make it available soon.",
+  "inProgress.home": "Back to home",
+  "inProgress.back": "Go back",
+  "inProgress.note.title": "You do not need to do anything for now.",
+  "inProgress.note.description": "You can continue using the rest of the application normally."
 }

@@ -13,6 +13,7 @@ import { RecoverPassword } from './auth/recover-password/recover-password'; // U
 import { SignUp } from './auth/sign-up/sign-up';
 import { ProfilePageComponent } from './user/profile-page/profile-page';
 import { ChangePassword } from './auth/change-password/change-password';
+import { InProgress } from './status/in-progress/in-progress';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
@@ -33,5 +34,6 @@ export const routes: Routes = [
       { path: '', redirectTo: 'detalles', pathMatch: 'full' },
     ],
   },
+  { path: 'en-construccion', component: InProgress },
   { path: '**', component: NotFound },
 ];

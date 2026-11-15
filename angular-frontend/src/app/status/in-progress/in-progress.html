@@ -1,0 +1,153 @@
+
+<main
+  class="flex min-h-[80vh] items-center justify-center bg-page px-4 py-12 font-sans sm:px-6 lg:py-20"
+  data-testid="in-progress-page"
+>
+  <section
+    class="w-full max-w-[826px] rounded-xl border border-border-default bg-surface px-6 py-10 text-center sm:px-12 sm:py-12 lg:px-16"
+    aria-labelledby="in-progress-title"
+    data-testid="in-progress-card"
+  >
+    <!-- ICONO DE CONSTRUCCIÓN -->
+    <div
+      class="mx-auto flex h-[90px] w-[90px] items-center justify-center rounded-2xl border border-border-subtle bg-neutral-50"
+      data-testid="in-progress-icon"
+    >
+      <svg
+        class="h-11 w-11 text-brand-primary-500"
+        viewBox="0 0 64 64"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M19 11V53" />
+        <path d="M45 11V53" />
+
+        <rect
+          x="9"
+          y="19"
+          width="46"
+          height="20"
+          rx="1"
+        />
+
+        <path d="M12 19L30 39" />
+        <path d="M26 19L44 39" />
+        <path d="M40 19L54 35" />
+      </svg>
+    </div>
+
+    <!-- ETIQUETA EN CONSTRUCCIÓN -->
+    <div
+      class="mt-6 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-neutral-50 px-3 py-2"
+      data-testid="in-progress-badge"
+    >
+      <span
+        class="h-2 w-2 rounded-full bg-accent-warning-500"
+        aria-hidden="true"
+      ></span>
+
+      <span class="text-sm font-medium text-txt-secondary">
+        {{ 'inProgress.badge' | transloco }}
+      </span>
+    </div>
+
+    <!-- TÍTULO -->
+    <h1
+      id="in-progress-title"
+      class="mx-auto mt-8 max-w-[720px] text-3xl font-extrabold leading-tight tracking-tight text-txt-primary sm:text-4xl"
+      data-testid="in-progress-title"
+    >
+      {{ 'inProgress.title' | transloco }}
+    </h1>
+
+    <!-- DESCRIPCIÓN -->
+    <p
+      class="mx-auto mt-5 max-w-[580px] text-base leading-7 text-txt-secondary sm:text-lg"
+      data-testid="in-progress-description"
+    >
+      {{ 'inProgress.description' | transloco }}
+    </p>
+
+    <!-- BOTONES DE NAVEGACIÓN -->
+    <div
+      class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+      data-testid="in-progress-actions"
+    >
+      <!-- VOLVER AL INICIO -->
+      <a
+        routerLink="/"
+        data-testid="in-progress-home"
+        class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-interactive-primary px-6 py-3 text-sm font-bold !text-white transition-colors hover:bg-interactive-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary sm:w-auto"
+      >
+        <svg
+          class="h-5 w-5 shrink-0 !text-white"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m3 10 9-7 9 7" />
+          <path d="M5 9v11h14V9" />
+          <path d="M9 20v-7h6v7" />
+        </svg>
+
+        <span class="!text-white">
+          {{ 'inProgress.home' | transloco }}
+        </span>
+      </a>
+
+      <!-- VOLVER ATRÁS -->
+      <button
+        type="button"
+        (click)="goBack()"
+        data-testid="in-progress-back"
+        class="inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-border-default bg-surface px-6 py-3 text-sm font-semibold text-txt-primary transition-colors hover:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary sm:w-auto"
+      >
+        <svg
+          class="h-5 w-5 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m12 19-7-7 7-7" />
+          <path d="M5 12h14" />
+        </svg>
+
+        <span>
+          {{ 'inProgress.back' | transloco }}
+        </span>
+      </button>
+    </div>
+
+    <!-- LÍNEA SEPARADORA -->
+    <div class="mt-9 border-t border-border-subtle"></div>
+
+    <!-- INFORMACIÓN INFERIOR -->
+    <div class="mt-6">
+      <p
+        class="text-sm font-semibold text-txt-primary"
+        data-testid="in-progress-note-title"
+      >
+        {{ 'inProgress.note.title' | transloco }}
+      </p>
+
+      <p
+        class="mt-2 text-sm leading-6 text-txt-secondary"
+        data-testid="in-progress-note-description"
+      >
+        {{ 'inProgress.note.description' | transloco }}
+      </p>
+    </div>
+  </section>
+</main>
