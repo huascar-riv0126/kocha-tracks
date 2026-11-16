@@ -1,4 +1,3 @@
-
 {
   "brand": "Kocha Tracks",
   "navbar.home": "Inicio",
@@ -222,5 +221,9 @@
   "auth.login.noAccount": "¿No tienes una cuenta?",
   "auth.login.createAccount": "Crear cuenta",
   "notifications.card.open": "Abrir notificación",
-  "notifications.card.menu": "Más opciones"
+  "notifications.card.menu": "Más opciones",
+  "notifications.group.today": "Hoy",
+  "notifications.group.yesterday": "Ayer",
+  "notifications.group.this_week": "Esta semana",
+  "notifications.list.empty": "No hay notificaciones para mostrar."
 }

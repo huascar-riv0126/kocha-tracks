@@ -1,4 +1,3 @@
-
 {
   "brand": "Kocha Tracks",
   "navbar.home": "Inicio",
@@ -186,5 +185,9 @@
   "auth.changePassword.mismatch": "Las contraseñas no coinciden",
   "auth.changePassword.submit": "Cambiar contraseña",
   "notifications.card.open": "Abrir notificación",
-  "notifications.card.menu": "Más opciones"
+  "notifications.card.menu": "Más opciones",
+  "notifications.group.today": "Hoy",
+  "notifications.group.yesterday": "Ayer",
+  "notifications.group.this_week": "Esta semana",
+  "notifications.list.empty": "No hay notificaciones para mostrar."
 }
