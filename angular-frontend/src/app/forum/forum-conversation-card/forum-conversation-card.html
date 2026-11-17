@@ -1,0 +1,29 @@
+<article
+  class="flex flex-col gap-1.5 cursor-pointer border-b border-border-default px-4 py-3 hover:bg-section-alt transition-colors duration-150"
+>
+  <!-- Badges: estado + severidad -->
+  <div class="flex items-center gap-1.5" data-testid="badges">
+    <span [class]="statusBadgeClass()" data-testid="status-badge">
+      {{ statusConfig().labelKey | getStrings }}
+    </span>
+    <span [class]="severityBadgeClass()" data-testid="severity-badge">
+      {{ 'forum.severity.label' | getStrings }}{{ severityConfig().labelKey | getStrings }}
+    </span>
+  </div>
+
+  <!-- Tiempo relativo -->
+  <span class="text-[11px] leading-none text-txt-secondary" data-testid="time-ago">
+    {{ timeAgo() }}
+  </span>
+
+  <!-- Título -->
+  <h3 class="text-sm font-bold leading-5 text-txt-primary line-clamp-2" data-testid="title">
+    {{ conversation().title }}
+  </h3>
+
+  <!-- Contador de comentarios -->
+  <div class="flex items-center gap-1 text-xs text-txt-secondary" data-testid="comments">
+    <img src="icons/chat_bubble.svg" alt="" class="size-3.5" aria-hidden="true" />
+    <span>{{ conversation().commentCount }} {{ 'forum.comments.count' | getStrings }}</span>
+  </div>
+</article>
