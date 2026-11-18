@@ -1,17 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
-
-export type ForumSeverity = 'high' | 'medium' | 'low';
-export type ForumStatus = 'active' | 'finished' | 'confirmation';
-
-export interface ForumConversation {
-  id: number;
-  title: string;
-  severity: ForumSeverity;
-  status: ForumStatus;
-  commentCount: number;
-  createdAt: Date;
-}
+import { ForumConversation, ForumSeverity, ForumStatus } from './conversation-model';
 
 const SEVERITY_BADGE: Record<ForumSeverity, { classes: string; labelKey: string }> = {
   high:   { classes: 'bg-status-danger-100 text-status-danger-500',   labelKey: 'forum.severity.high' },

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
-import { ForumConversationCard, ForumConversation } from './forum-conversation-card';
+import { ForumConversationCard } from './forum-conversation-card';
+import { ForumConversation } from './conversation-model';
 import { StringsService } from '../../core/strings/strings-service/strings-service';
 import { StringsServiceStub } from '@testutils/stubs';
 import { setRequiredInputs } from '@testutils/set-required-inputs';
