@@ -62,9 +62,9 @@
           (ngModelChange)="onEmailChange($event)"
           (blur)="onEmailBlur()"
           [attr.aria-invalid]="showEmailError()"
-          aria-describedby="email-error"
+          [attr.aria-describedby]="showEmailError() ? 'email-error' : null"
           class="h-11 w-full rounded-md border bg-surface px-3 text-sm text-txt-primary outline-none transition focus:ring-1"
-          [class.border-red-500]="showEmailError()"
+          [class.border-status-danger-500]="showEmailError()"
           [class.border-border-default]="!showEmailError()"
           [class.focus:border-interactive-cta]="!showEmailError()"
           [class.focus:ring-interactive-cta]="!showEmailError()"
@@ -75,7 +75,7 @@
             id="email-error"
             data-testid="login-email-error"
             role="alert"
-            class="mt-2 text-sm text-red-600"
+            class="mt-2 text-sm text-status-danger-500"
           >
             @if (emailRequired()) {
               {{ 'auth.login.error.email.required' | transloco }}
@@ -108,9 +108,9 @@
             (ngModelChange)="onPasswordChange($event)"
             (blur)="onPasswordBlur()"
             [attr.aria-invalid]="showPasswordError()"
-            aria-describedby="password-error"
+            [attr.aria-describedby]="showPasswordError() ? 'password-error' : null"
             class="h-11 w-full rounded-md border bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:ring-1"
-            [class.border-red-500]="showPasswordError()"
+            [class.border-status-danger-500]="showPasswordError()"
             [class.border-border-default]="!showPasswordError()"
             [class.focus:border-interactive-cta]="!showPasswordError()"
             [class.focus:ring-interactive-cta]="!showPasswordError()"
@@ -172,7 +172,7 @@
             id="password-error"
             data-testid="login-password-error"
             role="alert"
-            class="mt-2 text-sm text-red-600"
+            class="mt-2 text-sm text-status-danger-500"
           >
             {{ 'auth.login.error.password.required' | transloco }}
           </p>
