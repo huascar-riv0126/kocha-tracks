@@ -220,5 +220,11 @@
   "auth.login.forgotPassword": "¿Olvidaste tu contraseña?",
   "auth.login.submit": "Iniciar sesión",
   "auth.login.noAccount": "¿No tienes una cuenta?",
-  "auth.login.createAccount": "Crear cuenta"
+  "auth.login.createAccount": "Crear cuenta",
+
+  "notfound.status": "404",
+  "notfound.title": "Página no encontrada",
+  "notfound.description": "La página que buscas no existe, ha sido removida o la dirección que ingresaste es incorrecta. Verifica la URL o regresa al inicio.",
+  "notfound.goback": "Volver atrás",
+  "notfound.gohome": "Ir al inicio"
 }
