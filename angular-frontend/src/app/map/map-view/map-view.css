@@ -81,17 +81,26 @@
 }
 
 ::ng-deep .kocha-dark-tooltip .leaflet-popup-content-wrapper {
-  background-color: #0B1120 !important;
+  background-color: #0b1120 !important;
   border: 1px solid #1e293b !important;
   border-radius: 8px !important;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
 }
 
 ::ng-deep .kocha-dark-tooltip .leaflet-popup-tip {
-  background-color: #0B1120 !important;
+  background-color: #0b1120 !important;
   border: 1px solid #1e293b !important;
 }
 
 ::ng-deep .kocha-dark-tooltip .leaflet-popup-content {
   margin: 12px 14px !important;
+}
+
+::ng-deep .zone-undo-popup .leaflet-popup-content {
+  margin: 8px !important;
+}
+
+::ng-deep .zone-undo-popup .leaflet-popup-content-wrapper {
+  border-radius: 8px !important;
+  box-shadow: 0 6px 14px -4px rgba(0, 0, 0, 0.35) !important;
 }
