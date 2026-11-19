@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { GetStringsPipe } from '../../core/strings/get-strings-pipe';
 import { BrandComponent } from '../../shared/brand/brand';
 import { UserService } from '../../user/user-service';
+import { Router } from '@angular/router';
 
 export interface SignUpPayload {
   username: string;
@@ -23,6 +24,8 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 })
 export class SignUp {
   private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+  readonly registerError = signal<string | null>(null);
 
   readonly signUp = output<SignUpPayload>();
 
@@ -32,6 +35,8 @@ export class SignUp {
   readonly confirmPassword = signal('');
   readonly termsAccepted = signal(false);
   readonly showPassword = signal(false);
+  readonly isLoading = signal(false);
+  readonly showSuccessModal = signal(false);
 
   private readonly touched = signal<ReadonlySet<Field>>(new Set());
 
@@ -57,9 +62,14 @@ export class SignUp {
     return EMAIL_PATTERN.test(value) ? null : 'auth.signup.error.email.invalid';
   });
 
-  private readonly passwordKey = computed(() =>
-    this.password().length > 0 ? null : 'auth.signup.error.password.required',
-  );
+  private readonly passwordKey = computed(() => {
+  const p = this.password();
+  if (p.length === 0) return 'auth.signup.error.password.required';
+  if (p.length < 8) return 'auth.signup.error.password.length';
+  if (!/(?=.*[A-Z])/.test(p)) return 'auth.signup.error.password.uppercase';
+  if (!/(?=.*\d)/.test(p)) return 'auth.signup.error.password.number';
+  return null;
+});
 
   private readonly confirmKey = computed(() => {
     if (this.confirmPassword().length === 0) return 'auth.signup.error.confirm.required';
@@ -116,19 +126,40 @@ export class SignUp {
   }
 
   onSubmit(event: Event): void {
-    event.preventDefault();
-    this.touched.set(new Set(ALL_FIELDS));
+  event.preventDefault();
+  this.touched.set(new Set(ALL_FIELDS));
 
-    if (!this.formValid()) return;
+  if (!this.formValid()) return;
 
-    const payload: SignUpPayload = {
-      username: this.username().trim(),
-      email: this.email().trim(),
-      password: this.password(),
-    };
+  this.isLoading.set(true);
+  this.registerError.set(null);
 
-    this.signUp.emit(payload);
-    this.userService.createUser(payload).subscribe();
+  const payload: SignUpPayload = {
+    username: this.username().trim(),
+    email: this.email().trim(),
+    password: this.password(),
+  };
+
+  this.signUp.emit(payload);
+
+  this.userService.createUser(payload).subscribe({
+    next: () => {
+      this.isLoading.set(false);
+      this.showSuccessModal.set(true);
+      setTimeout(() => {
+        this.showSuccessModal.set(false);
+        this.router.navigate(['/login']); 
+      }, 2000);
+    },
+    error: (err) => {
+      this.isLoading.set(false);
+      if (err.status === 409) {
+        this.registerError.set('auth.signup.error.conflict'); 
+      } else {
+        this.registerError.set('auth.signup.error.general');
+      }
+    }
+  });
   }
 
   private visible(field: Field, key: string | null): string | null {
