@@ -15,7 +15,7 @@ type Field = 'username' | 'email' | 'password' | 'confirmPassword' | 'terms';
 
 const ALL_FIELDS: readonly Field[] = ['username', 'email', 'password', 'confirmPassword', 'terms'];
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const EMAIL_PATTERN = /^[^\s@]{6,}@[^\s@]+\.[^\s@]{2,}$/;
 
 @Component({
   selector: 'app-sign-up',
@@ -52,9 +52,13 @@ export class SignUp {
   readonly canSubmit = computed(() => this.passwordsMatch() && this.termsAccepted());
 
 
-  private readonly usernameKey = computed(() =>
-    this.username().trim().length > 0 ? null : 'auth.signup.error.username.required',
-  );
+  private readonly usernameKey = computed(() => {
+    const u = this.username().trim();
+    if (u.length === 0) return 'auth.signup.error.username.required';
+    if (u.length < 3) return 'auth.signup.error.username.length';
+    if (!/^[a-zA-Z0-9_-]+$/.test(u)) return 'auth.signup.error.username.invalid';
+    return null;
+  });
 
   private readonly emailKey = computed(() => {
     const value = this.email().trim();
@@ -63,13 +67,16 @@ export class SignUp {
   });
 
   private readonly passwordKey = computed(() => {
-  const p = this.password();
-  if (p.length === 0) return 'auth.signup.error.password.required';
-  if (p.length < 8) return 'auth.signup.error.password.length';
-  if (!/(?=.*[A-Z])/.test(p)) return 'auth.signup.error.password.uppercase';
-  if (!/(?=.*\d)/.test(p)) return 'auth.signup.error.password.number';
-  return null;
-});
+    const p = this.password();
+    if (p.length === 0) return 'auth.signup.error.password.required';
+    if (p.length < 8) return 'auth.signup.error.password.length';
+    if (p.length > 255) return 'auth.signup.error.password.maxlength';
+    if (!/(?=.*[a-z])/.test(p)) return 'auth.signup.error.password.lowercase';
+    if (!/(?=.*[A-Z])/.test(p)) return 'auth.signup.error.password.uppercase';
+    if (!/(?=.*\d)/.test(p)) return 'auth.signup.error.password.number';
+    if (!/(?=.*[!\"@#%&/()=?¿,.+*\-_$])/.test(p)) return 'auth.signup.error.password.special';
+    return null;
+  });
 
   private readonly confirmKey = computed(() => {
     if (this.confirmPassword().length === 0) return 'auth.signup.error.confirm.required';

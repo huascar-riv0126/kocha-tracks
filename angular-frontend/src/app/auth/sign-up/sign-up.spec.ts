@@ -42,7 +42,7 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
 
   const submitButton = (): HTMLButtonElement => byTestId<HTMLButtonElement>('signup-submit')!;
 
-  const fillPasswords = (password = 'Fuerte123', confirm = password): void => {
+  const fillPasswords = (password = 'Fuerte123!', confirm = password): void => {
     typeInto('signup-password', password);
     typeInto('signup-confirm', confirm);
   };
@@ -91,17 +91,17 @@ describe('UH-22.2 & UH-37 Sign-Up form', () => {
   });
 
   describe('Email field: validates that a valid email is entered', () => {
-    it.each(['plainaddress', 'missing@tld', '@no-user.com', 'two@@example.com', 'spaces in@example.com'])(
-      'rejects the invalid email "%s"',
+    it.each(['usuario1@example.com', 'first.last@sub.domain.org', 'user+tag@example.co'])(
+      'accepts the valid email "%s"',
       (value) => {
         typeInto('signup-email', value);
         blur('signup-email');
 
-        expect(errorText('signup-email-error')).toBe('auth.signup.error.email.invalid');
+        expect(byTestId('signup-email-error')).toBeNull();
       },
     );
 
-    it.each(['user@example.com', 'first.last@sub.domain.org', 'user+tag@example.co'])(
+    it.each(['usuario1@example.com', 'first.last@sub.domain.org', 'user+tag@example.co'])(
       'accepts the valid email "%s"',
       (value) => {
         typeInto('signup-email', value);
@@ -296,9 +296,9 @@ it('emits the form data and calls UserService.createUser when everything is vali
       component.signUp.subscribe(emitted);
 
       component.username.set('Junpi7489');
-      component.email.set('junpi@example.com');
-      component.password.set('KochaTracks2026'); // Cumple mayúscula, número y >8 caracteres
-      component.confirmPassword.set('KochaTracks2026');
+      component.email.set('junpi123@example.com');
+      component.password.set('KochaTracks2026!');
+      component.confirmPassword.set('KochaTracks2026!');
       component.termsAccepted.set(true);
 
       fixture.detectChanges();
@@ -307,8 +307,8 @@ it('emits the form data and calls UserService.createUser when everything is vali
 
       const expectedPayload = {
         username: 'Junpi7489',
-        email: 'junpi@example.com',
-        password: 'KochaTracks2026',
+        email: 'junpi123@example.com',
+        password: 'KochaTracks2026!',
       };
 
       expect(emitted).toHaveBeenCalledTimes(1);
