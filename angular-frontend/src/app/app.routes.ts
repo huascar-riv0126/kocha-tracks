@@ -1,4 +1,3 @@
-
 import { Routes } from '@angular/router';
 import { MapView } from './map/map-view/map-view';
 import { SourcesPage } from './sources-page/sources-page';
@@ -13,6 +12,7 @@ import { RecoverPassword } from './auth/recover-password/recover-password'; // U
 import { SignUp } from './auth/sign-up/sign-up';
 import { ProfilePageComponent } from './user/profile-page/profile-page';
 import { ChangePassword } from './auth/change-password/change-password';
+import { NotificationsPage } from './notifications/notifications-page/notifications-page';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
@@ -24,6 +24,7 @@ export const routes: Routes = [
   { path: 'register', component: SignUp },
   { path: 'perfil', component: ProfilePageComponent },
   { path: 'auth/cambiar-contrasena', component: ChangePassword },
+  { path: 'notificaciones', component: NotificationsPage },
   {
     path: 'evento/:eventId',
     resolve: { event: eventResolver },

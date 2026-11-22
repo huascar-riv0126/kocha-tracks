@@ -173,5 +173,13 @@
   "notifications.group.today": "Today",
   "notifications.group.yesterday": "Yesterday",
   "notifications.group.this_week": "This week",
-  "notifications.list.empty": "No notifications to show."
+  "notifications.list.empty": "No notifications to show.",
+  "notifications.page.title": "Notification Center",
+  "notifications.filter.all": "All",
+  "notifications.filter.unread": "Unread",
+  "notifications.filter.new": "New events",
+  "notifications.filter.updates": "Updates",
+  "notifications.filter.confirmations": "Confirmations",
+  "notifications.filter.ended": "Ended",
+  "notifications.actions.mark_all_read": "Mark all as read"
 }
