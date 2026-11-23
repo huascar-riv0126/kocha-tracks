@@ -70,4 +70,19 @@ beforeEach(async () => {
     const divElement = fixture.nativeElement.querySelector('div.pointer-events-none');
     expect(divElement).toBeTruthy();
   });
+
+  it('debería apuntar el enlace a la ruta de inicio "/" cuando isClickable es true', () => {
+    component.isClickable = true;
+    fixture.detectChanges();
+    const linkElement: HTMLAnchorElement = fixture.nativeElement.querySelector('a');
+    expect(linkElement).toBeTruthy();
+    expect(linkElement.getAttribute('href')).toBe('/');
+  });
+
+  it('no debería renderizar ninguna etiqueta <a> cuando isClickable es false', () => {
+    component.isClickable = false;
+    fixture.detectChanges();
+    const linkElement = fixture.nativeElement.querySelector('a');
+    expect(linkElement).toBeNull();
+  });
 });
