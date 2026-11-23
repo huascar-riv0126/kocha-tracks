@@ -1,92 +1,15 @@
-// @vitest-environment jsdom
-/// <reference types="vite/client" />
-import '@angular/compiler';
-import * as angularCore from '@angular/core';
-import type { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { vi } from 'vitest';
+
 import { StringsService } from '../../core/strings/strings-service/strings-service';
 import { StringsServiceStub } from '../../testing/stubs';
-import cardTemplate from '../notification-card/notification-card.html?raw';
-import { NotificationCard } from '../notification-card/notification-card';
-import listTemplate from '../notification-list/notification-list.html?raw';
-import { NotificationList } from '../notification-list/notification-list';
-import pageTemplate from './notifications-page.html?raw';
 import { NotificationsPage } from './notifications-page';
-
-if (!TestBed.platform) {
-  TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
-}
-
-// Vitest runs these specs without Angular's build pipeline, so the templates
-// are supplied as raw strings and the signal inputs/outputs of the reused
-// components are registered explicitly for JIT compilation.
-const registerSignalInput = angularCore.Input as unknown as (
-  options: Record<string, unknown>,
-) => PropertyDecorator;
-const registerOutput = angularCore.Output as unknown as (alias?: string) => PropertyDecorator;
-const registerViewChild = angularCore.ViewChild as unknown as (
-  selector: unknown,
-  opts?: Record<string, unknown>,
-) => PropertyDecorator;
-
-// Signal queries are invisible to JIT unless their metadata is provided too.
-registerViewChild(NotificationList, { isSignal: true })(
-  NotificationsPage.prototype,
-  'notificationList',
-);
-
-registerSignalInput({ alias: 'notifications', isSignal: true, required: true })(
-  NotificationList.prototype,
-  'notifications',
-);
-registerOutput('cardClick')(NotificationList.prototype, 'cardClick');
-registerOutput('menuClick')(NotificationList.prototype, 'menuClick');
-
-registerSignalInput({ alias: 'notification', isSignal: true, required: true })(
-  NotificationCard.prototype,
-  'notification',
-);
-registerOutput('cardClick')(NotificationCard.prototype, 'cardClick');
-registerOutput('menuClick')(NotificationCard.prototype, 'menuClick');
-
-// The `signals` metadata flag is deliberately omitted: in JIT it prevents
-// directive inputs and repeater views from updating in the same CD pass.
-const PAGE_JIT_METADATA = { template: pageTemplate } as unknown as Component;
-const LIST_JIT_METADATA = { template: listTemplate } as unknown as Component;
-const CARD_JIT_METADATA = { template: cardTemplate, signals: true } as unknown as Component;
-
-// `resolveComponentResources` is documented as a public API but is only
-// exported under Angular's private `ɵ` prefix at runtime.
-const resolveComponentResources = (
-  angularCore as unknown as {
-    ɵresolveComponentResources: (resolver: (url: string) => Promise<string>) => Promise<void>;
-  }
-).ɵresolveComponentResources;
-
-const TEMPLATES: Record<string, string> = {
-  'notifications-page.html': pageTemplate,
-  'notification-list.html': listTemplate,
-  'notification-card.html': cardTemplate,
-};
 
 describe('NotificationsPage', () => {
   let component: NotificationsPage;
   let fixture: ComponentFixture<NotificationsPage>;
 
   async function setup() {
-    TestBed.overrideComponent(NotificationsPage, { set: PAGE_JIT_METADATA });
-    TestBed.overrideComponent(NotificationList, { set: LIST_JIT_METADATA });
-    TestBed.overrideComponent(NotificationCard, { set: CARD_JIT_METADATA });
-
-    await resolveComponentResources((url) => {
-      const template = Object.entries(TEMPLATES).find(([name]) => url.endsWith(name))?.[1];
-      return template
-        ? Promise.resolve(template)
-        : Promise.reject(new Error(`Unexpected resource: ${url}`));
-    });
-
     await TestBed.configureTestingModule({
       imports: [NotificationsPage],
       providers: [{ provide: StringsService, useClass: StringsServiceStub }],
@@ -113,7 +36,6 @@ describe('NotificationsPage', () => {
   }
 
   beforeEach(async () => {
-    TestBed.resetTestingModule();
     await setup();
   });
 
