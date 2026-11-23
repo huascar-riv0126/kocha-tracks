@@ -1,47 +1,11 @@
-// @vitest-environment jsdom
-/// <reference types="vite/client" />
-import '@angular/compiler';
-import * as angularCore from '@angular/core';
-import type { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { vi } from 'vitest';
+
 import { StringsService } from '../../core/strings/strings-service/strings-service';
 import { setRequiredInputs } from '../../testing/set-required-inputs';
 import { StringsServiceStub } from '../../testing/stubs';
 import { AppNotification } from '../notification.model';
 import { NotificationCard } from './notification-card';
-import template from './notification-card.html?raw';
-
-if (!TestBed.platform) {
-  TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
-}
-
-// When Vitest runs without Angular's build pipeline, components are compiled
-// with JIT. Signal-based inputs are normally described by the Angular compiler
-// in the component metadata, so the test registers that metadata itself.
-const registerSignalInput = angularCore.Input as unknown as (
-  options: Record<string, unknown>,
-) => PropertyDecorator;
-
-registerSignalInput({
-  alias: 'notification',
-  isSignal: true,
-  required: true,
-})(NotificationCard.prototype, 'notification');
-
-const JIT_SIGNAL_METADATA = {
-  template,
-  signals: true,
-} as unknown as Component;
-
-// `resolveComponentResources` is documented as a public API but is only
-// exported under Angular's private `ɵ` prefix at runtime.
-const resolveComponentResources = (
-  angularCore as unknown as {
-    ɵresolveComponentResources: (resolver: (url: string) => Promise<string>) => Promise<void>;
-  }
-).ɵresolveComponentResources;
 
 const unreadNotification: AppNotification = {
   id: 'notification-1',
@@ -64,17 +28,6 @@ describe('NotificationCard', () => {
   let fixture: ComponentFixture<NotificationCard>;
 
   async function setup(notification: AppNotification = unreadNotification) {
-    TestBed.overrideComponent(NotificationCard, { set: JIT_SIGNAL_METADATA });
-
-    // Resolve the component's original `templateUrl` before TestBed reads its
-    // definition. The override above already carries the raw template, so this
-    // only covers the initial JIT-compiled metadata.
-    await resolveComponentResources((url) =>
-      url.endsWith('notification-card.html')
-        ? Promise.resolve(template)
-        : Promise.reject(new Error(`Unexpected resource: ${url}`)),
-    );
-
     await TestBed.configureTestingModule({
       imports: [NotificationCard],
       providers: [{ provide: StringsService, useClass: StringsServiceStub }],
@@ -100,7 +53,6 @@ describe('NotificationCard', () => {
   }
 
   beforeEach(async () => {
-    TestBed.resetTestingModule();
     await setup();
   });
 
