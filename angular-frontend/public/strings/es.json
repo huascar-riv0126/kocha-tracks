@@ -184,5 +184,7 @@
   "auth.changePassword.hide": "Ocultar contraseña",
   "auth.changePassword.match": "Las contraseñas coinciden",
   "auth.changePassword.mismatch": "Las contraseñas no coinciden",
-  "auth.changePassword.submit": "Cambiar contraseña"
+  "auth.changePassword.submit": "Cambiar contraseña",
+  "notifications.card.open": "Abrir notificación",
+  "notifications.card.menu": "Más opciones"
 }

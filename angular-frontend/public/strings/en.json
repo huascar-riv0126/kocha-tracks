@@ -168,5 +168,7 @@
   "auth.changePassword.hide": "Hide password",
   "auth.changePassword.match": "Passwords match",
   "auth.changePassword.mismatch": "Passwords do not match",
-  "auth.changePassword.submit": "Change password"
+  "auth.changePassword.submit": "Change password",
+  "notifications.card.open": "Open notification",
+  "notifications.card.menu": "More options"
 }
