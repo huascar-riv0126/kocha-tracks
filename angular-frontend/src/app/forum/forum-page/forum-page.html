@@ -1,0 +1,131 @@
+<div class="flex h-[calc(100vh-64px)] overflow-hidden bg-section-alt">
+
+  <!-- ===== SIDEBAR: lista de conversaciones ===== -->
+  <aside
+    class="flex w-72 shrink-0 flex-col border-r border-border-default bg-card"
+    data-testid="sidebar"
+  >
+    <!-- Título del foro -->
+    <div class="border-b border-border-default px-4 py-3">
+      <h1 class="text-base font-bold text-txt-primary" data-testid="page-title">
+        {{ 'forum.page.title' | getStrings }}
+      </h1>
+    </div>
+
+    <!-- Input de búsqueda -->
+    <div class="px-3 py-2">
+      <input
+        type="search"
+        [placeholder]="'forum.search.placeholder' | getStrings"
+        (input)="onSearchInput($event)"
+        class="w-full rounded-lg border border-border-default bg-section-alt px-3 py-1.5 text-sm text-txt-primary placeholder:text-txt-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary-400"
+        data-testid="search-input"
+      />
+    </div>
+
+    <!-- Lista de conversaciones -->
+    <ul class="flex-1 overflow-y-auto" data-testid="conversation-list">
+      @for (conv of filteredConversations(); track conv.id) {
+        <li
+          (click)="selectConversation(conv)"
+          [class.bg-brand-primary-50]="selectedConversation().id === conv.id"
+          class="cursor-pointer"
+          data-testid="conversation-item"
+        >
+          <app-forum-conversation-card [conversation]="conv" />
+        </li>
+      }
+      @empty {
+        <li class="px-4 py-6 text-center text-sm text-txt-secondary" data-testid="empty-list">
+          {{ 'forum.search.empty' | getStrings }}
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <!-- ===== PANEL DERECHO: detalle de la conversación ===== -->
+  <main class="flex flex-1 flex-col overflow-hidden" data-testid="detail-panel">
+
+    <!-- Header del evento seleccionado -->
+    <header
+      class="flex flex-col gap-2 border-b border-border-default bg-card px-6 py-4"
+      data-testid="detail-header"
+    >
+      <!-- Badges status + severity -->
+      <div class="flex items-center gap-2">
+        <span
+          class="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none bg-status-danger-100 text-status-danger-500"
+          data-testid="detail-status"
+        >
+          {{ 'forum.status.' + selectedConversation().status | getStrings }}
+        </span>
+        <span
+          class="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none bg-accent-warning-100 text-accent-warning-600"
+          data-testid="detail-severity"
+        >
+          {{ 'forum.severity.label' | getStrings }}{{ 'forum.severity.' + selectedConversation().severity | getStrings }}
+        </span>
+      </div>
+
+      <!-- Título de la conversación -->
+      <h2 class="text-lg font-bold leading-snug text-txt-primary" data-testid="detail-title">
+        {{ selectedConversation().title }}
+      </h2>
+
+      <!-- Metadatos: comentarios + fecha -->
+      <div class="flex items-center gap-4 text-xs text-txt-secondary">
+        <span class="flex items-center gap-1" data-testid="detail-comments">
+          <img src="icons/chat_bubble.svg" alt="" class="size-3.5" aria-hidden="true" />
+          {{ selectedConversation().commentCount }} {{ 'forum.comments.count' | getStrings }}
+        </span>
+        <span data-testid="detail-created">
+          {{ 'forum.detail.created' | getStrings }} {{ selectedConversation().createdAt | date:'dd/MM/yyyy HH:mm' }}
+        </span>
+      </div>
+    </header>
+
+    <!-- Lista de mensajes -->
+    <section
+      class="flex-1 overflow-y-auto px-6 py-4"
+      data-testid="messages-section"
+    >
+      <h3 class="mb-3 text-sm font-semibold text-txt-secondary uppercase tracking-wide" data-testid="messages-title">
+        {{ 'forum.comments.section' | getStrings }}
+      </h3>
+
+      <ul class="flex flex-col gap-3">
+        @for (msg of messages(); track msg.id) {
+          <li data-testid="message-item">
+            <app-forum-message-card [message]="msg" />
+          </li>
+        }
+      </ul>
+    </section>
+
+    <!-- Área de nuevo comentario -->
+    <footer
+      class="border-t border-border-default bg-card px-6 py-4"
+      data-testid="comment-footer"
+    >
+      <div class="flex flex-col gap-2">
+        <textarea
+          rows="2"
+          [placeholder]="'forum.comment.placeholder' | getStrings"
+          (input)="onCommentInput($event)"
+          class="w-full resize-none rounded-lg border border-border-default bg-section-alt px-3 py-2 text-sm text-txt-primary placeholder:text-txt-secondary focus:outline-none focus:ring-2 focus:ring-brand-primary-400"
+          data-testid="comment-textarea"
+        ></textarea>
+        <div class="flex justify-end">
+          <button
+            disabled
+            class="rounded-lg bg-brand-primary-500 px-4 py-1.5 text-sm font-semibold text-white opacity-50 cursor-not-allowed"
+            data-testid="comment-submit"
+          >
+            {{ 'forum.comment.submit' | getStrings }}
+          </button>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+</div>
