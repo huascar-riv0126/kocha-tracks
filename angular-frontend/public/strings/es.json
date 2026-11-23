@@ -189,5 +189,13 @@
   "notifications.group.today": "Hoy",
   "notifications.group.yesterday": "Ayer",
   "notifications.group.this_week": "Esta semana",
-  "notifications.list.empty": "No hay notificaciones para mostrar."
+  "notifications.list.empty": "No hay notificaciones para mostrar.",
+  "notifications.page.title": "Centro de Notificaciones",
+  "notifications.filter.all": "Todas",
+  "notifications.filter.unread": "No leídas",
+  "notifications.filter.new": "Nuevos eventos",
+  "notifications.filter.updates": "Actualizaciones",
+  "notifications.filter.confirmations": "Confirmaciones",
+  "notifications.filter.ended": "Finalizados",
+  "notifications.actions.mark_all_read": "Marcar todas como leídas"
 }

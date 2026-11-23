@@ -205,7 +205,6 @@
   "eventHistoryPage.fixture.startedDescription": "The initial event report is published.",
   "eventHistoryPage.fixture.updatedDescription": "The impact level is updated as traffic improves.",
   "eventHistoryPage.fixture.finishedDescription": "Roadworks end and traffic is restored.",
-
   "auth.login.title": "Log in",
   "auth.login.email.label": "Email address",
   "auth.login.email.placeholder": "name@example.com",
@@ -225,5 +224,13 @@
   "notifications.group.today": "Today",
   "notifications.group.yesterday": "Yesterday",
   "notifications.group.this_week": "This week",
-  "notifications.list.empty": "No notifications to show."
+  "notifications.list.empty": "No notifications to show.",
+  "notifications.page.title": "Notification Center",
+  "notifications.filter.all": "All",
+  "notifications.filter.unread": "Unread",
+  "notifications.filter.new": "New events",
+  "notifications.filter.updates": "Updates",
+  "notifications.filter.confirmations": "Confirmations",
+  "notifications.filter.ended": "Ended",
+  "notifications.actions.mark_all_read": "Mark all as read"
 }
