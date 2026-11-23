@@ -229,5 +229,11 @@
   "forum.status.active": "ACTIVE",
   "forum.status.finished": "FINISHED",
   "forum.status.confirmation": "CONFIRMATION",
-  "forum.comments.count": "comments"
+  "forum.comments.count": "comments",
+
+  "forum.message.confirm": "Confirm information",
+  "forum.message.report": "Report",
+  "forum.message.agree": "Citizens agree",
+  "forum.message.role.verified": "Verified User",
+  "forum.message.role.moderator": "Moderator"
 }
