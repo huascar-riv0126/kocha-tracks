@@ -1,8 +1,9 @@
 
-import { Component, computed, output, signal } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { AuthService } from '../auth-service';
 
 export interface LoginCredentials {
   email: string;
@@ -21,6 +22,8 @@ export interface LoginCredentials {
   styleUrl: './login.css',
 })
 export class Login {
+  private readonly authService = inject(AuthService);
+
   readonly email = signal('');
   readonly password = signal('');
   readonly showPassword = signal(false);
@@ -89,8 +92,18 @@ export class Login {
       return;
     }
 
+    const email = this.email().trim();
+
+    // The login endpoint is not wired yet; seed the shared session with the
+    // submitted identity so the navbar can react to authentication immediately.
+    this.authService.signIn({
+      username: email.split('@')[0],
+      email,
+      role: 'USER',
+    });
+
     this.loginRequested.emit({
-      email: this.email().trim(),
+      email,
       password: this.password(),
     });
   }
