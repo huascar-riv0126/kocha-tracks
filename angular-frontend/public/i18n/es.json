@@ -235,5 +235,13 @@
   "forum.message.report": "Reportar",
   "forum.message.agree": "Ciudadanos coinciden",
   "forum.message.role.verified": "Usuario Verificado",
-  "forum.message.role.moderator": "Moderador"
+  "forum.message.role.moderator": "Moderador",
+
+  "forum.page.title": "Foro de Tránsito",
+  "forum.search.placeholder": "Buscar conversaciones…",
+  "forum.search.empty": "Sin resultados para esta búsqueda.",
+  "forum.detail.created": "Publicado el",
+  "forum.comments.section": "Comentarios de la comunidad",
+  "forum.comment.placeholder": "Escribe tu comentario…",
+  "forum.comment.submit": "Comentar"
 }

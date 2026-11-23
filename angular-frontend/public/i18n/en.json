@@ -235,5 +235,13 @@
   "forum.message.report": "Report",
   "forum.message.agree": "Citizens agree",
   "forum.message.role.verified": "Verified User",
-  "forum.message.role.moderator": "Moderator"
+  "forum.message.role.moderator": "Moderator",
+
+  "forum.page.title": "Traffic Forum",
+  "forum.search.placeholder": "Search conversations…",
+  "forum.search.empty": "No results for this search.",
+  "forum.detail.created": "Published on",
+  "forum.comments.section": "Community comments",
+  "forum.comment.placeholder": "Write your comment…",
+  "forum.comment.submit": "Comment"
 }
