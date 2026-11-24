@@ -1,62 +1,11 @@
-// @vitest-environment jsdom
-/// <reference types="vite/client" />
-import '@angular/compiler';
-import * as angularCore from '@angular/core';
-import type { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { vi } from 'vitest';
+
 import { StringsService } from '../../core/strings/strings-service/strings-service';
 import { setRequiredInputs } from '../../testing/set-required-inputs';
 import { StringsServiceStub } from '../../testing/stubs';
-import cardTemplate from '../notification-card/notification-card.html?raw';
-import { NotificationCard } from '../notification-card/notification-card';
 import { AppNotification } from '../notification.model';
-import listTemplate from './notification-list.html?raw';
 import { NotificationList } from './notification-list';
-
-if (!TestBed.platform) {
-  TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
-}
-
-// When Vitest runs without Angular's build pipeline, components are compiled
-// with JIT. Signal-based inputs and outputs are normally described by the
-// Angular compiler in the component metadata, so the test registers that
-// metadata itself for both the list and the reused card.
-const registerSignalInput = angularCore.Input as unknown as (
-  options: Record<string, unknown>,
-) => PropertyDecorator;
-const registerOutput = angularCore.Output as unknown as (alias?: string) => PropertyDecorator;
-
-registerSignalInput({ alias: 'notifications', isSignal: true, required: true })(
-  NotificationList.prototype,
-  'notifications',
-);
-
-registerSignalInput({ alias: 'notification', isSignal: true, required: true })(
-  NotificationCard.prototype,
-  'notification',
-);
-registerOutput('cardClick')(NotificationCard.prototype, 'cardClick');
-registerOutput('menuClick')(NotificationCard.prototype, 'menuClick');
-
-const LIST_JIT_METADATA = {
-  template: listTemplate,
-  signals: true,
-} as unknown as Component;
-
-const CARD_JIT_METADATA = {
-  template: cardTemplate,
-  signals: true,
-} as unknown as Component;
-
-// `resolveComponentResources` is documented as a public API but is only
-// exported under Angular's private `ɵ` prefix at runtime.
-const resolveComponentResources = (
-  angularCore as unknown as {
-    ɵresolveComponentResources: (resolver: (url: string) => Promise<string>) => Promise<void>;
-  }
-).ɵresolveComponentResources;
 
 function daysAgo(days: number): Date {
   const date = new Date();
@@ -103,18 +52,6 @@ describe('NotificationList', () => {
   let fixture: ComponentFixture<NotificationList>;
 
   async function setup(notifications: AppNotification[] = seedNotifications) {
-    TestBed.overrideComponent(NotificationCard, { set: CARD_JIT_METADATA });
-    TestBed.overrideComponent(NotificationList, { set: LIST_JIT_METADATA });
-
-    // Resolve the components' original `templateUrl` before TestBed reads their
-    // definitions. The overrides above already carry the raw templates, so this
-    // only covers the initial JIT-compiled metadata.
-    await resolveComponentResources((url) => {
-      if (url.endsWith('notification-card.html')) return Promise.resolve(cardTemplate);
-      if (url.endsWith('notification-list.html')) return Promise.resolve(listTemplate);
-      return Promise.reject(new Error(`Unexpected resource: ${url}`));
-    });
-
     await TestBed.configureTestingModule({
       imports: [NotificationList],
       providers: [{ provide: StringsService, useClass: StringsServiceStub }],
@@ -153,7 +90,6 @@ describe('NotificationList', () => {
   }
 
   beforeEach(async () => {
-    TestBed.resetTestingModule();
     await setup();
   });
 
