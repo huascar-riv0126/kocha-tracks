@@ -1,7 +1,12 @@
-<app-navbar></app-navbar>
 
-<main style="min-height: 60vh;">
+@if (!isInProgress()) {
+  <app-navbar></app-navbar>
+}
+
+<main [style.min-height]="isInProgress() ? null : '60vh'">
   <router-outlet></router-outlet>
 </main>
 
-<app-footer></app-footer>
+@if (!isInProgress()) {
+  <app-footer></app-footer>
+}
