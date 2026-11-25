@@ -1,4 +1,3 @@
-
 {
   "brand": "Kocha Tracks",
   "navbar.home": "Home",
@@ -168,5 +167,11 @@
   "auth.changePassword.hide": "Hide password",
   "auth.changePassword.match": "Passwords match",
   "auth.changePassword.mismatch": "Passwords do not match",
-  "auth.changePassword.submit": "Change password"
+  "auth.changePassword.submit": "Change password",
+  "notifications.card.open": "Open notification",
+  "notifications.card.menu": "More options",
+  "notifications.group.today": "Today",
+  "notifications.group.yesterday": "Yesterday",
+  "notifications.group.this_week": "This week",
+  "notifications.list.empty": "No notifications to show."
 }
