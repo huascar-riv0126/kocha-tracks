@@ -1,0 +1,31 @@
+<div class="flex flex-col gap-5" data-testid="notification-list">
+  @for (group of groups(); track group.key) {
+    <section class="flex flex-col gap-3" [attr.data-testid]="'notification-group-' + group.key">
+      <h2
+        class="m-0 text-xs font-bold uppercase tracking-wider text-txt-primary"
+        [attr.data-testid]="'notification-group-title-' + group.key"
+      >
+        {{ group.labelKey | getStrings }}
+      </h2>
+
+      <div class="flex flex-col gap-3">
+        @for (notification of group.notifications; track notification.id) {
+          <app-notification-card
+            [notification]="notification"
+            (cardClick)="onCardClick($event)"
+            (menuClick)="onMenuClick($event)"
+          />
+        }
+      </div>
+    </section>
+  }
+
+  @if (isEmpty()) {
+    <p
+      class="m-0 rounded-xl border border-dashed border-border-default p-6 text-center text-sm text-txt-secondary"
+      data-testid="notification-list-empty"
+    >
+      {{ 'notifications.list.empty' | getStrings }}
+    </p>
+  }
+</div>
