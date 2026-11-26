@@ -1,4 +1,7 @@
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+
 import { LandingPage } from './landing-page';
 import { StringsService } from '../core/strings/strings-service/strings-service';
 import { getTranslocoTestingModule } from '../testing/stubs';
@@ -9,12 +12,24 @@ describe('LandingPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LandingPage, getTranslocoTestingModule()],
-      providers: [{ provide: StringsService, useValue: { get: (key: string) => key } }],
+      imports: [
+        LandingPage,
+        getTranslocoTestingModule(),
+      ],
+      providers: [
+        provideRouter([]),
+        {
+          provide: StringsService,
+          useValue: {
+            get: (key: string) => key,
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LandingPage);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
     await fixture.whenStable();
   });
@@ -25,6 +40,7 @@ describe('LandingPage', () => {
 
   it('should compose hero, map, features, steps and cta like the Figma', () => {
     const el: HTMLElement = fixture.nativeElement;
+
     expect(el.querySelector('app-landing-hero')).toBeTruthy();
     expect(el.querySelector('app-landing-map')).toBeTruthy();
     expect(el.querySelector('app-landing-features')).toBeTruthy();
