@@ -155,5 +155,8 @@
   "zones.page.ariaLabel": "Zones of interest",
   "zones.sidebar.ariaLabel": "My areas of interest",
   "map.popup.details": "View detailed information",
+  "map.popup.location": "Location:",
+  "map.popup.sources": "Sources:",
+  "map.popup.currentState": "Current status:",
   "filter.all": "All"
 }

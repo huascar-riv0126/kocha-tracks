@@ -4,14 +4,14 @@
   </h4>
   <div style="font-size: 13px; color: #d1d5db; margin-bottom: 15px; line-height: 1.5;">
     <p style="margin: 5px 0;">
-      <span style="color: #9ca3af;">Ubicación:</span><br />
+      <span style="color: #9ca3af;">{{ 'map.popup.location' | getStrings }}</span><br />
       <strong>{{ event().location }}</strong>
     </p>
     <p style="margin: 5px 0;">
-      <span style="color: #9ca3af;">Fuentes:</span> {{ event().sourceName }}
+      <span style="color: #9ca3af;">{{ 'map.popup.sources' | getStrings }}</span> {{ event().sourceName }}
     </p>
     <div style="margin: 12px 0 6px 0; display: flex; align-items: center; gap: 8px;">
-      <span style="color: #9ca3af;">Estado actual:</span>
+      <span style="color: #9ca3af;">{{ 'map.popup.currentState' | getStrings }}</span>
       <span
         style="padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;"
         [style.background-color]="markerColor() + '20'"

@@ -281,6 +281,9 @@
   "notifications.group.this_week": "Esta semana",
   "notifications.list.empty": "No hay notificaciones para mostrar.",
   "map.popup.details": "Ver información detallada",
+  "map.popup.location": "Ubicación:",
+  "map.popup.sources": "Fuentes:",
+  "map.popup.currentState": "Estado actual:",
   "zones.page.ariaLabel": "Zonas de interés",
   "zones.sidebar.ariaLabel": "Mis zonas de interés"
 }
