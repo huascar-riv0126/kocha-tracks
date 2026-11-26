@@ -1,12 +1,23 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export const USERS_API_URL = 'https://kocha-tracks.onrender.com/api/v1/users';
+const BASE_URL = isDevMode() 
+  ? 'http://localhost:8080' 
+  : 'https://kocha-tracks.onrender.com'; 
+
+export const USERS_API_URL = `${BASE_URL}/api/v1/users`;
+export const LOGIN_API_URL = `${BASE_URL}/api/v1/auth/login`;
 
 export interface CreateUserRequest {
   username: string;
   email?: string;
+  password: string;
+}
+
+export interface LoginRequest {
+  email?: string;
+  username?: string;
   password: string;
 }
 
@@ -16,14 +27,25 @@ export interface UserResponse {
   role: string;
 }
 
+export const currentUser = signal<UserResponse | null>(null);
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private readonly http = inject(HttpClient);
   readonly apiUrl = USERS_API_URL;
+  readonly loginUrl = LOGIN_API_URL;
 
   createUser(userData: CreateUserRequest): Observable<UserResponse> {
     return this.http.post<UserResponse>(this.apiUrl, userData);
+  }
+
+  loginUser(credentials: LoginRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(this.loginUrl, credentials);
+  }
+  
+  logout(): void {
+    currentUser.set(null);
   }
 }
