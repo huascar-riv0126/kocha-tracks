@@ -1,22 +1,44 @@
+
 <section class="min-h-screen flex items-center justify-center bg-section-alt px-4 py-8">
   <div
     class="w-full max-w-[664px] rounded-xl border border-border-default bg-surface px-6 py-8 shadow-lg sm:px-[62px] sm:py-[62px]"
   >
     <app-brand variant="light" [isClickable]="false" />
-
+   <!-- MODAL DE ÉXITO -->
+    @if (showSuccessModal()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
+      <div class="flex flex-col items-center rounded-xl bg-surface p-8 shadow-2xl text-center border border-border-default transform transition-transform scale-100 animate-fade-in-up">
+        <svg class="h-16 w-16 text-green-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 class="text-2xl font-bold text-txt-primary">{{ 'auth.signup.successTitle' | getStrings }}</h2>
+        <p class="mt-2 text-sm text-txt-secondary">{{ 'auth.signup.successSub' | getStrings }}</p>
+      </div>
+    </div>
+    }
     <h1 class="mt-6 text-2xl font-bold text-txt-primary">
       {{ 'auth.signup.title' | getStrings }}
     </h1>
+
     <p class="mt-2 text-sm text-txt-secondary">
       {{ 'auth.signup.subtitle' | getStrings }}
     </p>
 
-    <form class="mt-6 space-y-5" novalidate (submit)="onSubmit($event)" data-testid="signup-form">
+    <form
+      class="mt-6 space-y-5"
+      novalidate
+      (submit)="onSubmit($event)"
+      data-testid="signup-form"
+    >
       <!-- Nombre de usuario -->
       <div>
-        <label for="signup-username" class="mb-2 block text-sm font-medium text-txt-primary">
+        <label
+          for="signup-username"
+          class="mb-2 block text-sm font-medium text-txt-primary"
+        >
           {{ 'auth.signup.username.label' | getStrings }}
         </label>
+
         <input
           id="signup-username"
           name="username"
@@ -32,6 +54,7 @@
           class="h-11 w-full rounded-md border bg-surface px-3 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
           data-testid="signup-username"
         />
+
         @if (usernameError(); as error) {
           <p
             id="signup-username-error"
@@ -46,9 +69,13 @@
 
       <!-- Correo electrónico -->
       <div>
-        <label for="signup-email" class="mb-2 block text-sm font-medium text-txt-primary">
+        <label
+          for="signup-email"
+          class="mb-2 block text-sm font-medium text-txt-primary"
+        >
           {{ 'auth.signup.email.label' | getStrings }}
         </label>
+
         <input
           id="signup-email"
           name="email"
@@ -64,6 +91,7 @@
           class="h-11 w-full rounded-md border bg-surface px-3 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
           data-testid="signup-email"
         />
+
         @if (emailError(); as error) {
           <p
             id="signup-email-error"
@@ -78,9 +106,13 @@
 
       <!-- Contraseña -->
       <div>
-        <label for="signup-password" class="mb-2 block text-sm font-medium text-txt-primary">
+        <label
+          for="signup-password"
+          class="mb-2 block text-sm font-medium text-txt-primary"
+        >
           {{ 'auth.signup.password.label' | getStrings }}
         </label>
+
         <div class="relative">
           <input
             id="signup-password"
@@ -97,19 +129,20 @@
             class="h-11 w-full rounded-md border bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
             data-testid="signup-password"
           />
+
           <button
             type="button"
             (click)="togglePassword()"
             [attr.aria-label]="
-              (showPassword() ? 'auth.signup.password.hide' : 'auth.signup.password.show')
-                | getStrings
+              (showPassword()
+                ? 'auth.signup.password.hide'
+                : 'auth.signup.password.show') | getStrings
             "
             [attr.aria-pressed]="showPassword()"
             class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer border-0 bg-transparent text-txt-secondary"
             data-testid="signup-password-toggle"
           >
             @if (showPassword()) {
-              <!-- Ojo tachado: la contraseña está visible -->
               <svg
                 class="h-5 w-5"
                 viewBox="0 0 24 24"
@@ -127,7 +160,6 @@
                 <line x1="2" y1="2" x2="22" y2="22" />
               </svg>
             } @else {
-              <!-- Ojo abierto: la contraseña está oculta -->
               <svg
                 class="h-5 w-5"
                 viewBox="0 0 24 24"
@@ -145,6 +177,7 @@
             }
           </button>
         </div>
+
         @if (passwordError(); as error) {
           <p
             id="signup-password-error"
@@ -159,9 +192,13 @@
 
       <!-- Confirmar contraseña -->
       <div>
-        <label for="signup-confirm" class="mb-2 block text-sm font-medium text-txt-primary">
+        <label
+          for="signup-confirm"
+          class="mb-2 block text-sm font-medium text-txt-primary"
+        >
           {{ 'auth.signup.confirm.label' | getStrings }}
         </label>
+
         <div class="relative">
           <input
             id="signup-confirm"
@@ -182,6 +219,7 @@
             class="h-11 w-full rounded-md border bg-surface px-3 pr-11 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
             data-testid="signup-confirm"
           />
+
           @if (confirmStatus() === 'match') {
             <span
               role="img"
@@ -227,6 +265,7 @@
             </span>
           }
         </div>
+
         @if (confirmError(); as error) {
           <p
             id="signup-confirm-error"
@@ -242,7 +281,7 @@
       <!-- Términos y condiciones -->
       <div>
         <div class="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-txt-secondary">
-                    <span class="relative mr-1.5 inline-flex size-5 shrink-0">
+          <span class="relative mr-1.5 inline-flex size-5 shrink-0">
             <input
               id="signup-terms"
               name="terms"
@@ -254,6 +293,7 @@
               class="peer size-5 cursor-pointer appearance-none rounded border border-border-default bg-surface transition checked:border-interactive-cta checked:bg-interactive-cta focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-cta"
               data-testid="signup-terms"
             />
+
             <svg
               class="pointer-events-none absolute inset-0 m-auto size-3.5 text-on-dark opacity-0 peer-checked:opacity-100"
               viewBox="0 0 16 16"
@@ -267,25 +307,30 @@
               <path d="m3.5 8.5 3 3 6-7" />
             </svg>
           </span>
+
           <label for="signup-terms" class="cursor-pointer">
             {{ 'auth.signup.terms.prefix' | getStrings }}
           </label>
+
           <a
-            href="#"
-            (click)="$event.preventDefault()"
+            routerLink="/en-construccion"
             class="font-medium text-interactive-cta underline hover:text-interactive-cta-hover"
           >
             {{ 'auth.signup.terms.link' | getStrings }}
           </a>
-          <span>{{ 'auth.signup.terms.and' | getStrings }}</span>
+
+          <span>
+            {{ 'auth.signup.terms.and' | getStrings }}
+          </span>
+
           <a
-            href="#"
-            (click)="$event.preventDefault()"
+            routerLink="/en-construccion"
             class="font-medium text-interactive-cta underline hover:text-interactive-cta-hover"
           >
             {{ 'auth.signup.privacy.link' | getStrings }}
           </a>
         </div>
+
         @if (termsError(); as error) {
           <p
             id="signup-terms-error"
@@ -298,17 +343,34 @@
         }
       </div>
 
+      <!-- Mensaje de error general (Ej. Usuario ya existe) -->
+      @if (registerError(); as errorMsg) {
+        <div class="rounded-md border border-status-danger-500/20 bg-status-danger-500/10 p-3 text-center text-sm text-status-danger-500 mb-4">
+          {{ errorMsg | getStrings }}
+        </div>
+      }
+
+      <!-- Crear cuenta -->
       <button
         type="submit"
-        [disabled]="!canSubmit()"
-        class="h-11 w-full cursor-pointer rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition enabled:hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
+        [disabled]="!canSubmit() || isLoading()"
+        class="flex h-11 w-full cursor-pointer items-center justify-center rounded-md bg-interactive-cta text-sm font-bold text-on-dark transition enabled:hover:bg-interactive-cta-hover disabled:cursor-not-allowed disabled:opacity-50"
         data-testid="signup-submit"
       >
-        {{ 'auth.signup.submit' | getStrings }}
+        @if (isLoading()) {
+          <svg class="mr-2 h-5 w-5 animate-spin text-white" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          {{ 'auth.signup.loading' | getStrings }}
+        } @else {
+          {{ 'auth.signup.submit' | getStrings }}
+        }
       </button>
 
       <p class="text-center text-sm text-txt-secondary">
         {{ 'auth.signup.has.account' | getStrings }}
+
         <a
           routerLink="/login"
           class="font-medium text-interactive-cta underline hover:text-interactive-cta-hover"
