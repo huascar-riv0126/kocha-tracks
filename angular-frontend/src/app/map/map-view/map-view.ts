@@ -7,6 +7,8 @@ import {
   OnDestroy,
   output,
   PLATFORM_ID,
+  ViewContainerRef,
+  type ComponentRef,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
@@ -15,6 +17,8 @@ import { EventMockService } from '../../event/event-mock';
 import { EventMock } from '../../event/event-mock.model';
 import type { LatLng, ZoneMapOverlay } from '../zones/zone.model';
 import { SidebarReportsComponent } from './components/sidebar-reports/sidebar-reports';
+import { MarkerPopupComponent } from './components/marker-popup/marker-popup';
+import { ZoneUndoButtonComponent } from './components/zone-undo-button/zone-undo-button';
 
 export const COCHABAMBA_CENTER: [number, number] = [-17.3895, -66.1568];
 export const COCHABAMBA_ZOOM = 14;
@@ -28,7 +32,12 @@ const ZONE_FILL_COLOR = '#f97316';
 @Component({
   selector: 'app-map-view',
   standalone: true,
-  imports: [CommonModule, SidebarReportsComponent],
+  imports: [
+    CommonModule,
+    SidebarReportsComponent,
+    MarkerPopupComponent,
+    ZoneUndoButtonComponent,
+  ],
   templateUrl: './map-view.html',
   styleUrl: './map-view.css',
 })
@@ -49,11 +58,14 @@ export class MapView implements AfterViewInit, OnDestroy {
   private destroyed = false;
   private resizeObserver?: ResizeObserver;
   private markersMap: Map<number, Leaflet.CircleMarker> = new Map();
+  private popupRefs: Map<number, ComponentRef<MarkerPopupComponent>> = new Map();
+  private undoRef?: ComponentRef<ZoneUndoButtonComponent>;
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
     private router: Router,
     private eventMockService: EventMockService,
+    private vcRef: ViewContainerRef,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
@@ -71,7 +83,6 @@ export class MapView implements AfterViewInit, OnDestroy {
     const leafletModule = await import('leaflet');
     const L = ((leafletModule as any).default ?? leafletModule) as typeof Leaflet;
 
-    // El componente pudo destruirse mientras cargaba Leaflet
     if (this.destroyed) return;
 
     const host = document.getElementById(this.mapId());
@@ -82,6 +93,7 @@ export class MapView implements AfterViewInit, OnDestroy {
     this.markersMap.clear();
     this.zoneLayer = undefined;
     this.undoPopup = undefined;
+    this.closeUndoPopup();
 
     if ((host as HTMLElement & { _leaflet_id?: unknown })._leaflet_id !== undefined) {
       host.innerHTML = '';
@@ -95,8 +107,6 @@ export class MapView implements AfterViewInit, OnDestroy {
     this.map = map;
     this.leaflet = L;
 
-    // El slot flex puede crecer tras el init (ej. Zonas): revalidar tamaño
-    // para que Leaflet pinte tiles hasta abajo y no quede franja en blanco.
     window.setTimeout(() => map.invalidateSize(), 100);
     window.setTimeout(() => map.invalidateSize(), 500);
     if (typeof ResizeObserver !== 'undefined') {
@@ -126,8 +136,7 @@ export class MapView implements AfterViewInit, OnDestroy {
     const map = this.map;
     if (!L || !map) return;
 
-    this.undoPopup?.close();
-    this.undoPopup = undefined;
+    this.closeUndoPopup();
 
     if (!this.zoneLayer) {
       this.zoneLayer = L.layerGroup().addTo(map);
@@ -190,17 +199,23 @@ export class MapView implements AfterViewInit, OnDestroy {
         className: 'zone-undo-popup',
       })
       .setLatLng(point)
-      .setContent(
-        `<button type="button" class="zone-undo-btn" style="background-color: #f97316; color: #ffffff; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer;">Deshacer punto</button>`,
-      )
       .openOn(this.map);
 
     this.undoPopup = popup;
 
-    const element = popup.getElement();
-    element
-      ?.querySelector('.zone-undo-btn')
-      ?.addEventListener('click', () => this.undoPoint.emit());
+    const ref = this.vcRef.createComponent(ZoneUndoButtonComponent);
+    ref.instance.undo.subscribe(() => this.undoPoint.emit());
+    this.undoRef = ref;
+
+    popup.setContent(ref.location.nativeElement);
+    popup.update();
+  }
+
+  private closeUndoPopup(): void {
+    this.undoPopup?.close();
+    this.undoPopup = undefined;
+    this.undoRef?.destroy();
+    this.undoRef = undefined;
   }
 
   private renderMarkers(L: typeof Leaflet, map: Leaflet.Map): void {
@@ -221,58 +236,17 @@ export class MapView implements AfterViewInit, OnDestroy {
 
       this.markersMap.set(event.id, marker);
 
-      const address = event.location || 'Ubicación no especificada';
-      const sourceInfo = event.sourceName || 'Múltiples reportes';
+      const ref = this.vcRef.createComponent(MarkerPopupComponent);
+      ref.setInput('event', event);
+      ref.instance.details.subscribe((id) => {
+        this.router.navigate(['/evento', id, 'detalles']);
+      });
+      this.popupRefs.set(event.id, ref);
 
-      const popupContent = `
-        <div style="text-align: left; font-family: sans-serif; min-width: 240px; padding-right: 15px;">
-          <h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 16px; border-bottom: 1px solid #4b5563; padding-bottom: 8px;">
-            ${event.title}
-          </h4>
-          <div style="font-size: 13px; color: #d1d5db; margin-bottom: 15px; line-height: 1.5;">
-            <p style="margin: 5px 0;">
-              <span style="color: #9ca3af;">Ubicación:</span><br/>
-              <strong>${address}</strong>
-            </p>
-            <p style="margin: 5px 0;">
-              <span style="color: #9ca3af;">Fuentes:</span> 
-              ${sourceInfo}
-            </p>
-            
-            <div style="margin: 12px 0 6px 0; display: flex; align-items: center; gap: 8px;">
-              <span style="color: #9ca3af;">Estado actual:</span> 
-              <span style="background-color: ${markerColor}20; color: ${markerColor}; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; border: 1px solid ${markerColor}50;">
-                ${event.state.toUpperCase()}
-              </span>
-            </div>
-
-          </div>
-          <button 
-            class="btn-detalles" 
-            style="background-color: #f97316; color: white; border: none; padding: 10px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; width: 100%; transition: background-color 0.2s;">
-            Ver información detallada
-          </button>
-        </div>
-      `;
-
-      marker.bindPopup(popupContent, {
+      marker.bindPopup(ref.location.nativeElement, {
         className: 'kocha-dark-tooltip',
         closeButton: true,
         offset: [0, -10],
-      });
-
-      marker.on('popupopen', (e) => {
-        const popupNode = e.popup.getElement();
-        if (popupNode) {
-          const btn = popupNode.querySelector('.btn-detalles');
-          if (btn) {
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode?.replaceChild(newBtn, btn);
-            newBtn.addEventListener('click', () => {
-              this.router.navigate(['/evento', event.id, 'detalles']);
-            });
-          }
-        }
       });
     });
   }
@@ -295,8 +269,9 @@ export class MapView implements AfterViewInit, OnDestroy {
     this.destroyed = true;
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
-    this.undoPopup?.close();
-    this.undoPopup = undefined;
+    this.closeUndoPopup();
+    this.popupRefs.forEach((ref) => ref.destroy());
+    this.popupRefs.clear();
     this.zoneLayer?.clearLayers();
     this.zoneLayer = undefined;
     this.leaflet = undefined;

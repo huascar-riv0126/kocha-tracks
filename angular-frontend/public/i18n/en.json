@@ -220,5 +220,8 @@
   "auth.login.forgotPassword": "Forgot your password?",
   "auth.login.submit": "Log in",
   "auth.login.noAccount": "Don't have an account?",
-  "auth.login.createAccount": "Create account"
+  "auth.login.createAccount": "Create account",
+  "map.popup.details": "View detailed information",
+  "zones.page.ariaLabel": "Zones of interest",
+  "zones.sidebar.ariaLabel": "My areas of interest"
 }

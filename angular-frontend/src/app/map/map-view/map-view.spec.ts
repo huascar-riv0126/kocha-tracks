@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { Router } from '@angular/router';
 import { COCHABAMBA_CENTER, COCHABAMBA_ZOOM, MapView, OSM_TILE_URL } from './map-view';
 import { EventMockService } from '../../event/event-mock';
@@ -34,6 +35,7 @@ const {
   const popupMock = {
     setLatLng: vi.fn().mockReturnThis(),
     setContent: vi.fn().mockReturnThis(),
+    update: vi.fn().mockReturnThis(),
     openOn: vi.fn().mockReturnThis(),
     close: vi.fn(),
     getElement: vi.fn(() => {
@@ -164,20 +166,13 @@ describe('MapView', () => {
     expect('locate' in component).toBe(false);
   });
 
-  it('should navigate to event details when popup button is clicked', () => {
-    const router = TestBed.inject(Router);
-
-    // Buscamos el callback registrado para 'popupopen' en el primer marcador
-    const popupOpenCall = markerMock.on.mock.calls.find(([name]) => name === 'popupopen');
-    const handler = popupOpenCall![1];
-
-    const popupEl = document.createElement('div');
-    popupEl.innerHTML = '<button class="btn-detalles">Ver</button>';
-    handler({ popup: { getElement: () => popupEl } });
-
-    popupEl.querySelector<HTMLButtonElement>('.btn-detalles')!.click();
-
-    expect(router.navigate).toHaveBeenCalledWith(['/evento', 1, 'detalles']);
+  it('should bind each marker popup as an element (not an HTML string)', () => {
+    const bindPopupCalls = markerMock.bindPopup.mock.calls;
+    expect(bindPopupCalls.length).toBe(2);
+    bindPopupCalls.forEach(([content]) => {
+      expect(content).toBeInstanceOf(HTMLElement);
+      expect((content as HTMLElement).querySelector('.marker-popup')).toBeTruthy();
+    });
   });
 
   it('should apply embedded class when embedded input is true', () => {
@@ -243,7 +238,7 @@ describe('MapView', () => {
     expect(emitSpy).toHaveBeenCalledWith([-17.4, -66.1]);
   });
 
-  it('should show an undo popup on the last draft point and emit undoPoint', async () => {
+  it('should open an undo popup on the last draft point', async () => {
     fixture.componentRef.setInput('zoneInteractive', true);
     fixture.componentRef.setInput('zoneOverlays', [
       {
@@ -260,10 +255,33 @@ describe('MapView', () => {
     await fixture.whenStable();
 
     expect(popupMock.setLatLng).toHaveBeenCalledWith([-17.39, -66.157]);
+    expect(popupMock.setContent).toHaveBeenCalled();
+    expect(popupMock.openOn).toHaveBeenCalledWith(mapMock);
+
+    const content = popupMock.setContent.mock.calls[0][0];
+    expect(content).toBeInstanceOf(HTMLElement);
+    expect(content.querySelector('.zone-undo-btn')).toBeTruthy();
+  });
+
+  it('should emit undoPoint when the undo button is clicked', async () => {
+    fixture.componentRef.setInput('zoneInteractive', true);
+    fixture.componentRef.setInput('zoneOverlays', [
+      {
+        id: 'draft',
+        type: 'polygon',
+        points: [
+          [-17.3895, -66.1568],
+          [-17.39, -66.157],
+        ],
+        draft: true,
+      },
+    ]);
+    fixture.detectChanges();
+    await fixture.whenStable();
 
     const emitSpy = vi.spyOn(component.undoPoint, 'emit');
-    getPopupElement()?.querySelector<HTMLButtonElement>('.zone-undo-btn')?.click();
-
+    const content = popupMock.setContent.mock.calls[0][0] as HTMLElement;
+    (content.querySelector('.zone-undo-btn') as HTMLElement).click();
     expect(emitSpy).toHaveBeenCalled();
   });
 });

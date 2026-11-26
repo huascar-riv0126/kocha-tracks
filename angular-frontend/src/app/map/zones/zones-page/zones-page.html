@@ -1,11 +1,11 @@
 <section
   class="zones-page flex flex-col-reverse lg:flex-row items-stretch w-full lg:h-[calc(100vh-64px)] h-auto overflow-hidden"
-  aria-label="Zonas de interés"
+  aria-label="{{ 'zones.page.ariaLabel' | getStrings }}"
   data-testid="zones-page"
 >
   <aside
     class="zones-sidebar w-full min-w-full lg:min-w-[340px] lg:w-[340px] max-w-none lg:max-w-[360px] h-auto lg:h-full max-h-[70vh] lg:max-h-none overflow-y-auto z-10 bg-white border-t lg:border-t-0 lg:border-r border-[var(--color-border-default)] flex flex-col"
-    aria-label="Mis zonas de interés"
+    aria-label="{{ 'zones.sidebar.ariaLabel' | getStrings }}"
   >
     <div class="zones-list-slot shrink-0">
       <app-zones-list

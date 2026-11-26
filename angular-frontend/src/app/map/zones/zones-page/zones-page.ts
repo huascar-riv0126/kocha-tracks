@@ -2,6 +2,7 @@ import { afterNextRender, Component, computed, signal } from '@angular/core';
 import { MapView } from '../../map-view/map-view';
 import { ZonesList } from '../zones-list/zones-list';
 import { ZoneConfig } from '../zone-config/zone-config';
+import { GetStringsPipe } from '../../../core/strings/get-strings-pipe';
 import {
   LatLng,
   Zone,
@@ -18,7 +19,7 @@ const INITIAL_ZONE = ZONES_MOCK[0];
 @Component({
   selector: 'app-zones-page',
   standalone: true,
-  imports: [MapView, ZonesList, ZoneConfig],
+  imports: [MapView, ZonesList, ZoneConfig, GetStringsPipe],
   templateUrl: './zones-page.html',
   styleUrl: './zones-page.css',
 })

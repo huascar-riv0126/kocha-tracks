@@ -220,5 +220,8 @@
   "auth.login.forgotPassword": "¿Olvidaste tu contraseña?",
   "auth.login.submit": "Iniciar sesión",
   "auth.login.noAccount": "¿No tienes una cuenta?",
-  "auth.login.createAccount": "Crear cuenta"
+  "auth.login.createAccount": "Crear cuenta",
+  "map.popup.details": "Ver información detallada",
+  "zones.page.ariaLabel": "Zonas de interés",
+  "zones.sidebar.ariaLabel": "Mis zonas de interés"
 }
