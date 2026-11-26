@@ -294,6 +294,37 @@ describe('FIX-02 - Login UI/UX', () => {
     );
   });
 
+    // BUG-02: ESTADO DE ERROR CON VARIABLES DEL SISTEMA
+
+  it('should use the status-danger-500 variable for every error state', () => {
+    submitForm();
+
+    const emailError = compiled.querySelector(
+      '[data-testid="login-email-error"]'
+    ) as HTMLElement;
+    const passwordError = compiled.querySelector(
+      '[data-testid="login-password-error"]'
+    ) as HTMLElement;
+
+    expect(getEmailInput().classList.contains('border-status-danger-500')).toBe(true);
+    expect(getPasswordInput().classList.contains('border-status-danger-500')).toBe(true);
+    expect(emailError.classList.contains('text-status-danger-500')).toBe(true);
+    expect(passwordError.classList.contains('text-status-danger-500')).toBe(true);
+    expect(compiled.querySelectorAll('[class*="red-"]').length).toBe(0);
+  });
+
+  it('should link each input to its error message only while the error is visible', () => {
+    expect(getEmailInput().getAttribute('aria-describedby')).toBeNull();
+    expect(getPasswordInput().getAttribute('aria-describedby')).toBeNull();
+
+    submitForm();
+
+    expect(getEmailInput().getAttribute('aria-describedby')).toBe('email-error');
+    expect(getPasswordInput().getAttribute('aria-describedby')).toBe('password-error');
+    expect(compiled.querySelector('#email-error')).toBeTruthy();
+    expect(compiled.querySelector('#password-error')).toBeTruthy();
+  });
+
   // VALIDACIÓN Y ENVÍO DEL FORMULARIO
 
   it('should disable submit with empty fields', () => {
@@ -397,3 +428,4 @@ describe('FIX-02 - Login UI/UX', () => {
       .toBe('Log in');
   });
 });
+
