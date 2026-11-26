@@ -13,6 +13,7 @@ import { RecoverPassword } from './auth/recover-password/recover-password'; // U
 import { SignUp } from './auth/sign-up/sign-up';
 import { ProfilePageComponent } from './user/profile-page/profile-page';
 import { ChangePassword } from './auth/change-password/change-password';
+import { ForumPage } from './forum/forum-page/forum-page'; // UH-54
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'register', component: SignUp },
   { path: 'perfil', component: ProfilePageComponent },
   { path: 'auth/cambiar-contrasena', component: ChangePassword },
+  { path: 'forum', component: ForumPage }, // UH-54
   {
     path: 'evento/:eventId',
     resolve: { event: eventResolver },
