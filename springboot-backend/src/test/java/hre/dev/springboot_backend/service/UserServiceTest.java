@@ -2,7 +2,11 @@ package hre.dev.springboot_backend.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -134,6 +138,57 @@ class UserServiceTest {
         assertThat(user.isIsActive()).isFalse();
         assertThat(user.getDeletedAt()).isNotNull();
         verify(userRepository).save(user);
+    }
+
+    @Test
+    @DisplayName("login() with valid credentials returns success")
+    void login_WithValidCredentials_ReturnsSuccess() {
+    String email = "eduardo.qa@kochatracks.com";
+    String rawPassword = "KochaTracks2026!";
+    String encodedPassword = "$2a$10$hashedPasswordExample";
+
+    User activeUser = new User();
+    activeUser.setId(1L);
+    activeUser.setUsername("EduardoQA");
+    activeUser.setEmail(email);
+    activeUser.setPassword(encodedPassword);
+    activeUser.setRole("USER");
+    activeUser.setIsActive(true);
+
+    when(userRepository.findByEmailAndIsActiveTrue(email)).thenReturn(Optional.of(activeUser));
+    when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(true);
+
+    UserResponseDTO response = userService.login(email, rawPassword);
+
+    assertNotNull(response);
+    assertEquals(1L, response.id());
+    assertEquals("EduardoQA", response.username());
+    assertEquals("USER", response.role());
+    verify(userRepository, times(1)).findByEmailAndIsActiveTrue(email);
+    verify(passwordEncoder, times(1)).matches(rawPassword, encodedPassword);
+    }
+
+    @Test
+    @DisplayName("login() with invalid password throws IllegalArgumentException")
+    void login_WithInvalidPassword_ThrowsIllegalArgumentException() {
+    String email = "eduardo.qa@kochatracks.com";
+    String wrongPassword = "WrongPassword!";
+    String encodedPassword = "$2a$10$hashedPasswordExample";
+
+    User activeUser = new User();
+    activeUser.setId(1L);
+    activeUser.setUsername("EduardoQA");
+    activeUser.setEmail(email);
+    activeUser.setPassword(encodedPassword);
+    activeUser.setRole("USER");
+    activeUser.setIsActive(true);
+
+    when(userRepository.findByEmailAndIsActiveTrue(email)).thenReturn(Optional.of(activeUser));
+    when(passwordEncoder.matches(wrongPassword, encodedPassword)).thenReturn(false);
+
+    assertThrows(IllegalArgumentException.class, () -> userService.login(email, wrongPassword));
+    verify(userRepository, times(1)).findByEmailAndIsActiveTrue(email);
+    verify(passwordEncoder, times(1)).matches(wrongPassword, encodedPassword);
     }
 }
 

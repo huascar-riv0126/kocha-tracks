@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { UserService, USERS_API_URL, CreateUserRequest, UserResponse } from './user-service';
+import { isDevMode } from '@angular/core';
 
 describe('UH-37 UserService', () => {
   let service: UserService;
@@ -20,10 +21,16 @@ describe('UH-37 UserService', () => {
     httpMock.verify();
   });
 
+
   it('should be created and define the base API URL constant', () => {
     expect(service).toBeTruthy();
-    expect(service.apiUrl).toBe('https://kocha-tracks.onrender.com/api/v1/users');
-    expect(USERS_API_URL).toBe('https://kocha-tracks.onrender.com/api/v1/users');
+  
+    const expectedUrl = isDevMode()
+      ? 'http://localhost:8080/api/v1/users'
+      : 'https://kocha-tracks.onrender.com/api/v1/users';
+
+    expect(service.apiUrl).toBe(expectedUrl);
+    expect(USERS_API_URL).toBe(expectedUrl);
   });
 
   it('should send a POST request with the user payload to the API URL', () => {

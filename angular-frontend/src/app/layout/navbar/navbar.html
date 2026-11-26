@@ -1,12 +1,10 @@
 
 <nav class="navbar">
-
   <div class="navbar-brand">
     <app-brand variant="dark" [isClickable]="true"></app-brand>
   </div>
 
   <ul class="navbar-links">
-
     <li>
       <a
         routerLink="/"
@@ -37,8 +35,8 @@
 
     <li>
       <a
-         routerLink="/forum"
-         routerLinkActive="active"
+        routerLink="/forum"
+        routerLinkActive="active"
       >
         {{ 'navbar.forum' | transloco }}
       </a>
@@ -52,25 +50,36 @@
         {{ "navbar.sources" | transloco }}
       </a>
     </li>
-
   </ul>
 
-  <div class="navbar-auth">
-
+  <div class="navbar-auth flex items-center gap-4">
     <app-language-toggle></app-language-toggle>
 
-    <a routerLink="/register" class="btn-register">
-      {{ "navbar.sign.out" | transloco }}
-    </a>
+@if (user()) {
+      <div class="flex items-center gap-4">
+        <span class="text-sm font-medium text-white">
+          {{ 'navbar.greeting' | transloco: { name: user()?.username } }}
+        </span>
+        <button
+          (click)="logout()"
+          class="rounded-md border border-status-danger-500 bg-transparent px-4 py-2 text-sm font-semibold text-status-danger-500 transition-colors duration-200 hover:bg-status-danger-500 hover:text-white"
+        >
+          {{ "navbar.logout" | transloco }}
+        </button>
+      </div>
+    } @else {
+      <a routerLink="/register" class="btn-register">
+        {{ "navbar.sign.out" | transloco }}
+      </a>
 
-    <a
-      routerLink="/login"
-      routerLinkActive="active"
-      class="btn-login"
-    >
-      {{ "navbar.sign.in" | transloco }}
-    </a>
-
+      <a
+        routerLink="/login"
+        routerLinkActive="active"
+        class="btn-login"
+      >
+        {{ "navbar.sign.in" | transloco }}
+      </a>
+    }
   </div>
 
 </nav>
