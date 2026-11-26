@@ -229,6 +229,12 @@
   "forum.status.finished": "FINALIZADO",
   "forum.status.confirmation": "CONFIRMACIÓN",
   "forum.comments.count": "comentarios",
+
+  "forum.message.confirm": "Confirmar información",
+  "forum.message.report": "Reportar",
+  "forum.message.agree": "Ciudadanos coinciden",
+  "forum.message.role.verified": "Usuario Verificado",
+  "forum.message.role.moderator": "Moderador",
   "notfound.status": "404",
   "notfound.title": "Página no encontrada",
   "notfound.description": "La página que buscas no existe, ha sido removida o la dirección que ingresaste es incorrecta. Verifica la URL o regresa al inicio.",
