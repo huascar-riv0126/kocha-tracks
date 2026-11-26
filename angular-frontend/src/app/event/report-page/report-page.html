@@ -1,0 +1,309 @@
+<section class="bg-section-alt px-4 py-10 sm:py-14" data-testid="report-page">
+  <div class="mx-auto flex w-full max-w-3xl flex-col gap-8">
+    <!-- Encabezado -->
+    <header class="text-center">
+      <h1 class="text-3xl font-bold text-txt-primary sm:text-4xl" data-testid="report-title">
+        {{ 'report.title' | getStrings }}
+      </h1>
+      <p class="mx-auto mt-3 max-w-2xl text-base text-txt-secondary" data-testid="report-subtitle">
+        {{ 'report.subtitle' | getStrings }}
+      </p>
+    </header>
+
+    <!-- Formulario -->
+    <form
+      class="flex flex-col gap-6 rounded-xl border border-border-default bg-surface p-6 shadow-sm sm:p-10"
+      novalidate
+      (submit)="onSubmit($event)"
+      data-testid="report-form">
+      @if (submitted()) {
+        <p
+          role="status"
+          class="rounded-md border border-status-success-500 bg-status-success-100 px-4 py-3 text-sm font-medium text-status-success-600"
+          data-testid="report-success">
+          {{ 'report.success' | getStrings }}
+        </p>
+      }
+
+      <!-- Título del evento -->
+      <div>
+        <label for="report-title-input" class="mb-2 block text-sm font-semibold text-txt-primary">
+          {{ 'report.field.title.label' | getStrings }}
+          <span class="text-status-danger-500" aria-hidden="true" data-testid="required-mark">*</span>
+        </label>
+        <input
+          id="report-title-input"
+          name="title"
+          type="text"
+          aria-required="true"
+          [placeholder]="'report.field.title.placeholder' | getStrings"
+          [value]="title()"
+          (input)="onTextInput('title', $event)"
+          (blur)="touch('title')"
+          [attr.aria-invalid]="errors().title ? 'true' : null"
+          [attr.aria-describedby]="errors().title ? 'report-title-error' : null"
+          [class]="errors().title ? 'border-status-danger-500' : 'border-border-default'"
+          class="h-11 w-full rounded-md border bg-neutral-50 px-3 text-sm text-txt-primary outline-none transition placeholder:text-neutral-400 focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="report-title-input" />
+        @if (errors().title; as error) {
+          <p
+            id="report-title-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="report-title-error">
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Tipo de evento -->
+      <div>
+        <label for="report-category" class="mb-2 block text-sm font-semibold text-txt-primary">
+          {{ 'report.field.category.label' | getStrings }}
+          <span class="text-status-danger-500" aria-hidden="true" data-testid="required-mark">*</span>
+        </label>
+        <select
+          id="report-category"
+          name="category"
+          aria-required="true"
+          (change)="onCategoryChange($event)"
+          (blur)="touch('category')"
+          [attr.aria-invalid]="errors().category ? 'true' : null"
+          [attr.aria-describedby]="errors().category ? 'report-category-error' : null"
+          [class]="errors().category ? 'border-status-danger-500' : 'border-border-default'"
+          class="h-11 w-full cursor-pointer rounded-md border bg-neutral-50 px-3 text-sm text-txt-primary outline-none transition focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="report-category">
+          <option value="" [selected]="category() === ''">
+            {{ 'report.field.category.placeholder' | getStrings }}
+          </option>
+          @for (option of categories; track option.value) {
+            <option [value]="option.value" [selected]="category() === option.value">
+              {{ option.labelKey | getStrings }}
+            </option>
+          }
+        </select>
+        @if (errors().category; as error) {
+          <p
+            id="report-category-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="report-category-error">
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Descripción del incidente -->
+      <div>
+        <label for="report-description" class="mb-2 block text-sm font-semibold text-txt-primary">
+          {{ 'report.field.description.label' | getStrings }}
+          <span class="text-status-danger-500" aria-hidden="true" data-testid="required-mark">*</span>
+        </label>
+        <textarea
+          id="report-description"
+          name="description"
+          rows="4"
+          aria-required="true"
+          [placeholder]="'report.field.description.placeholder' | getStrings"
+          [value]="description()"
+          (input)="onTextInput('description', $event)"
+          (blur)="touch('description')"
+          [attr.aria-invalid]="errors().description ? 'true' : null"
+          [attr.aria-describedby]="errors().description ? 'report-description-error' : null"
+          [class]="errors().description ? 'border-status-danger-500' : 'border-border-default'"
+          class="w-full resize-y rounded-md border bg-neutral-50 px-3 py-3 text-sm text-txt-primary outline-none transition placeholder:text-neutral-400 focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="report-description"></textarea>
+        @if (errors().description; as error) {
+          <p
+            id="report-description-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="report-description-error">
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Ubicación y referencia + mapa -->
+      <div>
+        <label for="report-reference" class="mb-2 block text-sm font-semibold text-txt-primary">
+          {{ 'report.field.reference.label' | getStrings }}
+          <span class="text-status-danger-500" aria-hidden="true" data-testid="required-mark">*</span>
+        </label>
+        <input
+          id="report-reference"
+          name="reference"
+          type="text"
+          aria-required="true"
+          [placeholder]="'report.field.reference.placeholder' | getStrings"
+          [value]="reference()"
+          (input)="onTextInput('reference', $event)"
+          (blur)="touch('reference')"
+          [attr.aria-invalid]="errors().reference ? 'true' : null"
+          [attr.aria-describedby]="errors().reference ? 'report-reference-error' : null"
+          [class]="errors().reference ? 'border-status-danger-500' : 'border-border-default'"
+          class="h-11 w-full rounded-md border bg-neutral-50 px-3 text-sm text-txt-primary outline-none transition placeholder:text-neutral-400 focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="report-reference" />
+        @if (errors().reference; as error) {
+          <p
+            id="report-reference-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="report-reference-error">
+            {{ error | getStrings }}
+          </p>
+        }
+
+        <!-- Punto en el mapa -->
+        <p class="mb-2 mt-4 text-sm font-semibold text-txt-primary">
+          {{ 'report.field.map.label' | getStrings }}
+          <span class="text-status-danger-500" aria-hidden="true" data-testid="required-mark">*</span>
+        </p>
+        <div
+          class="report-map-slot relative overflow-hidden rounded-lg border"
+          [class]="errors().location ? 'border-status-danger-500' : 'border-border-default'"
+          data-testid="report-map">
+          <app-map-view
+            mapId="report-map"
+            [embedded]="true"
+            [showEvents]="false"
+            [selectable]="selectingOnMap()"
+            [selectedLocation]="mapLocation()"
+            (locationSelect)="onLocationSelect($event)" />
+          <button
+            type="button"
+            (click)="toggleMapSelection()"
+            [attr.aria-pressed]="selectingOnMap()"
+            [class]="
+              selectingOnMap()
+                ? 'border-interactive-cta bg-interactive-cta text-on-dark'
+                : 'border-border-default bg-surface text-txt-primary hover:bg-neutral-50'
+            "
+            class="absolute left-14 top-3 z-10 inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-1.5 text-xs font-semibold shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary"
+            data-testid="report-map-select">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="size-4"
+              aria-hidden="true">
+              <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"></path>
+              <path d="M9 4v14M15 6v14"></path>
+            </svg>
+            {{ 'report.field.map.select' | getStrings }}
+          </button>
+        </div>
+        <p class="mt-2 text-xs text-txt-secondary" data-testid="report-map-hint">
+          @if (formattedLocation(); as coordinates) {
+            {{ 'report.field.map.selected' | getStrings }}
+            <span class="font-semibold text-txt-primary" data-testid="report-map-coordinates">{{ coordinates }}</span>
+          } @else if (selectingOnMap()) {
+            {{ 'report.field.map.selecting' | getStrings }}
+          } @else {
+            {{ 'report.field.map.hint' | getStrings }}
+          }
+        </p>
+        @if (errors().location; as error) {
+          <p
+            id="report-location-error"
+            role="alert"
+            class="mt-1.5 text-xs text-status-danger-500"
+            data-testid="report-location-error">
+            {{ error | getStrings }}
+          </p>
+        }
+      </div>
+
+      <!-- Severidad del bloqueo -->
+      <fieldset>
+        <legend class="mb-2 block text-sm font-semibold text-txt-primary">
+          {{ 'report.field.severity.label' | getStrings }}
+          <span class="text-status-danger-500" aria-hidden="true" data-testid="required-mark">*</span>
+        </legend>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-3" data-testid="report-severity">
+          @for (option of severityOptions; track option.value) {
+            <button
+              type="button"
+              (click)="selectSeverity(option.value)"
+              [attr.aria-pressed]="severity() === option.value"
+              [class]="
+                severity() === option.value
+                  ? option.selectedClass + ' bg-surface'
+                  : 'border-border-default bg-neutral-50 text-txt-primary hover:bg-neutral-100'
+              "
+              class="flex h-11 cursor-pointer items-center gap-2 rounded-md border px-4 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary"
+              [attr.data-testid]="'report-severity-' + option.value">
+              <span class="size-2.5 shrink-0 rounded-full" [class]="option.dotClass" aria-hidden="true"></span>
+              {{ option.labelKey | getStrings }}
+            </button>
+          }
+        </div>
+      </fieldset>
+
+      <!-- Fuente de información (opcional) -->
+      <div>
+        <label for="report-source" class="mb-2 block text-sm font-semibold text-txt-primary">
+          {{ 'report.field.source.label' | getStrings }}
+        </label>
+        <input
+          id="report-source"
+          name="source"
+          type="text"
+          [placeholder]="'report.field.source.placeholder' | getStrings"
+          [value]="source()"
+          (input)="onTextInput('source', $event)"
+          class="h-11 w-full rounded-md border border-border-default bg-neutral-50 px-3 text-sm text-txt-primary outline-none transition placeholder:text-neutral-400 focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="report-source" />
+      </div>
+
+      <!-- Información adicional o notas (opcional) -->
+      <div>
+        <label for="report-notes" class="mb-2 block text-sm font-semibold text-txt-primary">
+          {{ 'report.field.notes.label' | getStrings }}
+        </label>
+        <textarea
+          id="report-notes"
+          name="notes"
+          rows="3"
+          [placeholder]="'report.field.notes.placeholder' | getStrings"
+          [value]="notes()"
+          (input)="onTextInput('notes', $event)"
+          class="w-full resize-y rounded-md border border-border-default bg-neutral-50 px-3 py-3 text-sm text-txt-primary outline-none transition placeholder:text-neutral-400 focus:border-interactive-cta focus:ring-1 focus:ring-interactive-cta"
+          data-testid="report-notes"></textarea>
+      </div>
+
+      <!-- Acciones -->
+      <div class="flex flex-col-reverse gap-3 border-t border-border-default pt-6 sm:flex-row sm:justify-end">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="h-11 cursor-pointer rounded-md border border-border-default bg-surface px-6 text-sm font-semibold text-txt-primary transition-colors hover:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary"
+          data-testid="report-cancel">
+          {{ 'report.actions.cancel' | getStrings }}
+        </button>
+        <button
+          type="submit"
+          class="h-11 cursor-pointer rounded-md bg-interactive-cta px-6 text-sm font-semibold text-on-dark transition-colors hover:bg-interactive-cta-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-interactive-primary"
+          data-testid="report-submit">
+          {{ 'report.actions.submit' | getStrings }}
+        </button>
+      </div>
+    </form>
+
+    <!-- Aviso de revisión -->
+    <p class="flex items-start justify-center gap-2 text-center text-xs text-txt-secondary" data-testid="report-notice">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        class="mt-px size-4 shrink-0"
+        aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 16v-4M12 8h.01"></path>
+      </svg>
+      {{ 'report.notice' | getStrings }}
+    </p>
+  </div>
+</section>

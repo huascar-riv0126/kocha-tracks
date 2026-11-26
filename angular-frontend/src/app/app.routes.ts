@@ -15,6 +15,7 @@ import { ProfilePageComponent } from './user/profile-page/profile-page';
 import { ChangePassword } from './auth/change-password/change-password';
 import { InProgress } from './status/in-progress/in-progress';
 import { ForumPage } from './forum/forum-page/forum-page';
+import { ReportPage } from './event/report-page/report-page';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
@@ -36,6 +37,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'detalles', pathMatch: 'full' },
     ],
   },
+  { path: 'reportar', component: ReportPage },
   { path: 'en-construccion', component: InProgress },
   { path: '**', component: NotFound },
 ];
