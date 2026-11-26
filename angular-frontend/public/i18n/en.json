@@ -228,7 +228,7 @@
   "forum.status.active": "ACTIVE",
   "forum.status.finished": "FINISHED",
   "forum.status.confirmation": "CONFIRMATION",
-  "forum.comments.count": "comments"
+  "forum.comments.count": "comments",
   "notfound.status": "404",
   "notfound.title": "Page not Found",
   "notfound.description": "The page you're looking for doesn't exist, may have been removed, or the URL may be incorrect. Please check the URL or return to the home page.",
