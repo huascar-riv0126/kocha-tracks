@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, Inject, input, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, effect, Inject, input, OnDestroy, output, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import type * as Leaflet from 'leaflet';
 import { EventMockService } from '../../event/event-mock';
 import { EventMock } from '../../event/event-mock.model';
 import { SidebarReportsComponent } from './components/sidebar-reports/sidebar-reports';
+import { LatLng } from '../zones/zone.model';
 
 export const COCHABAMBA_CENTER: [number, number] = [-17.3895, -66.1568];
 export const COCHABAMBA_ZOOM = 14;
@@ -21,7 +22,24 @@ export const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/co
 export class MapView implements AfterViewInit, OnDestroy {
   readonly mapId = input<string>('map');
   readonly embedded = input<boolean>(false);
+  /**
+   * Muestra los marcadores de eventos. Por defecto se mantienen como antes.
+   * Cuando el mapa es la página de una ruta (/map), el router asigna `undefined`
+   * a las entradas que no vienen en la URL; en ese caso también se muestran.
+   */
+  readonly showEvents = input<boolean, boolean | undefined>(true, {
+    transform: (value: boolean | undefined) => value ?? true,
+  });
+  /** UH-55: permite elegir un punto haciendo clic en el mapa. */
+  readonly selectable = input<boolean>(false);
+  /** UH-55: punto seleccionado que se marca en el mapa. */
+  readonly selectedLocation = input<LatLng | null>(null);
+  /** UH-55: emite las coordenadas del clic cuando `selectable` está activo. */
+  readonly locationSelect = output<LatLng>();
   private map?: Leaflet.Map;
+  private leaflet?: typeof Leaflet;
+  private selectionMarker?: Leaflet.CircleMarker;
+  private selectionClickEnabled = false;
   private readonly isBrowser: boolean;
   private destroyed = false;
   private resizeObserver?: ResizeObserver;
@@ -33,6 +51,9 @@ export class MapView implements AfterViewInit, OnDestroy {
     private eventMockService: EventMockService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
+
+    effect(() => this.syncSelectionMarker(this.selectedLocation()));
+    effect(() => this.syncSelectableCursor(this.selectable()));
   }
 
   async ngAfterViewInit(): Promise<void> {
@@ -61,6 +82,7 @@ export class MapView implements AfterViewInit, OnDestroy {
     L.tileLayer(OSM_TILE_URL, { maxZoom: 19, attribution: OSM_ATTRIBUTION }).addTo(map);
     map.invalidateSize();
     this.map = map;
+    this.leaflet = L;
 
     // El slot flex puede crecer tras el init (ej. Zonas): revalidar tamaño
     // para que Leaflet pinte tiles hasta abajo y no quede franja en blanco.
@@ -79,7 +101,59 @@ export class MapView implements AfterViewInit, OnDestroy {
       this.resizeObserver.observe(host);
     }
 
-    this.renderMarkers(L, map);
+    if (this.showEvents()) {
+      this.renderMarkers(L, map);
+    }
+
+    this.syncSelectionMarker(this.selectedLocation());
+    this.syncSelectableCursor(this.selectable());
+  }
+
+  /** UH-55: crea, mueve o quita el marcador del punto seleccionado. */
+  private syncSelectionMarker(location: LatLng | null): void {
+    const L = this.leaflet;
+    const map = this.map;
+    if (!L || !map) return;
+
+    if (!location) {
+      this.selectionMarker?.remove();
+      this.selectionMarker = undefined;
+      return;
+    }
+
+    if (this.selectionMarker) {
+      this.selectionMarker.setLatLng(location);
+      return;
+    }
+
+    this.selectionMarker = L.circleMarker(location, {
+      radius: 10,
+      weight: 3,
+      opacity: 1,
+      fillOpacity: 1,
+      className: 'selected-location-marker',
+    }).addTo(map);
+  }
+
+  /** UH-55: muestra el cursor de selección y escucha clics mientras se puede elegir un punto. */
+  private syncSelectableCursor(selectable: boolean): void {
+    if (!this.isBrowser) return;
+    document.getElementById(this.mapId())?.classList.toggle('map-selectable', selectable);
+    if (selectable) this.enableSelectionClick();
+  }
+
+  /**
+   * UH-55: el mapa solo escucha clics cuando alguna página activa la selección,
+   * así las páginas que no la usan (/map, Zonas, landing) se comportan igual que antes.
+   */
+  private enableSelectionClick(): void {
+    const map = this.map;
+    if (!map || this.selectionClickEnabled) return;
+    this.selectionClickEnabled = true;
+    map.on('click', (event: Leaflet.LeafletMouseEvent) => {
+      if (!this.selectable()) return;
+      this.locationSelect.emit([event.latlng.lat, event.latlng.lng]);
+    });
   }
 
   private renderMarkers(L: typeof Leaflet, map: Leaflet.Map): void {
@@ -175,6 +249,8 @@ export class MapView implements AfterViewInit, OnDestroy {
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
     this.markersMap.clear();
+    this.selectionMarker = undefined;
+    this.selectionClickEnabled = false;
     this.map?.remove();
     this.map = undefined;
   }

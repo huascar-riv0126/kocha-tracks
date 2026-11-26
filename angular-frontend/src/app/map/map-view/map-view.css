@@ -95,3 +95,19 @@
 ::ng-deep .kocha-dark-tooltip .leaflet-popup-content {
   margin: 12px 14px !important;
 }
+
+/* UH-55: dentro del formulario de reporte el mapa usa una altura compacta */
+:host-context(.report-map-slot) .map-page.embedded .map-canvas {
+  min-height: 280px;
+}
+
+/* UH-55: cursor de selección cuando se puede elegir un punto en el mapa */
+.map-canvas.map-selectable {
+  cursor: crosshair;
+}
+
+/* UH-55: marcador del punto seleccionado con los colores del sistema */
+::ng-deep .selected-location-marker {
+  fill: var(--color-interactive-cta);
+  stroke: var(--color-neutral-white);
+}
