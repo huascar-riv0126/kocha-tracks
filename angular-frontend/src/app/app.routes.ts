@@ -9,11 +9,12 @@ import { EventHistoryPage } from './event/history-page/history-page';
 import { eventResolver } from './event/event-resolver';
 import { NotFound } from './status/not-found/not-found';
 import { Login } from './auth/login/login';
-import { RecoverPassword } from './auth/recover-password/recover-password'; // UH-47
+import { RecoverPassword } from './auth/recover-password/recover-password';
 import { SignUp } from './auth/sign-up/sign-up';
 import { ProfilePageComponent } from './user/profile-page/profile-page';
 import { ChangePassword } from './auth/change-password/change-password';
 import { InProgress } from './status/in-progress/in-progress';
+import { ForumPage } from './forum/forum-page/forum-page';
 
 export const routes: Routes = [
   { path: '', component: LandingPage },
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'register', component: SignUp },
   { path: 'perfil', component: ProfilePageComponent },
   { path: 'auth/cambiar-contrasena', component: ChangePassword },
+  { path: 'forum', component: ForumPage },
   {
     path: 'evento/:eventId',
     resolve: { event: eventResolver },

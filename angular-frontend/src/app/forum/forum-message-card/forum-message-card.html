@@ -1,0 +1,75 @@
+<article class="flex flex-col gap-3 rounded-xl border border-border-default bg-card p-4">
+
+  <!-- Cabecera: avatar + nombre + rol + tiempo -->
+  <div class="flex items-start gap-3">
+
+    <!-- Avatar circular con inicial -->
+    <div
+      class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-primary-200 text-sm font-bold uppercase text-brand-primary-700"
+      data-testid="avatar"
+      aria-hidden="true"
+    >
+      {{ initial() }}
+    </div>
+
+    <!-- Nombre, insignia de moderador y subtítulo de rol/tiempo -->
+    <div class="flex flex-col gap-0.5">
+
+      <!-- Nombre + insignia MODERADOR -->
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-bold text-txt-primary" data-testid="author-name">
+          {{ message().author }}
+        </span>
+        @if (isModerator()) {
+          <span
+            class="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none bg-brand-primary-100 text-brand-primary-600"
+            data-testid="moderator-badge"
+          >
+            {{ 'forum.message.role.moderator' | getStrings }}
+          </span>
+        }
+      </div>
+
+      <!-- Subtítulo: rol (si aplica) + tiempo relativo -->
+      <span class="text-xs text-txt-secondary" data-testid="role-subtitle">
+        @if (isModerator()) {
+          {{ 'forum.message.role.moderator' | getStrings }} &middot;
+        } @else if (isVerified()) {
+          <span class="text-accent-warning-500">{{ 'forum.message.role.verified' | getStrings }}</span>
+          &middot;
+        }
+        {{ timeAgo() }}
+      </span>
+
+    </div>
+  </div>
+
+  <!-- Cuerpo del mensaje -->
+  <p class="text-sm leading-relaxed text-txt-primary" data-testid="message-body">
+    {{ message().body }}
+  </p>
+
+  <!-- Acciones: botones deshabilitados + contador de coincidencias -->
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <app-button
+        [label]="'forum.message.confirm' | getStrings"
+        [disabled]="true"
+        data-testid="confirm-btn"
+      />
+      <app-button
+        [label]="'forum.message.report' | getStrings"
+        [disabled]="true"
+        data-testid="report-btn"
+      />
+    </div>
+
+    <span
+      class="flex items-center gap-1 text-sm font-semibold text-accent-warning-500"
+      data-testid="agree-count"
+    >
+      {{ message().agreeCount }} {{ 'forum.message.agree' | getStrings }}
+    </span>
+  </div>
+
+</article>
