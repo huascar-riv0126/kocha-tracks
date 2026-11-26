@@ -1,0 +1,32 @@
+<div class="marker-popup" style="text-align: left; font-family: sans-serif; min-width: 240px; padding-right: 15px;">
+  <h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 16px; border-bottom: 1px solid #4b5563; padding-bottom: 8px;">
+    {{ event().title }}
+  </h4>
+  <div style="font-size: 13px; color: #d1d5db; margin-bottom: 15px; line-height: 1.5;">
+    <p style="margin: 5px 0;">
+      <span style="color: #9ca3af;">{{ 'map.popup.location' | getStrings }}</span><br />
+      <strong>{{ event().location }}</strong>
+    </p>
+    <p style="margin: 5px 0;">
+      <span style="color: #9ca3af;">{{ 'map.popup.sources' | getStrings }}</span> {{ event().sourceName }}
+    </p>
+    <div style="margin: 12px 0 6px 0; display: flex; align-items: center; gap: 8px;">
+      <span style="color: #9ca3af;">{{ 'map.popup.currentState' | getStrings }}</span>
+      <span
+        style="padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;"
+        [style.background-color]="markerColor() + '20'"
+        [style.color]="markerColor()"
+        [style.border]="'1px solid ' + markerColor() + '50'"
+      >
+        {{ event().state.toUpperCase() }}
+      </span>
+    </div>
+  </div>
+  <button
+    class="btn-detalles"
+    (click)="details.emit(event().id)"
+    style="background-color: #f97316; color: white; border: none; padding: 10px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; width: 100%;"
+  >
+    {{ 'map.popup.details' | getStrings }}
+  </button>
+</div>

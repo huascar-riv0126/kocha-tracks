@@ -99,6 +99,7 @@
   "landing.cta.desc": "Únete a la red ciudadana de monitoreo de movilidad en Cochabamba y Bolivia. Mantente informado con total privacidad.",
   "landing.cta.button": "Registrarse",
   "landing.cta.note": "No requiere GPS activo continuamente. Totalmente libre y gratuito.",
+  "map.popup.details": "Ver información detallada",
   "action.card.title": "ACCIONES DISPONIBLES",
   "action.to.forum": "Ir al Foro",
   "action.to.forum.add": "Reportar nueva Informacion",
@@ -151,5 +152,11 @@
   "zones.config.cancel": "Cancelar",
   "zones.config.save": "Guardar Cambios",
   "zones.empty": "Aún no tienes zonas. Crea tu primera zona.",
+  "zones.page.ariaLabel": "Zonas de interés",
+  "zones.sidebar.ariaLabel": "Mis zonas de interés",
+  "map.popup.details": "Ver información detallada",
+  "map.popup.location": "Ubicación:",
+  "map.popup.sources": "Fuentes:",
+  "map.popup.currentState": "Estado actual:",
   "filter.all": "Todos"
 }

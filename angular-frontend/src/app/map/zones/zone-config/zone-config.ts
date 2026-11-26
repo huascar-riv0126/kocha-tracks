@@ -27,6 +27,8 @@ export class ZoneConfig {
   readonly cancel = output<void>();
   readonly undoPoint = output<void>();
   readonly clearPoints = output<void>();
+  readonly radiusChange = output<number>();
+  readonly typeChange = output<ZoneType>();
 
   readonly name = signal('');
   readonly zoneType = signal<ZoneType>('radio');
@@ -54,7 +56,7 @@ export class ZoneConfig {
 
   readonly geometryValid = computed(() =>
     this.isRadio()
-      ? this.radius() >= ZONE_RADIUS_MIN
+      ? this.center() !== null && this.radius() >= ZONE_RADIUS_MIN
       : this.points().length >= ZONE_POLYGON_MIN_POINTS,
   );
 
@@ -65,11 +67,15 @@ export class ZoneConfig {
   }
 
   onTypeChange(value: string): void {
-    this.zoneType.set(value as ZoneType);
+    const type = value as ZoneType;
+    this.zoneType.set(type);
+    this.typeChange.emit(type);
   }
 
   onRadiusChange(value: string): void {
-    this.radius.set(Number(value));
+    const radius = Number(value);
+    this.radius.set(radius);
+    this.radiusChange.emit(radius);
   }
 
   onCancel(): void {

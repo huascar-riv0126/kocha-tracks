@@ -238,6 +238,7 @@
   "auth.login.submit": "Iniciar sesión",
   "auth.login.noAccount": "¿No tienes una cuenta?",
   "auth.login.createAccount": "Crear cuenta",
+
   "inProgress.badge": "En construcción",
   "inProgress.title": "Estamos preparando este espacio",
   "inProgress.description": "Esta página o funcionalidad sigue en desarrollo. Estamos trabajando para que pronto puedas utilizarla.",
@@ -278,5 +279,11 @@
   "notifications.group.today": "Hoy",
   "notifications.group.yesterday": "Ayer",
   "notifications.group.this_week": "Esta semana",
-  "notifications.list.empty": "No hay notificaciones para mostrar."
+  "notifications.list.empty": "No hay notificaciones para mostrar.",
+  "map.popup.details": "Ver información detallada",
+  "map.popup.location": "Ubicación:",
+  "map.popup.sources": "Fuentes:",
+  "map.popup.currentState": "Estado actual:",
+  "zones.page.ariaLabel": "Zonas de interés",
+  "zones.sidebar.ariaLabel": "Mis zonas de interés"
 }

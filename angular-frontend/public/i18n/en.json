@@ -240,6 +240,7 @@
   "auth.login.submit": "Log in",
   "auth.login.noAccount": "Don't have an account?",
   "auth.login.createAccount": "Create account",
+
   "inProgress.badge": "Under construction",
   "inProgress.title": "We are preparing this space",
   "inProgress.description": "This page or feature is still under development. We are working to make it available soon.",
@@ -280,5 +281,11 @@
   "notifications.group.today": "Today",
   "notifications.group.yesterday": "Yesterday",
   "notifications.group.this_week": "This week",
-  "notifications.list.empty": "No notifications to show."
+  "notifications.list.empty": "No notifications to show.",
+  "map.popup.details": "View detailed information",
+  "map.popup.location": "Location:",
+  "map.popup.sources": "Sources:",
+  "map.popup.currentState": "Current status:",
+  "zones.page.ariaLabel": "Zones of interest",
+  "zones.sidebar.ariaLabel": "My areas of interest"
 }

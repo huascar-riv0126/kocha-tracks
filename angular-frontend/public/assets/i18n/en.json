@@ -99,6 +99,7 @@
   "landing.cta.desc": "Join the citizen mobility monitoring network in Cochabamba and Bolivia. Stay informed with complete privacy.",
   "landing.cta.button": "Sign up",
   "landing.cta.note": "Does not require continuous active GPS. Completely free and open.",
+  "map.popup.details": "View detailed information",
   "action.card.title": "AVAILABLE ACTIONS",
   "action.to.forum": "Go to Forum",
   "action.to.forum.add": "Report New Information",
@@ -151,5 +152,11 @@
   "zones.config.cancel": "Cancel",
   "zones.config.save": "Save Changes",
   "zones.empty": "You don't have any zones yet. Create your first zone.",
+  "zones.page.ariaLabel": "Zones of interest",
+  "zones.sidebar.ariaLabel": "My areas of interest",
+  "map.popup.details": "View detailed information",
+  "map.popup.location": "Location:",
+  "map.popup.sources": "Sources:",
+  "map.popup.currentState": "Current status:",
   "filter.all": "All"
 }

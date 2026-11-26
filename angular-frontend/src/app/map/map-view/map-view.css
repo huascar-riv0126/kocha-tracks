@@ -12,7 +12,7 @@
   max-width: 360px;
   height: 100%;
   z-index: 10;
-  background-color: #ffffff;
+  background-color: var(--color-neutral-white);
 }
 
 .map-canvas {
@@ -43,6 +43,9 @@
 :host {
   display: block;
   height: auto;
+  --kocha-tooltip-bg: var(--color-neutral-900);
+  --kocha-tooltip-border: var(--color-neutral-800);
+  --kocha-zone-color: #f97316;
 }
 
 /* Cuando el MapView vive dentro de Zonas, el host debe llenar el slot flex */
@@ -73,25 +76,34 @@
 
 /* Quitar el outline (cuadro) que aparece al hacer clic en el marcador SVG */
 ::ng-deep .no-outline-marker {
-  outline: none !important;
+  outline: none;
 }
 
 ::ng-deep .leaflet-interactive:focus {
-  outline: none !important;
+  outline: none;
 }
 
 ::ng-deep .kocha-dark-tooltip .leaflet-popup-content-wrapper {
-  background-color: #0B1120 !important;
-  border: 1px solid #1e293b !important;
-  border-radius: 8px !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+  background-color: var(--kocha-tooltip-bg);
+  border: 1px solid var(--kocha-tooltip-border);
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
 
 ::ng-deep .kocha-dark-tooltip .leaflet-popup-tip {
-  background-color: #0B1120 !important;
-  border: 1px solid #1e293b !important;
+  background-color: var(--kocha-tooltip-bg);
+  border: 1px solid var(--kocha-tooltip-border);
 }
 
 ::ng-deep .kocha-dark-tooltip .leaflet-popup-content {
-  margin: 12px 14px !important;
+  margin: 12px 14px;
+}
+
+::ng-deep .zone-undo-popup .leaflet-popup-content {
+  margin: 8px;
+}
+
+::ng-deep .zone-undo-popup .leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 6px 14px -4px rgba(0, 0, 0, 0.35);
 }
